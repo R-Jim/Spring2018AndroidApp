@@ -34,6 +34,18 @@ public class TableFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         listView = (ExpandableListView) view.findViewById(R.id.tableExpandableList);
+
+        //Only allow 1 expanded group
+        listView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+            int prevGrp = -1;
+            @Override
+            public void onGroupExpand(int i) {
+                if (i != prevGrp) {
+                    listView.collapseGroup(prevGrp);
+                    prevGrp = i;
+                }
+            }
+        });
         initData();
         listAdapter = new ExpandableListAdapter(getActivity(), listDataHeader, listHashMap);
         listView.setAdapter(listAdapter);

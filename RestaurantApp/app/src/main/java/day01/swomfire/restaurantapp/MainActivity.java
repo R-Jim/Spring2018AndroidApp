@@ -4,6 +4,9 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTabHost;
 import android.os.Bundle;
 import android.widget.ExpandableListView;
+import android.support.v7.widget.PopupMenu;
+import android.view.MenuInflater;
+import android.view.View;
 import android.widget.TabHost;
 
 import Service.TabHostService;
@@ -38,5 +41,14 @@ public class MainActivity extends FragmentActivity {
                     }
                 }
         );
+    }
+
+    public void showPopup(View v) {
+        PopupMenu popup = new PopupMenu(this, v);
+        popup.getMenu().add("View statistic");
+        popup.getMenu().add("Dashboard");
+        popup.getMenu().add("Bla bla");
+        getMenuInflater().inflate(R.menu.menu, popup.getMenu());
+        popup.show();
     }
 }

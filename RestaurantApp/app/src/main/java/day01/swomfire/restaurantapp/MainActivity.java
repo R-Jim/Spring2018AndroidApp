@@ -3,6 +3,7 @@ package day01.swomfire.restaurantapp;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTabHost;
 import android.os.Bundle;
+import android.widget.ExpandableListView;
 import android.support.v7.widget.PopupMenu;
 import android.view.MenuInflater;
 import android.view.View;
@@ -13,11 +14,15 @@ import Service.TabHostServiceImpl;
 
 public class MainActivity extends FragmentActivity {
     private FragmentTabHost tabHost;
+    private ExpandableListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        listView = findViewById(R.id.tableExpandableList);
+
+
         final TabHostService tabHostService = new TabHostServiceImpl(this);
 
         //get tabHost

@@ -38,7 +38,7 @@
         android:background="@color/colorTabBackground"
         android:onClick="showPopup"
         android:layout_weight=".2"
-        android:src="@drawable/sub_menu_tab_icon" />
+        android:src="@drawable/ic_tab_menu" />
 </LinearLayout>
 
     </RelativeLayout>

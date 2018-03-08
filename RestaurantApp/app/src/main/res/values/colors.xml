@@ -6,4 +6,8 @@
     <color name="colorTabBackground">#e0e0eb</color>
     <color name="colorTabSelectedBackground">#f0f0f5</color>
     <color name="colorActive">#3399ff</color>
+    <color name="colorItemGroupColor">#64B5F6</color>
+    <color name="colorItemTabBackground">#7b45f9</color>
+    <color name="colorItemGroupTextColor">#fcfcfc</color>
+
 </resources>

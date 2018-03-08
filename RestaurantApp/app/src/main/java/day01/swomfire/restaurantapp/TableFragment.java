@@ -11,7 +11,6 @@ import android.widget.ExpandableListView;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
 import Adapter.ExpandableListAdapter;
 
 
@@ -32,7 +31,6 @@ public class TableFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         listView = (ExpandableListView) view.findViewById(R.id.tableExpandableList);
 
         //Only allow 1 expanded group

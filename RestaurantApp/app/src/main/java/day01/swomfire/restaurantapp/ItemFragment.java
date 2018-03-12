@@ -60,6 +60,8 @@ public class ItemFragment extends Fragment {
         listDataHeader.add("Item3");
         listDataHeader.add("Item4");
         listDataHeader.add("Item5");
+        listDataHeader.add("Item6");
+        listDataHeader.add("Item7");
 
         List<String> list1 = new ArrayList<>();
         list1.add("1");
@@ -82,5 +84,7 @@ public class ItemFragment extends Fragment {
         listHashMap.put(listDataHeader.get(2), list3);
         listHashMap.put(listDataHeader.get(3), list4);
         listHashMap.put(listDataHeader.get(4), list4);
+        listHashMap.put(listDataHeader.get(5), list4);
+        listHashMap.put(listDataHeader.get(6), list4);
     }
 }

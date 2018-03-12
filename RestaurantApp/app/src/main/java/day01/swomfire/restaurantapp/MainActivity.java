@@ -26,7 +26,6 @@ public class MainActivity extends AppCompatActivity {
     private ExpandableListView listView;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,8 +76,6 @@ public class MainActivity extends AppCompatActivity {
         SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
         //Assumes cur activity is the searchable activity
         searchView.setSearchableInfo(manager.getSearchableInfo(getComponentName()));
-
-
         List demo = new ArrayList();
         demo.add("Bun bo");
         demo.add("Bun cha");

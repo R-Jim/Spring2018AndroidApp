@@ -2,18 +2,53 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="horizontal"
     tools:context="day01.swomfire.restaurantapp.ItemFragment">
 
     <!-- TODO: Update blank fragment layout -->
+
+    <LinearLayout
+        android:id="@+id/item_checkBar"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:background="?attr/colorPrimary">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight=".85"
+            android:fontFamily="@font/roboto_bold"
+            android:gravity="top"
+            android:paddingLeft="25dp"
+            android:paddingTop="5dp"
+            android:text="0 item"
+            android:textColor="@color/colorItemGroupTextColor"
+            android:textSize="15dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight=".08"
+            android:fontFamily="@font/roboto_bold"
+            android:gravity="top"
+            android:paddingLeft="25dp"
+            android:paddingTop="3dp"
+            android:text="DONE"
+            android:textColor="@color/colorItemGroupTextColor"
+            android:textSize="16dp" />
+    </LinearLayout>
+
     <ExpandableListView
         android:id="@+id/itemExpandableList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:groupIndicator="@null"
-        android:paddingBottom="55dp"
-        android:paddingTop="?attr/actionBarSize"
+        android:layout_marginTop="40dp"
         android:dividerHeight="-1dp"
-        android:layoutDirection="ltr">
-    </ExpandableListView>
+        android:groupIndicator="@null"
+        android:layoutDirection="ltr"
+        android:paddingBottom="55dp"
+        android:paddingTop="?attr/actionBarSize">
 
+    </ExpandableListView>
 </FrameLayout>

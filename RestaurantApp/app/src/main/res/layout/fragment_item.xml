@@ -11,6 +11,7 @@
         android:layout_height="wrap_content"
         android:groupIndicator="@null"
         android:layout_marginBottom="55dp"
+        android:layout_marginTop="?attr/actionBarSize"
         android:layoutDirection="ltr">
     </ExpandableListView>
 

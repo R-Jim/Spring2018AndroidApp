@@ -2,6 +2,7 @@ package day01.swomfire.restaurantapp;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.os.AsyncTask;
 import android.support.v4.app.FragmentTabHost;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -15,36 +16,45 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.widget.TabHost;
 
+import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 import Service.TabHostService;
 import Service.TabHostServiceImpl;
+import data.model.Item;
+import data.remote.APIService;
+import day01.swomfire.restaurantapp.utilities.NetworkUtils;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import utils.ApiUtils;
 
 public class MainActivity extends AppCompatActivity {
     private FragmentTabHost tabHost;
     private ExpandableListView listView;
-
+    private APIService mService;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mService = ApiUtils.getAPIService();
+
 
         setSupportActionBar((Toolbar) findViewById(R.id.my_toolbar));
-
         listView = findViewById(R.id.tableExpandableList);
 
 
         final TabHostService tabHostService = new TabHostServiceImpl(this);
-
-        //get tabHost
+        // get tabHost
         tabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);
         tabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
-        //
+
         tabHostService.tabInitializer(tabHost);
-        //
+
         tabHost.setOnTabChangedListener(
                 new TabHost.OnTabChangeListener() {
 
@@ -66,16 +76,33 @@ public class MainActivity extends AppCompatActivity {
         popup.show();
     }
 
+
+    public void loadItems() {
+        mService.getItemList().enqueue(new Callback<List<Item>>() {
+            @Override
+            public void onResponse(Call<List<Item>> call, Response<List<Item>> response) {
+                if (response.isSuccessful()) {
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Item>> call, Throwable t) {
+
+            }
+        });
+    }
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-//        return super.onCreateOptionsMenu(menu);
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.actionbar_menu, menu);
 
-        //Get the SearchView and set the Searchable config
+        // Get the SearchView and set the Searchable config
         SearchManager manager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
-        //Assumes cur activity is the searchable activity
+        // Assumes cur activity is the searchable activity
         searchView.setSearchableInfo(manager.getSearchableInfo(getComponentName()));
 
 
@@ -102,10 +129,12 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_setting:
+            case R.id.action_add:
                 System.out.println("Setting item selected");
                 break;
             case R.id.action_search:

@@ -11,7 +11,7 @@ import android.widget.ExpandableListView;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import Adapter.ExpandableListAdapter;
+import adapter.ExpandableListAdapter;
 
 
 public class TableFragment extends Fragment {

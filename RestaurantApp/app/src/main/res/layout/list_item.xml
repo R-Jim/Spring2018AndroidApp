@@ -25,7 +25,9 @@
         <ListView
             android:id="@+id/lvDrink"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"></ListView>
+            android:layout_height="wrap_content">
+
+        </ListView>
     </LinearLayout>
     <TextView
         android:id="@+id/lblListItem"

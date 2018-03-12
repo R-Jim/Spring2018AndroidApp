@@ -49,6 +49,21 @@ public class ItemFragment extends Fragment {
         listAdapter = new ExpandableItemListAdapter(getActivity(), listDataHeader, listHashMap);
         listView.setAdapter(listAdapter);
 
+        listView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+            @Override
+            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+
+                if (!parent.isGroupExpanded(groupPosition)) {
+                    parent.expandGroup(groupPosition);
+                } else {
+                    parent.collapseGroup(groupPosition);
+                }
+                parent.setSelectedGroup(groupPosition);
+
+                return true;
+            }
+        });
+
     }
 
     private void initData() {

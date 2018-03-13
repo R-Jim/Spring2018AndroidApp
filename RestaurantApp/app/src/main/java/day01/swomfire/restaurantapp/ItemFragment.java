@@ -102,4 +102,6 @@ public class ItemFragment extends Fragment {
         listHashMap.put(listDataHeader.get(5), list4);
         listHashMap.put(listDataHeader.get(6), list4);
     }
+
+
 }

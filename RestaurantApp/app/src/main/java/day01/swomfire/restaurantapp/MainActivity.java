@@ -1,7 +1,10 @@
 package day01.swomfire.restaurantapp;
 
+import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTabHost;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +16,7 @@ import android.widget.ExpandableListView;
 import android.support.v7.widget.PopupMenu;
 import android.view.MenuInflater;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TabHost;
 
 import java.util.ArrayList;
@@ -24,7 +28,7 @@ import Service.TabHostServiceImpl;
 public class MainActivity extends AppCompatActivity {
     private FragmentTabHost tabHost;
     private ExpandableListView listView;
-
+    private static ItemQuantityDialogFragment itemQuantityDialogFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,5 +114,17 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void itemQuantityChange(View view) {
+        FragmentManager fm = getSupportFragmentManager();
+        itemQuantityDialogFragment = new ItemQuantityDialogFragment();
+        LinearLayout thisItemTab = findViewById(R.id.itemItem);
+        itemQuantityDialogFragment.setUp(view, thisItemTab);
+        itemQuantityDialogFragment.show(fm, "item_quantity_dialog_fragment");
+    }
+
+    public static void closeDialog() {
+        itemQuantityDialogFragment.dismiss();
     }
 }

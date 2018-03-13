@@ -75,7 +75,6 @@ public class MainActivity extends AppCompatActivity {
         // Assumes cur activity is the searchable activity
         searchView.setSearchableInfo(manager.getSearchableInfo(getComponentName()));
 
-
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {

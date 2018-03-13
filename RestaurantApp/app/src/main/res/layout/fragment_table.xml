@@ -8,6 +8,7 @@
 <ExpandableListView
     android:id="@+id/tableExpandableList"
     android:layout_width="match_parent"
+    android:paddingTop="?attr/actionBarSize"
     android:layout_height="wrap_content"
     android:groupIndicator="@drawable/group_indicator"
     android:layoutDirection="rtl"></ExpandableListView>

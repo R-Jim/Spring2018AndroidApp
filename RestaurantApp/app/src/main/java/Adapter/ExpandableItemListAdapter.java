@@ -38,6 +38,20 @@ public class ExpandableItemListAdapter extends ExpandableListAdapter {
         TextView lblListHeader = (TextView) view.findViewById(R.id.lblListItemHeader);
         lblListHeader.setTypeface(null, Typeface.BOLD);
         lblListHeader.setText(headerTitle);
+        switch (i%4) {
+            case 0:
+                view.setBackgroundColor(view.getResources().getColor(R.color.colorItemGroupColor1));
+                break;
+            case 1:
+                view.setBackgroundColor(view.getResources().getColor(R.color.colorItemGroupColor2));
+                break;
+            case 2:
+                view.setBackgroundColor(view.getResources().getColor(R.color.colorItemGroupColor3));
+                break;
+            case 3:
+                view.setBackgroundColor(view.getResources().getColor(R.color.colorItemGroupColor4));
+                break;
+        }
         return view;
     }
 
@@ -46,12 +60,30 @@ public class ExpandableItemListAdapter extends ExpandableListAdapter {
         final String childText = (String) getChild(i, i1);
         if (view == null) {
             LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = layoutInflater.inflate(R.layout.list_item, null);
+            view = layoutInflater.inflate(R.layout.item_tab_list_item, null);
         }
 
         TextView lblListChild = (TextView) view.findViewById(R.id.lblListItem);
         lblListChild.setText(childText);
+        switch (i%4) {
+            case 0:
+                view.setBackgroundColor(view.getResources().getColor(R.color.colorItemGroupColor1));
+                break;
+            case 1:
+                view.setBackgroundColor(view.getResources().getColor(R.color.colorItemGroupColor2));
+                break;
+            case 2:
+                view.setBackgroundColor(view.getResources().getColor(R.color.colorItemGroupColor3));
+                break;
+            case 3:
+                view.setBackgroundColor(view.getResources().getColor(R.color.colorItemGroupColor4));
+                break;
+        }
         return view;
     }
 
+    @Override
+    public boolean isChildSelectable(int i, int i1) {
+        return super.isChildSelectable(i, i1);
+    }
 }

@@ -10,7 +10,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:groupIndicator="@null"
-        android:layout_marginBottom="55dp"
+        android:paddingBottom="55dp"
+        android:paddingTop="?attr/actionBarSize"
+        android:dividerHeight="-1dp"
         android:layoutDirection="ltr">
     </ExpandableListView>
 

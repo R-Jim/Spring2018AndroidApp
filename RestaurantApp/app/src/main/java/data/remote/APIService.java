@@ -21,7 +21,7 @@ public interface APIService {
     @GET("/getItem")
     Call<Item> getItem(@Query("itemId") String id);
 
-    @GET("/getAllItem")
+    @GET("/item")
     Call<List<Item>> getItemList();
 
 

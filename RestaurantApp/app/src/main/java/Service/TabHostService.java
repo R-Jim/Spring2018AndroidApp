@@ -1,8 +1,6 @@
-package Service;
+package service;
 
 import android.support.v4.app.FragmentTabHost;
-import android.widget.ImageView;
-import android.widget.TabHost;
 
 /**
  * Created by Swomfire on 23-Feb-18.

@@ -18,15 +18,15 @@ import data.remote.APIService;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import utils.ApiUtils;
+import utils.APIUtils;
 
 
 public class TableFragment extends Fragment {
 
     private ExpandableListView listView;
     private android.widget.ExpandableListAdapter listAdapter;
-    private List<String> listDataHeader;
-    private HashMap<String, List<String>> listHashMap;
+    private List<String> listDataHeader = new ArrayList<>();
+    private HashMap<String, List<String>> listHashMap = new HashMap<>();
 
     private APIService mService;
 
@@ -42,7 +42,8 @@ public class TableFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         listView = (ExpandableListView) view.findViewById(R.id.tableExpandableList);
-        mService = ApiUtils.getAPIService();
+        mService = APIUtils.getAPIService();
+        loadItems();
 
 
         //Only allow 1 expanded group
@@ -56,57 +57,69 @@ public class TableFragment extends Fragment {
                 }
             }
         });
-        initData();
-        listAdapter = new ExpandableListAdapter(getActivity(), listDataHeader, listHashMap);
-        listView.setAdapter(listAdapter);
+//        initData();
+
 
     }
 
     public void loadItems() {
+        System.out.println("Load item list");
         mService.getItemList().enqueue(new Callback<List<Item>>() {
             @Override
             public void onResponse(Call<List<Item>> call, Response<List<Item>> response) {
                 if (response.isSuccessful()) {
+                    listDataHeader = new ArrayList<>();
+                    listHashMap = new HashMap<>();
+                    for (Item item : response.body()) {
+                        listDataHeader.add(item.getItemName());
+                        List<String> orderDetail = new ArrayList<>();
 
+                        orderDetail.add("1");
+                        orderDetail.add("2");
+                        listHashMap.put(item.getItemName(), orderDetail);
+                    }
+
+                    listAdapter = new ExpandableListAdapter(getActivity(), listDataHeader, listHashMap);
+                    listView.setAdapter(listAdapter);
                     Log.d(this.getClass().getSimpleName(), "GET loaded from API");
                 }
             }
 
             @Override
             public void onFailure(Call<List<Item>> call, Throwable t) {
-
+                System.out.println("Failed to load item list");
+                System.out.println(t.getMessage());
             }
         });
     }
 
-    private void initData() {
-        listDataHeader = new ArrayList<>();
-        listHashMap = new HashMap<>();
-
-        listDataHeader.add("ABC");
-        listDataHeader.add("ADC");
-        listDataHeader.add("ASwC");
-        listDataHeader.add("Asadsa");
-
-        List<String> list1 = new ArrayList<>();
-        list1.add("1");
-
-        List<String> list2 = new ArrayList<>();
-        list2.add("1");
-        list2.add("2");
-
-        List<String> list3 = new ArrayList<>();
-        list3.add("1");
-        list3.add("3");
-        list3.add("4");
-
-        List<String> list4 = new ArrayList<>();
-        list4.add("2");
-        list4.add("24");
-
-        listHashMap.put(listDataHeader.get(0), list1);
-        listHashMap.put(listDataHeader.get(1), list2);
-        listHashMap.put(listDataHeader.get(2), list3);
-        listHashMap.put(listDataHeader.get(3), list4);
-    }
+//    private void initData() {
+//
+//
+//        listDataHeader.add("ABC");
+//        listDataHeader.add("ADC");
+//        listDataHeader.add("ASwC");
+//        listDataHeader.add("Asadsa");
+//
+//        List<String> list1 = new ArrayList<>();
+//        list1.add("1");
+//
+//        List<String> list2 = new ArrayList<>();
+//        list2.add("1");
+//        list2.add("2");
+//
+//        List<String> list3 = new ArrayList<>();
+//        list3.add("1");
+//        list3.add("3");
+//        list3.add("4");
+//
+//        List<String> list4 = new ArrayList<>();
+//        list4.add("2");
+//        list4.add("24");
+//
+//        listHashMap.put(listDataHeader.get(0), list1);
+//        listHashMap.put(listDataHeader.get(1), list2);
+//        listHashMap.put(listDataHeader.get(2), list3);
+//        listHashMap.put(listDataHeader.get(3), list4);
+//    }
 }

@@ -14,8 +14,8 @@ import android.support.v7.widget.PopupMenu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.widget.TabHost;
-import Service.TabHostService;
-import Service.TabHostServiceImpl;
+import service.TabHostService;
+import service.TabHostServiceImpl;
 
 public class MainActivity extends AppCompatActivity {
     private FragmentTabHost tabHost;

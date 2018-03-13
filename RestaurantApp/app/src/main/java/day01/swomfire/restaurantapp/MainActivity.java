@@ -2,7 +2,6 @@ package day01.swomfire.restaurantapp;
 
 import android.app.SearchManager;
 import android.content.Context;
-import android.os.AsyncTask;
 import android.support.v4.app.FragmentTabHost;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -15,33 +14,18 @@ import android.support.v7.widget.PopupMenu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.widget.TabHost;
-
-import java.io.IOException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-
 import Service.TabHostService;
 import Service.TabHostServiceImpl;
-import data.model.Item;
-import data.remote.APIService;
-import day01.swomfire.restaurantapp.utilities.NetworkUtils;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import utils.ApiUtils;
 
 public class MainActivity extends AppCompatActivity {
     private FragmentTabHost tabHost;
     private ExpandableListView listView;
-    private APIService mService;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mService = ApiUtils.getAPIService();
 
 
         setSupportActionBar((Toolbar) findViewById(R.id.my_toolbar));
@@ -77,21 +61,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void loadItems() {
-        mService.getItemList().enqueue(new Callback<List<Item>>() {
-            @Override
-            public void onResponse(Call<List<Item>> call, Response<List<Item>> response) {
-                if (response.isSuccessful()) {
 
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Item>> call, Throwable t) {
-
-            }
-        });
-    }
 
 
     @Override
@@ -105,12 +75,6 @@ public class MainActivity extends AppCompatActivity {
         // Assumes cur activity is the searchable activity
         searchView.setSearchableInfo(manager.getSearchableInfo(getComponentName()));
 
-
-        List demo = new ArrayList();
-        demo.add("Bun bo");
-        demo.add("Bun cha");
-        demo.add("Pho");
-        demo.add("23");
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override

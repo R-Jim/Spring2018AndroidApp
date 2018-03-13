@@ -3,6 +3,7 @@ package day01.swomfire.restaurantapp;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import adapter.ExpandableListAdapter;
+import data.model.Item;
+import data.remote.APIService;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import utils.ApiUtils;
 
 
 public class TableFragment extends Fragment {
@@ -20,6 +27,9 @@ public class TableFragment extends Fragment {
     private android.widget.ExpandableListAdapter listAdapter;
     private List<String> listDataHeader;
     private HashMap<String, List<String>> listHashMap;
+
+    private APIService mService;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -32,6 +42,8 @@ public class TableFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         listView = (ExpandableListView) view.findViewById(R.id.tableExpandableList);
+        mService = ApiUtils.getAPIService();
+
 
         //Only allow 1 expanded group
         listView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
@@ -48,6 +60,23 @@ public class TableFragment extends Fragment {
         listAdapter = new ExpandableListAdapter(getActivity(), listDataHeader, listHashMap);
         listView.setAdapter(listAdapter);
 
+    }
+
+    public void loadItems() {
+        mService.getItemList().enqueue(new Callback<List<Item>>() {
+            @Override
+            public void onResponse(Call<List<Item>> call, Response<List<Item>> response) {
+                if (response.isSuccessful()) {
+
+                    Log.d(this.getClass().getSimpleName(), "GET loaded from API");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Item>> call, Throwable t) {
+
+            }
+        });
     }
 
     private void initData() {

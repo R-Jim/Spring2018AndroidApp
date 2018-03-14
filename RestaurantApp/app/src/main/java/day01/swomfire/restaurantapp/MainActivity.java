@@ -18,8 +18,10 @@ import android.widget.ExpandableListView;
 import android.support.v7.widget.PopupMenu;
 import android.view.MenuInflater;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TabHost;
+import android.widget.TabWidget;
 
 import adapter.CustomRVAdapter;
 import service.TabHostService;
@@ -30,17 +32,20 @@ public class MainActivity extends AppCompatActivity {
 //    private ExpandableListView listView;
     private RecyclerView rvReqList;
     private ExpandableListView listView;
+    private TabWidget tabWidget;
+
     private static ItemQuantityDialogFragment itemQuantityDialogFragment;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        tabWidget = findViewById(android.R.id.tabs);
+
         setSupportActionBar((Toolbar) findViewById(R.id.my_toolbar));
 ////        listView = findViewById(R.id.tableExpandableList);
-//        // TODO: Replace old list view with new RecyclerView
-//        rvReqList = findViewById(R.id.rv_request_list);
 
         initTabWidget();
     }
@@ -67,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
         // Assumes cur activity is the searchable activity
         searchView.setSearchableInfo(manager.getSearchableInfo(getComponentName()));
 
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -79,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
                 System.out.println("Text changed: " + newText);
                 return false;
             }
+
         });
 
         return true;
@@ -123,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
         itemQuantityDialogFragment = new ItemQuantityDialogFragment();
         LinearLayout thisItemTab = findViewById(R.id.itemItem);
         itemQuantityDialogFragment.setUp(view, thisItemTab);
-        itemQuantityDialogFragment.show(fm, "item_quantity_dialog_fragment");
+        itemQuantityDialogFragment.show(fm, "fragment_dialog_item_quan");
     }
 
     public static void closeDialog() {

@@ -49,7 +49,7 @@ public class CustomRVAdapter extends RecyclerView.Adapter<CustomRVAdapter.Reques
     @NonNull
     @Override
     public RequestViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.request_card_view, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview_request_list, parent, false);
         RequestViewHolder rvh = new RequestViewHolder(v);
         return rvh;
     }

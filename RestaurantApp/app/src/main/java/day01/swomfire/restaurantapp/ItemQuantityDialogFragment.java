@@ -1,25 +1,17 @@
 package day01.swomfire.restaurantapp;
 
 import android.app.Dialog;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import java.util.zip.Inflater;
 
 
 public class ItemQuantityDialogFragment extends DialogFragment {
@@ -39,7 +31,7 @@ public class ItemQuantityDialogFragment extends DialogFragment {
         // Use the Builder class for convenient dialog construction
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        View quantityDialog = inflater.inflate(R.layout.item_quantity_dialog_fragment, null);
+        View quantityDialog = inflater.inflate(R.layout.fragment_dialog_item_quan, null);
         Drawable background = linearLayout.getBackground();
         int color = 0;
         if (background instanceof ColorDrawable) {

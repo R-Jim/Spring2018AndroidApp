@@ -41,6 +41,7 @@ public class CustomRVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     // Data for the RV
     private List<OrderRequest> requestList;
+
     public CustomRVAdapter(List requestList) {
         this.requestList = requestList;
     }
@@ -60,7 +61,7 @@ public class CustomRVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public int getItemCount() {
-        return requestList.size();
+        return requestList == null ? 0 : requestList.size();
     }
 
     @Override

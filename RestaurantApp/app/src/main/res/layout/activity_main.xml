@@ -4,13 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/my_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        android:elevation="4dp"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -18,37 +13,46 @@
         android:orientation="horizontal"
         android:weightSum="8">
 
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/my_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
         <FrameLayout
             android:id="@+id/realtabcontent"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_below="@id/my_toolbar"/>
 
         <FrameLayout
             android:id="@android:id/tabcontent"
             android:layout_width="0dp"
             android:layout_height="0dp" />
 
-<LinearLayout
-    android:layout_alignParentBottom="true"
-    android:layout_width="match_parent"
-    android:orientation="horizontal"
-    android:layout_height="wrap_content">
-    <TabWidget
-        android:id="@android:id/tabs"
-        android:layout_width="0dp"
-        android:layout_weight=".8"
-        android:layout_height="55dp"
-        android:background="@color/colorTabBackground"
-        android:orientation="horizontal" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal">
 
-    <ImageButton
-        android:layout_width="0dp"
-        android:layout_height="55dp"
-        android:background="@color/colorTabBackground"
-        android:onClick="showPopup"
-        android:layout_weight=".2"
-        android:src="@drawable/ic_tab_menu" />
-</LinearLayout>
+            <TabWidget
+                android:id="@android:id/tabs"
+                android:layout_width="0dp"
+                android:layout_height="55dp"
+                android:layout_weight=".8"
+                android:background="@color/colorTabBackground"
+                android:orientation="horizontal" />
+
+            <ImageButton
+                android:layout_width="0dp"
+                android:layout_height="55dp"
+                android:layout_weight=".2"
+                android:background="@color/colorTabBackground"
+                android:onClick="showPopup"
+                android:src="@drawable/ic_tab_menu" />
+        </LinearLayout>
 
     </RelativeLayout>
 </android.support.v4.app.FragmentTabHost>

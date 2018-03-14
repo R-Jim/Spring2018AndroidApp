@@ -33,7 +33,7 @@
             android:gravity="top"
             android:paddingLeft="25dp"
             android:paddingTop="3dp"
-            android:text="DONE"
+            android:text="REQUEST"
             android:textColor="@color/colorItemGroupTextColor"
             android:onClick="toDoneActivity"
             android:textSize="16dp" />

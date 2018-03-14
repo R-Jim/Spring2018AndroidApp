@@ -9,15 +9,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ExpandableListView;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import adapter.CustomRVAdapter;
-import adapter.ExpandableListAdapter;
-import data.model.Item;
 import data.model.OrderRequest;
 import data.remote.APIService;
 import retrofit2.Call;

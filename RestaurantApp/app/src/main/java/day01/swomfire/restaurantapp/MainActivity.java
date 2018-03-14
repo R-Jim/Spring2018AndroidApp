@@ -1,10 +1,8 @@
 package day01.swomfire.restaurantapp;
 
-import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTabHost;
 import android.os.Bundle;
@@ -21,7 +19,6 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TabHost;
 
-import adapter.CustomRVAdapter;
 import service.TabHostService;
 import service.TabHostServiceImpl;
 

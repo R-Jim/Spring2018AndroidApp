@@ -60,6 +60,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight=".2"
                 android:layout_gravity="center_vertical"
+                android:background="@android:color/transparent"
                 android:onClick="showPopup"
                 android:src="@drawable/ic_tab_menu" />
         </LinearLayout>

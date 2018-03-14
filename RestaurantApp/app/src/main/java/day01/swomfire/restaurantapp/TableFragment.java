@@ -3,6 +3,8 @@ package day01.swomfire.restaurantapp;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,8 +14,11 @@ import android.widget.ExpandableListView;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import adapter.CustomRVAdapter;
 import adapter.ExpandableListAdapter;
 import data.model.Item;
+import data.model.OrderRequest;
 import data.remote.APIService;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -23,10 +28,9 @@ import utils.APIUtils;
 
 public class TableFragment extends Fragment {
 
-    private ExpandableListView listView;
+    private RecyclerView rv;
     private android.widget.ExpandableListAdapter listAdapter;
-    private List<String> listDataHeader = new ArrayList<>();
-    private HashMap<String, List<String>> listHashMap = new HashMap<>();
+    private List<OrderRequest> requestList;
 
     private APIService mService;
 
@@ -35,60 +39,53 @@ public class TableFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
         return inflater.inflate(R.layout.fragment_table, container, false);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        listView = (ExpandableListView) view.findViewById(R.id.tableExpandableList);
         mService = APIUtils.getAPIService();
-        loadItems();
 
+        rv = getView().findViewById(R.id.rv_request_list);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+        rv.setLayoutManager(layoutManager);
+
+        loadRequestList();
 
         //Only allow 1 expanded group
-        listView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
-            int prevGrp = -1;
-            @Override
-            public void onGroupExpand(int i) {
-                if (i != prevGrp) {
-                    listView.collapseGroup(prevGrp);
-                    prevGrp = i;
-                }
-            }
-        });
+//        listView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+//            int prevGrp = -1;
+//            @Override
+//            public void onGroupExpand(int i) {
+//                if (i != prevGrp) {
+//                    listView.collapseGroup(prevGrp);
+//                    prevGrp = i;
+//                }
+//            }
+//        });
 //        initData();
 
 
     }
 
-    public void loadItems() {
-        System.out.println("Load item list");
-        mService.getItemList().enqueue(new Callback<List<Item>>() {
+    public void loadRequestList() {
+        mService.getRequestList().enqueue(new Callback<List<OrderRequest>>() {
             @Override
-            public void onResponse(Call<List<Item>> call, Response<List<Item>> response) {
+            public void onResponse(Call<List<OrderRequest>> call, Response<List<OrderRequest>> response) {
                 if (response.isSuccessful()) {
-                    listDataHeader = new ArrayList<>();
-                    listHashMap = new HashMap<>();
-                    for (Item item : response.body()) {
-                        listDataHeader.add(item.getItemName());
-                        List<String> orderDetail = new ArrayList<>();
+                    requestList = response.body();
 
-                        orderDetail.add("1");
-                        orderDetail.add("2");
-                        listHashMap.put(item.getItemName(), orderDetail);
-                    }
-
-                    listAdapter = new ExpandableListAdapter(getActivity(), listDataHeader, listHashMap);
-                    listView.setAdapter(listAdapter);
+                    CustomRVAdapter adapter = new CustomRVAdapter(requestList);
+                    rv.setAdapter(adapter);
                     Log.d(this.getClass().getSimpleName(), "GET loaded from API");
                 }
             }
 
             @Override
-            public void onFailure(Call<List<Item>> call, Throwable t) {
+            public void onFailure(Call<List<OrderRequest>> call, Throwable t) {
                 System.out.println("Failed to load item list");
-                System.out.println(t.getMessage());
             }
         });
     }

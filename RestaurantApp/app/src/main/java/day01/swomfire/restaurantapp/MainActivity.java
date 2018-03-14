@@ -1,10 +1,8 @@
 package day01.swomfire.restaurantapp;
 
-import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTabHost;
 import android.os.Bundle;
@@ -23,7 +21,6 @@ import android.widget.LinearLayout;
 import android.widget.TabHost;
 import android.widget.TabWidget;
 
-import adapter.CustomRVAdapter;
 import service.TabHostService;
 import service.TabHostServiceImpl;
 
@@ -138,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void toDoneActivity(View view) {
-        Intent intent = new Intent(this, DoneOrderActivity.class);
+        Intent intent = new Intent(this, RequestOrderActivity.class);
         startActivity(intent);
     }
 }

@@ -4,7 +4,7 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorTabBackground">#e0e0eb</color>
-    <color name="colorTabSelectedBackground">#f0f0f5</color>
+    <color name="colorTabSelectedBackground">#3F51B5</color>
     <color name="colorActive">#3399ff</color>
     <color name="colorInactive">#bcbcbc</color>
 
@@ -12,6 +12,12 @@
     <color name="colorItemGroupColor2">#6477f6</color>
     <color name="colorItemGroupColor3">#5c4fe7</color>
     <color name="colorItemGroupColor4">#6d2dd4</color>
+
+    <color name="colorDoneOrderBackground">#ffffff</color>
+    <color name="colorDoneOrderItemListBackground">#ffffff</color>
+    <color name="colorDoneOrderBackgroundConfirm">#00e676</color>
+    <color name="colorDoneOrderBackgroundCancel">#FF3D00</color>
+
 
     <color name="colorItemTabBackground">#7b45f9</color>
     <color name="colorItemGroupTextColor">#fcfcfc</color>

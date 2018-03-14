@@ -1,0 +1,52 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    tools:context="day01.swomfire.restaurantapp.ItemFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <LinearLayout
+        android:id="@+id/item_checkBar"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="?attr/colorPrimary"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight=".85"
+            android:fontFamily="@font/roboto_bold"
+            android:paddingLeft="25dp"
+            android:text="0 item"
+            android:gravity="center_vertical"
+            android:textColor="@color/colorItemGroupTextColor"
+            android:textSize="15dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight=".08"
+            android:fontFamily="@font/roboto_bold"
+            android:paddingLeft="25dp"
+            android:gravity="center_vertical"
+            android:layout_gravity="center_vertical"
+            android:text="DONE"
+            android:textColor="@color/colorItemGroupTextColor"
+            android:onClick="toDoneActivity"
+            android:textSize="16dp" />
+    </LinearLayout>
+
+    <ExpandableListView
+        android:id="@+id/itemExpandableList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:dividerHeight="-1dp"
+        android:groupIndicator="@null"
+        android:layoutDirection="ltr"
+        android:layout_below="@id/item_checkBar">
+
+    </ExpandableListView>
+</RelativeLayout>

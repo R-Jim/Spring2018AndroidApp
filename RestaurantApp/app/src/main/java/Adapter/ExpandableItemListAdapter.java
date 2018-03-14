@@ -1,4 +1,4 @@
-package Adapter;
+package adapter;
 
 import android.content.Context;
 import android.graphics.Typeface;

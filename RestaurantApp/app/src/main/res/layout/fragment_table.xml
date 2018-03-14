@@ -2,15 +2,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="day01.swomfire.restaurantapp.TableFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-<ExpandableListView
-    android:id="@+id/tableExpandableList"
-    android:layout_width="match_parent"
-    android:paddingTop="?attr/actionBarSize"
-    android:layout_height="wrap_content"
-    android:groupIndicator="@drawable/group_indicator"
-    android:layoutDirection="rtl"></ExpandableListView>
+    <!--&lt;!&ndash; TODO: Update blank fragment layout &ndash;&gt;-->
+<!--<ExpandableListView-->
+    <!--android:id="@+id/tableExpandableList"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:paddingTop="?attr/actionBarSize"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:groupIndicator="@drawable/group_indicator"-->
+    <!--android:layoutDirection="rtl"></ExpandableListView>-->
+
+    <!--Replace old list view with recyclerView-->
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_request_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
 </FrameLayout>

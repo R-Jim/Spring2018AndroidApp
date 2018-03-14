@@ -17,7 +17,7 @@ import day01.swomfire.restaurantapp.R;
  * Created by elpsychris on 03/13/2018.
  */
 
-public class CustomRVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class CustomRVAdapter extends RecyclerView.Adapter<CustomRVAdapter.RequestViewHolder> {
 
 
     // Provide a reference to the views for each data item
@@ -48,16 +48,19 @@ public class CustomRVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public RequestViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.request_card_view, parent, false);
         RequestViewHolder rvh = new RequestViewHolder(v);
         return rvh;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        RequestViewHolder requestViewHolder = (RequestViewHolder) holder;
+    public void onBindViewHolder(@NonNull RequestViewHolder holder, int position) {
+        holder.tvTableId.setText(requestList.get(position).getTableId() + "");
+        holder.tvDishName.setText(requestList.get(position).getItem().getItemName());
+        holder.tvDishDiscr.setText(requestList.get(position).getItem().getItemId());
     }
+
 
     @Override
     public int getItemCount() {

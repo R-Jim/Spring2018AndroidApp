@@ -1,10 +1,8 @@
 package day01.swomfire.restaurantapp;
 
-import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTabHost;
 import android.os.Bundle;
@@ -14,22 +12,26 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.CheckBox;
 import android.widget.ExpandableListView;
 import android.support.v7.widget.PopupMenu;
 import android.view.MenuInflater;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TabHost;
+import android.widget.TextView;
+
 import android.widget.TabWidget;
 
-import adapter.CustomRVAdapter;
+
+import adapter.ExpandableItemListAdapter;
+import model.DishInItemList;
 import service.TabHostService;
 import service.TabHostServiceImpl;
 
 public class MainActivity extends AppCompatActivity {
     private FragmentTabHost tabHost;
-//    private ExpandableListView listView;
+    //    private ExpandableListView listView;
     private RecyclerView rvReqList;
     private ExpandableListView listView;
     private TabWidget tabWidget;
@@ -138,7 +140,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void toDoneActivity(View view) {
-        Intent intent = new Intent(this, DoneOrderActivity.class);
+        Intent intent = new Intent(this, RequestOrderActivity.class);
         startActivity(intent);
+    }
+
+    public void selectItemToRequest(View view) {
+        View view1 = (View) view.getParent();
+        View view2 = (View) view1.getParent();
+        TextView lblId = (TextView) view2.findViewById(R.id.lblListItemId);
+        DishInItemList dishInItemList = ExpandableItemListAdapter.findDish(String.valueOf(lblId.getText()));
+
+        CheckBox thisBox = (CheckBox) view.findViewById(R.id.itemCheckbox);
+        dishInItemList.setSelected(thisBox.isChecked());
     }
 }

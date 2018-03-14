@@ -13,12 +13,16 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import adapter.ExpandableItemListAdapter;
+import model.DishInItemList;
+
 
 public class ItemQuantityDialogFragment extends DialogFragment {
     private View view;
     private LinearLayout linearLayout;
     private TextView currentItemQuantityText;
     private TextView itemQuantityText;
+    private TextView lblId;
 
     public void setUp(View view, LinearLayout linearLayout) {
         this.view = view;
@@ -43,6 +47,10 @@ public class ItemQuantityDialogFragment extends DialogFragment {
         // Get current item quantity
         currentItemQuantityText = view.findViewById(R.id.lblItemItemQuantity);
 
+        View parent1 = (View) view.getParent();
+        View parent2 = (View) parent1.getParent();
+        lblId = parent2.findViewById(R.id.lblListItemId);
+
         // Set Quantity for dialog
         itemQuantityText = quantityDialog.findViewById(R.id.itemItemQuantityDialogQuantity);
         itemQuantityText.setText(currentItemQuantityText.getText());
@@ -53,6 +61,8 @@ public class ItemQuantityDialogFragment extends DialogFragment {
             @Override
             public void onClick(View view) {
                 currentItemQuantityText.setText(itemQuantityText.getText());
+                DishInItemList dishInItemList = ExpandableItemListAdapter.findDish(String.valueOf(lblId.getText()));
+                dishInItemList.setQuantity(Integer.valueOf(String.valueOf(itemQuantityText.getText())));
                 MainActivity.closeDialog();
             }
         });

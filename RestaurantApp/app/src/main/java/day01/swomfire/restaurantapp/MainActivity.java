@@ -3,6 +3,7 @@ package day01.swomfire.restaurantapp;
 import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTabHost;
@@ -126,5 +127,10 @@ public class MainActivity extends AppCompatActivity {
 
     public static void closeDialog() {
         itemQuantityDialogFragment.dismiss();
+    }
+
+    public void toDoneActivity(View view) {
+        Intent intent = new Intent(this, DoneOrderActivity.class);
+        startActivity(intent);
     }
 }

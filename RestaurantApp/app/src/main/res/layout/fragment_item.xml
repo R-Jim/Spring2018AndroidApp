@@ -35,6 +35,7 @@
             android:paddingTop="3dp"
             android:text="DONE"
             android:textColor="@color/colorItemGroupTextColor"
+            android:onClick="toDoneActivity"
             android:textSize="16dp" />
     </LinearLayout>
 

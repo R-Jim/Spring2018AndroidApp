@@ -20,6 +20,7 @@ public class ExpandableItemListAdapter extends ExpandableListAdapter {
     private Context context;
     private List<String> listDataHeader;
     private HashMap<String, List<String>> listHashMap;
+    private int lastExpandedGroup;
 
     public ExpandableItemListAdapter(Context context, List<String> listDataHeader, HashMap<String, List<String>> listHashMap) {
         super(context, listDataHeader, listHashMap);
@@ -31,14 +32,18 @@ public class ExpandableItemListAdapter extends ExpandableListAdapter {
     @Override
     public View getGroupView(int i, boolean b, View view, ViewGroup viewGroup) {
         String headerTitle = (String) getGroup(i);
-        if (view == null) {
-            LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        if (b) {
+            lastExpandedGroup = i;
+            view = layoutInflater.inflate(R.layout.item_tab_list_group_expanded, null);
+        } else {
             view = layoutInflater.inflate(R.layout.item_tab_list_group, null);
+
         }
         TextView lblListHeader = (TextView) view.findViewById(R.id.lblListItemHeader);
         lblListHeader.setTypeface(null, Typeface.BOLD);
         lblListHeader.setText(headerTitle);
-        switch (i%4) {
+        switch (i % 4) {
             case 0:
                 view.setBackgroundColor(view.getResources().getColor(R.color.colorItemGroupColor1));
                 break;
@@ -65,7 +70,7 @@ public class ExpandableItemListAdapter extends ExpandableListAdapter {
 
         TextView lblListChild = (TextView) view.findViewById(R.id.lblListItem);
         lblListChild.setText(childText);
-        switch (i%4) {
+        switch (i % 4) {
             case 0:
                 view.setBackgroundColor(view.getResources().getColor(R.color.colorItemGroupColor1));
                 break;

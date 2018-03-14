@@ -19,6 +19,29 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical">
+
+                <ImageView
+                    android:id="@+id/listviewImage"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="5dp"
+                    android:src="@drawable/table_number_circle_no" />
+
+                <TextView
+                    android:id="@+id/tv_table_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="12"
+                    android:textColor="#FFFF"
+                    android:textSize="25dp" />
+            </android.support.constraint.ConstraintLayout>
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -42,11 +65,6 @@
                     android:text="Spagetti"
                     android:textSize="25dp" />
 
-                <ImageView
-                    android:src="@drawable/topline"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp" />
-
                 <TextView
                     android:id="@+id/tv_description"
                     android:layout_width="match_parent"
@@ -58,27 +76,7 @@
             </LinearLayout>
 
 
-            <android.support.constraint.ConstraintLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
 
-                <ImageView
-                    android:id="@+id/listviewImage"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:paddingBottom="5dp"
-                    android:paddingTop="5dp"
-                    android:src="@drawable/table_number_circle_no" />
-
-                <TextView
-                    android:id="@+id/tv_table_id"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="12"
-                    android:textColor="#FFFF"
-                    android:textSize="25dp" />
-            </android.support.constraint.ConstraintLayout>
         </LinearLayout>
 
     </android.support.v7.widget.CardView>

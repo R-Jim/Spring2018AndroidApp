@@ -79,6 +79,7 @@ public class TableFragment extends Fragment {
 
                     CustomRVAdapter adapter = new CustomRVAdapter(requestList);
                     rv.setAdapter(adapter);
+                    System.out.println("Loaded list");
                     Log.d(this.getClass().getSimpleName(), "GET loaded from API");
                 }
             }

@@ -128,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void toDoneActivity(View view) {
-        Intent intent = new Intent(this, DoneOrderActivity.class);
+        Intent intent = new Intent(this, RequestOrderActivity.class);
         startActivity(intent);
     }
 }

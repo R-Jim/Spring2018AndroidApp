@@ -33,7 +33,7 @@
             android:name=".OrderEditor"
             android:label="@string/title_activity_order_editor"
             android:theme="@style/AppTheme"></activity>
-        <activity android:name=".DoneOrderActivity"></activity>
+        <activity android:name=".RequestOrderActivity"></activity>
     </application>
 
 </manifest>

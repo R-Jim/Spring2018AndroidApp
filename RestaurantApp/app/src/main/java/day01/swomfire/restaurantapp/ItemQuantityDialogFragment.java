@@ -35,7 +35,7 @@ public class ItemQuantityDialogFragment extends DialogFragment {
         // Use the Builder class for convenient dialog construction
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        View quantityDialog = inflater.inflate(R.layout.item_quantity_dialog_fragment, null);
+        View quantityDialog = inflater.inflate(R.layout.fragment_dialog_item_quan, null);
         Drawable background = linearLayout.getBackground();
         int color = 0;
         if (background instanceof ColorDrawable) {

@@ -79,20 +79,20 @@ public class ItemFragment extends Fragment {
         listDataHeader.add("Item7");
 
         List<String> list1 = new ArrayList<>();
-        list1.add("1");
+        list1.add("Pizza");
 
         List<String> list2 = new ArrayList<>();
-        list2.add("1");
-        list2.add("2");
+        list2.add("Bugger");
+        list2.add("Meat");
 
         List<String> list3 = new ArrayList<>();
-        list3.add("1");
-        list3.add("3");
-        list3.add("4");
+        list3.add("Coffee");
+        list3.add("cappuccino");
+        list3.add("latte");
 
         List<String> list4 = new ArrayList<>();
-        list4.add("2");
-        list4.add("24");
+        list4.add("Steak");
+        list4.add("Pork");
 
         listHashMap.put(listDataHeader.get(0), list1);
         listHashMap.put(listDataHeader.get(1), list2);

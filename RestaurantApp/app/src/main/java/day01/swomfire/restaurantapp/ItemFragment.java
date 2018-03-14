@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import Adapter.ExpandableItemListAdapter;
+import adapter.ExpandableItemListAdapter;
 
 public class ItemFragment extends Fragment {
 

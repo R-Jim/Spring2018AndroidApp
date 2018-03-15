@@ -19,21 +19,23 @@ import model.DishInItemList;
 public class ItemRequestRVAdapter extends RecyclerView.Adapter<ItemRequestRVAdapter.MyViewHolder> {
 
     private List<DishInItemList> dishInItemLists;
-    private static boolean switchRow = false;
+    private int listCode;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView itemRequestHeader, itemRequestQuantity;
+        private TextView itemRequestId, itemRequestHeader, itemRequestQuantity;
 
         public MyViewHolder(View itemView) {
             super(itemView);
+            itemRequestId = (TextView) itemView.findViewById(R.id.itemRequestId);
             itemRequestHeader = (TextView) itemView.findViewById(R.id.lblItemRequestRowHeader);
             itemRequestQuantity = (TextView) itemView.findViewById(R.id.lblItemRequestRowQuantity);
         }
     }
 
-    public ItemRequestRVAdapter(List<DishInItemList> dishInItemLists) {
+    public ItemRequestRVAdapter(List<DishInItemList> dishInItemLists,int listCode) {
         this.dishInItemLists = dishInItemLists;
+        this.listCode = listCode;
     }
 
     @NonNull
@@ -47,6 +49,7 @@ public class ItemRequestRVAdapter extends RecyclerView.Adapter<ItemRequestRVAdap
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         DishInItemList dishInItemList = dishInItemLists.get(position);
+        holder.itemRequestId.setText(String.valueOf(listCode+","+position));
         holder.itemRequestHeader.setText(dishInItemList.getDish().getName());
         holder.itemRequestQuantity.setText(String.valueOf(dishInItemList.getQuantity()));
     }

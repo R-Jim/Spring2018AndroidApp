@@ -33,6 +33,10 @@ public class ExpandableItemListAdapter extends BaseExpandableListAdapter {
     }
 
 
+    public static HashMap<String, List<DishInItemList>> getListHashMap() {
+        return listHashMap;
+    }
+
     @Override
     public int getGroupCount() {
         return listDataHeader.size();

@@ -134,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
         itemQuantityDialogFragment = new ItemQuantityDialogFragment();
         LinearLayout thisItemTab = findViewById(R.id.itemItem);
         itemQuantityDialogFragment.setUp(view, thisItemTab);
-        itemQuantityDialogFragment.show(fm, "fragment_dialog_item_quan");
+        itemQuantityDialogFragment.show(fm, "fragment_dialog_item_quantity");
     }
 
     public static void closeDialog() {

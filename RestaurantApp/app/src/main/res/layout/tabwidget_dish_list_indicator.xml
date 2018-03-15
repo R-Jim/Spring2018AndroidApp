@@ -9,23 +9,23 @@
         android:layout_width="match_parent"
         android:layout_height="3dp"
         android:visibility="invisible"
-        android:background="@color/colorActive" />
+        android:background="@color/colorTabActive" />
 
     <ImageView
         android:id="@+id/tab_icon"
         android:layout_width="wrap_content"
-        android:layout_height="35dp"
+        android:layout_height="@dimen/tab_height"
         android:padding="5dp"
         android:layout_gravity="center"
         android:src="@drawable/ic_tab_dish_24dp" />
 
-    <TextView
+<!--    <TextView
         android:id="@+id/tab_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Menu"
         android:layout_gravity="center"
         android:textSize="@dimen/item_tab_item_list_size"
-        android:layout_marginHorizontal="5dp"/>
+        android:layout_marginHorizontal="5dp"/>-->
 
 </LinearLayout>

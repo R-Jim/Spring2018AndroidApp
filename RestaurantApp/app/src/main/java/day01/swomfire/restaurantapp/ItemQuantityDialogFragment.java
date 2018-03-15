@@ -18,8 +18,8 @@ import model.DishInItemList;
 
 
 public class ItemQuantityDialogFragment extends DialogFragment {
-    private View view;
-    private LinearLayout linearLayout;
+    private static View view;
+    private static LinearLayout linearLayout;
     private TextView currentItemQuantityText;
     private TextView itemQuantityText;
     private TextView lblId;

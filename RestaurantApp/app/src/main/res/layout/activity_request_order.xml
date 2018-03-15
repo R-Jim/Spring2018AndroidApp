@@ -33,8 +33,8 @@
                 <android.support.constraint.ConstraintLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:onClick="chooseTable"
-                    android:layout_marginLeft="20dp">
+                    android:layout_marginLeft="20dp"
+                    android:onClick="chooseTable">
 
                     <ImageView
                         android:id="@+id/listviewImage"
@@ -69,7 +69,21 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/roboto_bold"
-                            android:text="10 Items" />
+                            android:text="New: 2 0 Items"
+                            android:textColor="@color/colorDoneOrderBackgroundNewRequest" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".5"
+                        android:gravity="center">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/roboto_bold"
+                            android:text="Current: 2 Items" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -85,13 +99,33 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/newDishRequest"
                 android:layout_width="match_parent"
-
-                android:layout_height="800dp"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:background="@color/colorDoneOrderItemListBackground"
-                android:text="Item list here">
+                android:fontFamily="@font/roboto_bold"
+                android:text="Capuchino\nPizza x1"
+                android:textColor="@color/colorDoneOrderBackgroundNewRequest">
+
+            </TextView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:layout_margin="5dp"
+                android:background="@color/colorDoneOrderBackgroundLineBreaker"></LinearLayout>
+
+            <TextView
+                android:id="@+id/oldDishRequest"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/colorDoneOrderItemListBackground"
+                android:fontFamily="@font/roboto_bold"
+                android:text="Bugger\nCoffee x1">
 
             </TextView>
         </LinearLayout>
@@ -118,18 +152,18 @@
                 android:layout_height="match_parent"
                 android:layout_weight=".2"
                 android:background="@android:color/transparent"
-                android:textColor="@color/colorDoneOrderBackgroundCancel"
                 android:fontFamily="@font/roboto_bold"
-                android:text="CANCEL Request" />
+                android:text="CANCEL Request"
+                android:textColor="@color/colorDoneOrderBackgroundCancel" />
 
             <Button
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:textColor="@color/colorDoneOrderBackgroundConfirm"
                 android:layout_weight=".2"
                 android:background="@android:color/transparent"
                 android:fontFamily="@font/roboto_bold"
-                android:text="Confirm" />
+                android:text="Confirm"
+                android:textColor="@color/colorDoneOrderBackgroundConfirm" />
 
 
         </LinearLayout>

@@ -152,5 +152,15 @@ public class MainActivity extends AppCompatActivity {
 
         CheckBox thisBox = (CheckBox) view.findViewById(R.id.itemCheckbox);
         dishInItemList.setSelected(thisBox.isChecked());
+        TextView lblNumberOfDishRequested = findViewById(R.id.lblNumberOfDishRequested);
+        String quantityStr = String.valueOf(lblNumberOfDishRequested.getText());
+        int quantity = Integer.parseInt(quantityStr);
+        if (dishInItemList.isSelected()) {
+            quantity += dishInItemList.getQuantity();
+        } else {
+            quantity -= dishInItemList.getQuantity();
+        }
+        lblNumberOfDishRequested.setText(String.valueOf(quantity));
     }
+
 }

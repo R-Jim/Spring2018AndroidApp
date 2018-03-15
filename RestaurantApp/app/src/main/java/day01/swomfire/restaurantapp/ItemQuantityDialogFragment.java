@@ -20,6 +20,7 @@ import model.DishInItemList;
 public class ItemQuantityDialogFragment extends DialogFragment {
     private static View view;
     private static LinearLayout linearLayout;
+    private int quantityOld;
     private TextView currentItemQuantityText;
     private TextView itemQuantityText;
     private TextView lblId;
@@ -46,6 +47,7 @@ public class ItemQuantityDialogFragment extends DialogFragment {
 
         // Get current item quantity
         currentItemQuantityText = view.findViewById(R.id.lblItemItemQuantity);
+        quantityOld = Integer.parseInt(String.valueOf(currentItemQuantityText.getText()));
 
         View parent1 = (View) view.getParent();
         View parent2 = (View) parent1.getParent();
@@ -62,7 +64,16 @@ public class ItemQuantityDialogFragment extends DialogFragment {
             public void onClick(View view) {
                 currentItemQuantityText.setText(itemQuantityText.getText());
                 DishInItemList dishInItemList = ExpandableItemListAdapter.findDish(String.valueOf(lblId.getText()));
-                dishInItemList.setQuantity(Integer.valueOf(String.valueOf(itemQuantityText.getText())));
+                int quantityNew = Integer.valueOf(String.valueOf(itemQuantityText.getText()));
+                dishInItemList.setQuantity(quantityNew);
+
+                if (dishInItemList.isSelected()) {
+                    TextView lblNumberOfDishRequested = getActivity().findViewById(R.id.lblNumberOfDishRequested);
+                    String quantityStr = String.valueOf(lblNumberOfDishRequested.getText());
+                    int quantity = Integer.parseInt(quantityStr);
+                    quantity += (quantityNew - quantityOld);
+                    lblNumberOfDishRequested.setText(String.valueOf(quantity));
+                }
                 MainActivity.closeDialog();
             }
         });

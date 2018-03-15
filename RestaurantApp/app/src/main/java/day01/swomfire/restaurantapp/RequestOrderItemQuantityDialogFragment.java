@@ -1,5 +1,6 @@
 package day01.swomfire.restaurantapp;
 
+
 import android.app.Dialog;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -17,17 +18,15 @@ import adapter.ExpandableItemListAdapter;
 import model.DishInItemList;
 
 
-public class ItemQuantityDialogFragment extends DialogFragment {
+public class RequestOrderItemQuantityDialogFragment extends DialogFragment {
     private static View view;
-    private static LinearLayout linearLayout;
     private int quantityOld;
     private TextView currentItemQuantityText;
     private TextView itemQuantityText;
     private TextView lblId;
 
-    public void setUp(View view, LinearLayout linearLayout) {
+    public void setUp(View view) {
         this.view = view;
-        this.linearLayout = linearLayout;
     }
 
     @NonNull
@@ -36,22 +35,16 @@ public class ItemQuantityDialogFragment extends DialogFragment {
         // Use the Builder class for convenient dialog construction
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        View quantityDialog = inflater.inflate(R.layout.fragment_dialog_item_quantity, null);
-        Drawable background = linearLayout.getBackground();
-        int color = 0;
-        if (background instanceof ColorDrawable) {
-            color = ((ColorDrawable) background).getColor();
-        }
-        quantityDialog.setBackgroundColor(color);
+        View quantityDialog = inflater.inflate(R.layout.fragment_dialog_item_request_quantity, null);
         builder.setView(quantityDialog);
 
         // Get current item quantity
-        currentItemQuantityText = view.findViewById(R.id.lblItemItemQuantity);
+        currentItemQuantityText = view.findViewById(R.id.lblItemRequestRowQuantity);
         quantityOld = Integer.parseInt(String.valueOf(currentItemQuantityText.getText()));
 
         View parent1 = (View) view.getParent();
         View parent2 = (View) parent1.getParent();
-        lblId = parent2.findViewById(R.id.lblListItemId);
+        lblId = parent2.findViewById(R.id.itemRequestId);
 
         // Set Quantity for dialog
         itemQuantityText = quantityDialog.findViewById(R.id.itemItemQuantityDialogQuantity);
@@ -63,18 +56,18 @@ public class ItemQuantityDialogFragment extends DialogFragment {
             @Override
             public void onClick(View view) {
                 currentItemQuantityText.setText(itemQuantityText.getText());
-                DishInItemList dishInItemList = ExpandableItemListAdapter.findDish(String.valueOf(lblId.getText()));
+                String[] listCodeAndPosition = String.valueOf(lblId.getText()).split(",");
+                DishInItemList dishInItemList = RequestOrderActivity.getDishInRequestItemList(Integer.parseInt(listCodeAndPosition[0])
+                        , Integer.parseInt(listCodeAndPosition[1]));
                 int quantityNew = Integer.valueOf(String.valueOf(itemQuantityText.getText()));
-                dishInItemList.setQuantity(quantityNew);
-
-                if (dishInItemList.isSelected()) {
-                    TextView lblNumberOfDishRequested = getActivity().findViewById(R.id.lblNumberOfDishRequested);
-                    String quantityStr = String.valueOf(lblNumberOfDishRequested.getText());
-                    int quantity = Integer.parseInt(quantityStr);
-                    quantity += (quantityNew - quantityOld);
-                    lblNumberOfDishRequested.setText(String.valueOf(quantity));
+                if (quantityNew == 0) {
+                    dishInItemList.setQuantity(1);
+                    dishInItemList.setSelected(false);
+                } else {
+                    dishInItemList.setQuantity(quantityNew);
                 }
-                MainActivity.closeDialog();
+                RequestOrderActivity.closeDialog(getActivity());
+
             }
         });
         // Add button edit
@@ -95,7 +88,7 @@ public class ItemQuantityDialogFragment extends DialogFragment {
             @Override
             public void onClick(View view) {
                 int quantity = Integer.parseInt(String.valueOf(itemQuantityText.getText()));
-                if (--quantity >= 1) {
+                if (--quantity >= 0) {
                     itemQuantityText.setText(String.valueOf(quantity));
                 }
             }

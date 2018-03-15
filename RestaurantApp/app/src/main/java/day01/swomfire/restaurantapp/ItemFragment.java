@@ -12,6 +12,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import adapter.ExpandableItemListAdapter;
 import model.Dish;
@@ -37,7 +38,6 @@ public class ItemFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         listView = (ExpandableListView) view.findViewById(R.id.itemExpandableList);
-        System.out.println(listView.hashCode());
         //Only allow 1 expanded group
         listView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
             int prevGrp = -1;
@@ -50,7 +50,20 @@ public class ItemFragment extends Fragment {
                 }
             }
         });
-        initData();
+        if (listHashMap == null) {
+            initData();
+        } else {
+            int quantity = 0;
+            for (Map.Entry<String, List<DishInItemList>> entry : listHashMap.entrySet()) {
+                for (DishInItemList dishInItemList : entry.getValue()) {
+                    if (dishInItemList.isSelected()) {
+                        quantity += dishInItemList.getQuantity();
+                    }
+                }
+            }
+            TextView lblQuantity = view.findViewById(R.id.lblNumberOfDishRequested);
+            lblQuantity.setText(String.valueOf(quantity));
+        }
         listAdapter = new ExpandableItemListAdapter(getActivity(), listDataHeader, listHashMap);
         listView.setAdapter(listAdapter);
 

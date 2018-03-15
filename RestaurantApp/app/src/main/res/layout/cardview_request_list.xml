@@ -13,6 +13,7 @@
         app:contentPaddingBottom="0dp"
         app:cardPreventCornerOverlap="true"
         app:cardUseCompatPadding="true"
+        android:onClick="onRequestCardClick"
         android:id="@+id/cv_request_item">
 
         <LinearLayout

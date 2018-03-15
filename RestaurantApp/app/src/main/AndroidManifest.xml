@@ -34,7 +34,11 @@
             android:label="@string/title_activity_order_editor"
             android:theme="@style/AppTheme" />
         <activity android:name=".RequestOrderActivity" />
-        <activity android:name=".OrderDetailActivity"></activity>
+        <activity android:name=".OrderDetailActivity"
+            android:parentActivityName=".MainActivity">
+            <meta-data android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity"></meta-data>
+        </activity>
     </application>
 
 </manifest>

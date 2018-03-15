@@ -6,4 +6,6 @@
     <string name="search_title">Search</string>
     <string name="search_hint">Search tables and dishes</string>
     <string name="title_activity_order_editor">OrderEditor</string>
+    <string name="ordered_tab_title">ORDERED</string>
+    <string name="ordering_tab_title">WAITING</string>
 </resources>

@@ -163,4 +163,8 @@ public class MainActivity extends AppCompatActivity {
         lblNumberOfDishRequested.setText(String.valueOf(quantity));
     }
 
+    public void onRequestCardClick(View view) {
+        Intent intent = new Intent(this, OrderDetailActivity.class);
+        startActivity(intent);
+    }
 }

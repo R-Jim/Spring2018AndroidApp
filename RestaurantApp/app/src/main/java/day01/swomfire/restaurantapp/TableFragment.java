@@ -14,11 +14,11 @@ import java.util.List;
 
 import adapter.CustomRVAdapter;
 import data.model.OrderRequest;
-import data.remote.APIService;
+import data.remote.RmaAPIService;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import utils.APIUtils;
+import utils.RmaAPIUtils;
 
 
 public class TableFragment extends Fragment {
@@ -27,7 +27,7 @@ public class TableFragment extends Fragment {
     private android.widget.ExpandableListAdapter listAdapter;
     private List<OrderRequest> requestList;
 
-    private APIService mService;
+    private RmaAPIService mService;
 
 
     @Override
@@ -41,7 +41,7 @@ public class TableFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mService = APIUtils.getAPIService();
+        mService = RmaAPIUtils.getAPIService();
 
         rv = getView().findViewById(R.id.rv_request_list);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());

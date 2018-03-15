@@ -5,28 +5,74 @@ import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseExpandableListAdapter;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import day01.swomfire.restaurantapp.R;
+import model.DishInItemList;
 
 /**
  * Created by Swomfire on 08-Mar-18.
  */
 
-public class ExpandableItemListAdapter extends ExpandableListAdapter {
+public class ExpandableItemListAdapter extends BaseExpandableListAdapter {
     private Context context;
-    private List<String> listDataHeader;
-    private HashMap<String, List<String>> listHashMap;
+    private static List<String> listDataHeader;
+    private static HashMap<String, List<DishInItemList>> listHashMap;
     private int lastExpandedGroup;
 
-    public ExpandableItemListAdapter(Context context, List<String> listDataHeader, HashMap<String, List<String>> listHashMap) {
-        super(context, listDataHeader, listHashMap);
+    public ExpandableItemListAdapter(Context context, List<String> listDataHeader, HashMap<String, List<DishInItemList>> listHashMap) {
         this.context = context;
         this.listDataHeader = listDataHeader;
         this.listHashMap = listHashMap;
+    }
+
+
+    @Override
+    public int getGroupCount() {
+        return listDataHeader.size();
+    }
+
+    @Override
+    public int getChildrenCount(int groupPosition) {
+        return listHashMap.get(listDataHeader.get(groupPosition)).size();
+    }
+
+    @Override
+    public Object getGroup(int i) {
+        return listDataHeader.get(i);
+    }
+
+    @Override
+    public Object getChild(int i, int i1) {
+        return listHashMap.get(listDataHeader.get(i)).get(i1); // i = Group Item, i1 = Child Item
+    }
+
+    public static DishInItemList findDish(String id) {
+        String[] strings = id.split(",");
+        int i = Integer.parseInt(strings[0]);
+        int i1 = Integer.parseInt(strings[1]);
+        return listHashMap.get(listDataHeader.get(i)).get(i1);
+    }
+
+    @Override
+    public long getGroupId(int i) {
+        return i;
+    }
+
+    @Override
+    public long getChildId(int i, int i1) {
+        return i1;
+    }
+
+    @Override
+    public boolean hasStableIds() {
+        return false;
     }
 
     @Override
@@ -62,14 +108,24 @@ public class ExpandableItemListAdapter extends ExpandableListAdapter {
 
     @Override
     public View getChildView(int i, int i1, boolean b, View view, ViewGroup viewGroup) {
-        final String childText = (String) getChild(i, i1);
+        DishInItemList dish = (DishInItemList) getChild(i, i1);
         if (view == null) {
             LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = layoutInflater.inflate(R.layout.item_tab_list_item, null);
         }
 
-        TextView lblListChild = (TextView) view.findViewById(R.id.lblListItem);
-        lblListChild.setText(childText);
+        //Set information form child to view
+        TextView lblId = (TextView) view.findViewById(R.id.lblListItemId);
+        lblId.setText(i + "," + i1);
+
+        TextView lblName = (TextView) view.findViewById(R.id.lblListItem);
+        lblName.setText(dish.getDish().getName());
+        CheckBox checkBox = (CheckBox) view.findViewById(R.id.itemCheckbox);
+        checkBox.setChecked(dish.isSelected());
+
+        TextView lblQuantity = (TextView) view.findViewById(R.id.lblItemItemQuantity);
+        lblQuantity.setText(String.valueOf(dish.getQuantity()));
+
         switch (i % 4) {
             case 0:
                 view.setBackgroundColor(view.getResources().getColor(R.color.colorItemGroupColor1));
@@ -89,6 +145,6 @@ public class ExpandableItemListAdapter extends ExpandableListAdapter {
 
     @Override
     public boolean isChildSelectable(int i, int i1) {
-        return super.isChildSelectable(i, i1);
+        return true;
     }
 }

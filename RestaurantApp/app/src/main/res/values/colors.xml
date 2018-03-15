@@ -1,22 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimary">#423354</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorTabBackground">#e0e0eb</color>
+    <color name="colorTabActive">#FFD54F</color>
+    <color name="colorTabInactive">#ffffff</color>
     <color name="colorTabSelectedBackground">#3F51B5</color>
     <color name="colorActive">#3399ff</color>
     <color name="colorInactive">#bcbcbc</color>
 
-    <color name="colorItemGroupColor1">#64B5F6</color>
-    <color name="colorItemGroupColor2">#6477f6</color>
-    <color name="colorItemGroupColor3">#5c4fe7</color>
-    <color name="colorItemGroupColor4">#6d2dd4</color>
+    <color name="colorItemGroupColor1">#41c9c5</color>
+    <color name="colorItemGroupColor2">#4fa2d1</color>
+    <color name="colorItemGroupColor3">#4875a9</color>
+    <color name="colorItemGroupColor4">#5b5389</color>
+
 
     <color name="colorDoneOrderBackground">#ffffff</color>
     <color name="colorDoneOrderItemListBackground">#ffffff</color>
     <color name="colorDoneOrderBackgroundConfirm">#00e676</color>
     <color name="colorDoneOrderBackgroundCancel">#FF3D00</color>
+    <color name="colorDoneOrderBackgroundNewRequest">#303F9F</color>
+    <color name="colorDoneOrderBackgroundLineBreaker">#63605f</color>
 
 
     <color name="colorItemTabBackground">#7b45f9</color>

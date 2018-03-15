@@ -51,8 +51,8 @@ public class TabHostServiceImpl implements TabHostService {
         for (int i = 0; i < tabHost.getTabWidget().getChildCount(); i++) {
             View ivTopBar = tabHost.getTabWidget().getChildAt(i).findViewById(R.id.vTopBar);
             ivTopBar.setVisibility(View.INVISIBLE);
-            TextView tabTitle = tabHost.getTabWidget().getChildAt(i).findViewById(R.id.tab_title);
-            tabTitle.setTextColor(ContextCompat.getColor(tabHost.getContext(), R.color.colorInactive));
+/*            TextView tabTitle = tabHost.getTabWidget().getChildAt(i).findViewById(R.id.tab_title);
+            tabTitle.setTextColor(ContextCompat.getColor(tabHost.getContext(), R.color.colorTabInactive));*/
 
         }
 
@@ -97,8 +97,8 @@ public class TabHostServiceImpl implements TabHostService {
 
     @Override
     public void tabChooseIndicator(FragmentTabHost tabHost, String switchCase) {
-        TextView tabTitle = tabHost.getTabWidget().getChildAt(tabHost.getCurrentTab()).findViewById(R.id.tab_title);
-        tabTitle.setTextColor(ContextCompat.getColor(tabHost.getContext(), R.color.colorActive));
+/*        TextView tabTitle = tabHost.getTabWidget().getChildAt(tabHost.getCurrentTab()).findViewById(R.id.tab_title);
+        tabTitle.setTextColor(ContextCompat.getColor(tabHost.getContext(), R.color.colorTabActive));*/
         View ivTopBar = tabHost.getTabWidget().getChildAt(tabHost.getCurrentTab()).findViewById(R.id.vTopBar);
         ivTopBar.setVisibility(View.VISIBLE);
 

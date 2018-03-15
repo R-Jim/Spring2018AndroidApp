@@ -12,13 +12,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
+import adapter.ExpandableItemListAdapter;
+import model.DishInItemList;
 
 public class ItemQuantityDialogFragment extends DialogFragment {
-    private View view;
-    private LinearLayout linearLayout;
+    private static View view;
+    private static LinearLayout linearLayout;
+    private int quantityOld;
     private TextView currentItemQuantityText;
     private TextView itemQuantityText;
+    private TextView lblId;
 
     public void setUp(View view, LinearLayout linearLayout) {
         this.view = view;
@@ -42,6 +45,11 @@ public class ItemQuantityDialogFragment extends DialogFragment {
 
         // Get current item quantity
         currentItemQuantityText = view.findViewById(R.id.lblItemItemQuantity);
+        quantityOld = Integer.parseInt(String.valueOf(currentItemQuantityText.getText()));
+
+        View parent1 = (View) view.getParent();
+        View parent2 = (View) parent1.getParent();
+        lblId = parent2.findViewById(R.id.lblListItemId);
 
         // Set Quantity for dialog
         itemQuantityText = quantityDialog.findViewById(R.id.itemItemQuantityDialogQuantity);
@@ -53,6 +61,17 @@ public class ItemQuantityDialogFragment extends DialogFragment {
             @Override
             public void onClick(View view) {
                 currentItemQuantityText.setText(itemQuantityText.getText());
+                DishInItemList dishInItemList = ExpandableItemListAdapter.findDish(String.valueOf(lblId.getText()));
+                int quantityNew = Integer.valueOf(String.valueOf(itemQuantityText.getText()));
+                dishInItemList.setQuantity(quantityNew);
+
+                if (dishInItemList.isSelected()) {
+                    TextView lblNumberOfDishRequested = getActivity().findViewById(R.id.lblNumberOfDishRequested);
+                    String quantityStr = String.valueOf(lblNumberOfDishRequested.getText());
+                    int quantity = Integer.parseInt(quantityStr);
+                    quantity += (quantityNew - quantityOld);
+                    lblNumberOfDishRequested.setText(String.valueOf(quantity));
+                }
                 MainActivity.closeDialog();
             }
         });

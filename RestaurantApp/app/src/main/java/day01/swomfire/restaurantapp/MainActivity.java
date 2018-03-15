@@ -3,9 +3,11 @@ package day01.swomfire.restaurantapp;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTabHost;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -141,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void toDoneActivity(View view) {
         Intent intent = new Intent(this, RequestOrderActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, 2);
     }
 
     public void selectItemToRequest(View view) {
@@ -163,4 +165,24 @@ public class MainActivity extends AppCompatActivity {
         lblNumberOfDishRequested.setText(String.valueOf(quantity));
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        // check if the request code is same as what is passed  here it is 2
+        if (requestCode == 2) {
+            if (resultCode == 5) {
+                String message = data.getStringExtra("restartItemFragment");
+                if (message != null) {
+                    if (tabHost.getCurrentTabTag().equals("DISH_LIST_TAB")) {
+                        Fragment frg = null;
+                        frg = getSupportFragmentManager().findFragmentByTag("DISH_LIST_TAB");
+                        final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                        ft.detach(frg);
+                        ft.attach(frg);
+                        ft.commit();
+                    }
+                }
+            }
+        }
+    }
 }

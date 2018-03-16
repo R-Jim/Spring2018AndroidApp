@@ -3,30 +3,37 @@ package day01.swomfire.restaurantapp;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTabHost;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.CheckBox;
 import android.widget.ExpandableListView;
 import android.support.v7.widget.PopupMenu;
 import android.view.MenuInflater;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TabHost;
+import android.widget.TextView;
+
 import android.widget.TabWidget;
 
+
+import adapter.ExpandableItemListAdapter;
+import model.DishInItemList;
 import service.TabHostService;
 import service.TabHostServiceImpl;
 
 public class MainActivity extends AppCompatActivity {
     private FragmentTabHost tabHost;
-//    private ExpandableListView listView;
+    //    private ExpandableListView listView;
     private RecyclerView rvReqList;
     private ExpandableListView listView;
     private TabWidget tabWidget;
@@ -127,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
         itemQuantityDialogFragment = new ItemQuantityDialogFragment();
         LinearLayout thisItemTab = findViewById(R.id.itemItem);
         itemQuantityDialogFragment.setUp(view, thisItemTab);
-        itemQuantityDialogFragment.show(fm, "fragment_dialog_item_quan");
+        itemQuantityDialogFragment.show(fm, "fragment_dialog_item_quantity");
     }
 
     public static void closeDialog() {
@@ -136,6 +143,46 @@ public class MainActivity extends AppCompatActivity {
 
     public void toDoneActivity(View view) {
         Intent intent = new Intent(this, RequestOrderActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, 2);
+    }
+
+    public void selectItemToRequest(View view) {
+        View view1 = (View) view.getParent();
+        View view2 = (View) view1.getParent();
+        TextView lblId = (TextView) view2.findViewById(R.id.lblListItemId);
+        DishInItemList dishInItemList = ExpandableItemListAdapter.findDish(String.valueOf(lblId.getText()));
+
+        CheckBox thisBox = (CheckBox) view.findViewById(R.id.itemCheckbox);
+        dishInItemList.setSelected(thisBox.isChecked());
+        TextView lblNumberOfDishRequested = findViewById(R.id.lblNumberOfDishRequested);
+        String quantityStr = String.valueOf(lblNumberOfDishRequested.getText());
+        int quantity = Integer.parseInt(quantityStr);
+        if (dishInItemList.isSelected()) {
+            quantity += dishInItemList.getQuantity();
+        } else {
+            quantity -= dishInItemList.getQuantity();
+        }
+        lblNumberOfDishRequested.setText(String.valueOf(quantity));
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        // check if the request code is same as what is passed  here it is 2
+        if (requestCode == 2) {
+            if (resultCode == 5) {
+                String message = data.getStringExtra("restartItemFragment");
+                if (message != null) {
+                    if (tabHost.getCurrentTabTag().equals("DISH_LIST_TAB")) {
+                        Fragment frg = null;
+                        frg = getSupportFragmentManager().findFragmentByTag("DISH_LIST_TAB");
+                        final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                        ft.detach(frg);
+                        ft.attach(frg);
+                        ft.commit();
+                    }
+                }
+            }
+        }
     }
 }

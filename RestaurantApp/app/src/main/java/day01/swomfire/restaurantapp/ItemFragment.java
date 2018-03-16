@@ -7,21 +7,25 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import adapter.ExpandableItemListAdapter;
+import model.Dish;
+import model.DishInItemList;
 
 
 public class ItemFragment extends Fragment {
 
 
     private ExpandableListView listView;
-    private android.widget.ExpandableListAdapter listAdapter;
+    private ExpandableItemListAdapter listAdapter;
     private List<String> listDataHeader;
-    private HashMap<String, List<String>> listHashMap;
+    private static HashMap<String, List<DishInItemList>> listHashMap;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -34,10 +38,10 @@ public class ItemFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         listView = (ExpandableListView) view.findViewById(R.id.itemExpandableList);
-        System.out.println(listView.hashCode());
         //Only allow 1 expanded group
         listView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
             int prevGrp = -1;
+
             @Override
             public void onGroupExpand(int i) {
                 if (i != prevGrp) {
@@ -46,7 +50,20 @@ public class ItemFragment extends Fragment {
                 }
             }
         });
-        initData();
+        if (listHashMap == null) {
+            initData();
+        } else {
+            int quantity = 0;
+            for (Map.Entry<String, List<DishInItemList>> entry : listHashMap.entrySet()) {
+                for (DishInItemList dishInItemList : entry.getValue()) {
+                    if (dishInItemList.isSelected()) {
+                        quantity += dishInItemList.getQuantity();
+                    }
+                }
+            }
+            TextView lblQuantity = view.findViewById(R.id.lblNumberOfDishRequested);
+            lblQuantity.setText(String.valueOf(quantity));
+        }
         listAdapter = new ExpandableItemListAdapter(getActivity(), listDataHeader, listHashMap);
         listView.setAdapter(listAdapter);
 
@@ -75,34 +92,41 @@ public class ItemFragment extends Fragment {
         listDataHeader.add("Item2");
         listDataHeader.add("Item3");
         listDataHeader.add("Item4");
-        listDataHeader.add("Item5");
-        listDataHeader.add("Item6");
-        listDataHeader.add("Item7");
 
-        List<String> list1 = new ArrayList<>();
-        list1.add("Pizza");
+        List<DishInItemList> list1 = new ArrayList<>();
 
-        List<String> list2 = new ArrayList<>();
-        list2.add("Bugger");
-        list2.add("Meat");
+        list1.add(createDish("Pizza"));
 
-        List<String> list3 = new ArrayList<>();
-        list3.add("Coffee");
-        list3.add("cappuccino");
-        list3.add("latte");
+        List<DishInItemList> list2 = new ArrayList<>();
 
-        List<String> list4 = new ArrayList<>();
-        list4.add("Steak");
-        list4.add("Pork");
+
+        list2.add(createDish("Bugger"));
+        list2.add(createDish("Meat"));
+
+        List<DishInItemList> list3 = new ArrayList<>();
+        list3.add(createDish("Coffee"));
+        list3.add(createDish("cappuccino"));
+        list3.add(createDish("latte"));
+
+        List<DishInItemList> list4 = new ArrayList<>();
+        list4.add(createDish("Steak"));
+        list4.add(createDish("Pork"));
 
         listHashMap.put(listDataHeader.get(0), list1);
         listHashMap.put(listDataHeader.get(1), list2);
         listHashMap.put(listDataHeader.get(2), list3);
         listHashMap.put(listDataHeader.get(3), list4);
-        listHashMap.put(listDataHeader.get(4), list4);
-        listHashMap.put(listDataHeader.get(5), list4);
-        listHashMap.put(listDataHeader.get(6), list4);
+
     }
 
+    private DishInItemList createDish(String name) {
+        Dish dish = new Dish();
+        dish.setName(name);
+        return new DishInItemList(dish, 1, false);
+    }
+
+    public static HashMap<String, List<DishInItemList>> getListHashMap() {
+        return listHashMap;
+    }
 
 }

@@ -33,4 +33,12 @@ public class Dish {
     public void setQuality(int quality) {
         this.quality = quality;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }

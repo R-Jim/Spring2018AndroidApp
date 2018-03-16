@@ -18,6 +18,7 @@ import java.util.Map;
 
 import adapter.ItemRequestRVAdapter;
 import model.DishInItemList;
+import utils.APIUtils;
 
 public class RequestOrderActivity extends AppCompatActivity {
 
@@ -44,6 +45,10 @@ public class RequestOrderActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_request_order);
+
+        APIUtils.setGradientBackground(findViewById(android.R.id.content), R.id.requestOrderLayout,
+                new int[]{getColor(R.color.colorDoneOrderBackground1),
+                        getColor(R.color.colorDoneOrderBackground2)});
 
         initRecycleListView(this);
     }
@@ -101,6 +106,8 @@ public class RequestOrderActivity extends AppCompatActivity {
         requestOrderItemQuantityDialogFragment = new RequestOrderItemQuantityDialogFragment();
         requestOrderItemQuantityDialogFragment.setUp(view);
         requestOrderItemQuantityDialogFragment.show(fm, "fragment_dialog_item_request_quantity");
+
+
     }
 
     public static DishInItemList getDishInRequestItemList(int position) {

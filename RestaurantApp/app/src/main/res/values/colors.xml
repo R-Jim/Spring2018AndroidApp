@@ -16,15 +16,19 @@
     <color name="colorItemGroupColor4">#5b5389</color>
 
 
-    <color name="colorDoneOrderBackground">#ffffff</color>
+    <color name="colorDoneOrderBackground1">#423354</color>
+    <color name="colorDoneOrderBackground2">#261e32</color>
+
+
     <color name="colorDoneOrderItemListBackground">#ffffff</color>
     <color name="colorDoneOrderBackgroundConfirm">#00e676</color>
     <color name="colorDoneOrderBackgroundCancel">#FF3D00</color>
-    <color name="colorDoneOrderBackgroundNewRequest">#303F9F</color>
-    <color name="colorDoneOrderBackgroundLineBreaker">#63605f</color>
+    <color name="colorDoneOrderBackgroundNewRequest">#FFD54F</color>
+    <color name="colorDoneOrderBackgroundLineBreaker">#ffffff</color>
 
 
     <color name="colorItemTabBackground">#7b45f9</color>
     <color name="colorItemGroupTextColor">#fcfcfc</color>
+
 
 </resources>

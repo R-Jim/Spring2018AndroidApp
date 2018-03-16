@@ -19,7 +19,6 @@ import model.DishInItemList;
 public class ItemRequestRVAdapter extends RecyclerView.Adapter<ItemRequestRVAdapter.MyViewHolder> {
 
     private List<DishInItemList> dishInItemLists;
-    private int listCode;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
@@ -33,9 +32,8 @@ public class ItemRequestRVAdapter extends RecyclerView.Adapter<ItemRequestRVAdap
         }
     }
 
-    public ItemRequestRVAdapter(List<DishInItemList> dishInItemLists,int listCode) {
+    public ItemRequestRVAdapter(List<DishInItemList> dishInItemLists) {
         this.dishInItemLists = dishInItemLists;
-        this.listCode = listCode;
     }
 
     @NonNull
@@ -49,7 +47,7 @@ public class ItemRequestRVAdapter extends RecyclerView.Adapter<ItemRequestRVAdap
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         DishInItemList dishInItemList = dishInItemLists.get(position);
-        holder.itemRequestId.setText(String.valueOf(listCode+","+position));
+        holder.itemRequestId.setText(String.valueOf(position));
         holder.itemRequestHeader.setText(dishInItemList.getDish().getName());
         holder.itemRequestQuantity.setText(String.valueOf(dishInItemList.getQuantity()));
     }

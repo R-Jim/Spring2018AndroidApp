@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/roboto_bold"
         android:text="Change Quantity"
-        android:textColor="@color/colorItemGroupTextColor"
+        android:textColor="@color/colorDoneOrderBackgroundNewRequest"
         android:textSize="18dp" />
 
     <LinearLayout
@@ -32,7 +32,7 @@
                 android:background="@android:color/transparent"
                 android:fontFamily="@font/roboto_bold"
                 android:text="-"
-                android:textColor="@color/colorItemGroupTextColor"
+                android:textColor="@color/colorDoneOrderBackgroundNewRequest"
                 android:textSize="24dp" />
 
             <TextView
@@ -41,7 +41,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_bold"
                 android:text="0"
-                android:textColor="@color/colorItemGroupTextColor" />
+                android:textColor="@color/colorDoneOrderBackgroundNewRequest" />
 
             <Button
                 android:id="@+id/btnItemItemQuantityDialogAdd"
@@ -50,7 +50,7 @@
                 android:background="@android:color/transparent"
                 android:fontFamily="@font/roboto_bold"
                 android:text="+"
-                android:textColor="@color/colorItemGroupTextColor"
+                android:textColor="@color/colorDoneOrderBackgroundNewRequest"
                 android:textSize="24dp" />
         </LinearLayout>
 
@@ -68,7 +68,7 @@
                 android:background="@android:color/transparent"
                 android:fontFamily="@font/roboto_bold"
                 android:text="Change"
-                android:textColor="@color/colorItemGroupTextColor" />
+                android:textColor="@color/colorDoneOrderBackgroundNewRequest" />
         </LinearLayout>
 
     </LinearLayout>

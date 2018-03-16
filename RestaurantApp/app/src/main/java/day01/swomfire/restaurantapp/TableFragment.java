@@ -24,7 +24,6 @@ import utils.APIUtils;
 public class TableFragment extends Fragment {
 
     private RecyclerView rv;
-    private android.widget.ExpandableListAdapter listAdapter;
     private List<OrderRequest> requestList;
 
     private APIService mService;
@@ -49,19 +48,6 @@ public class TableFragment extends Fragment {
 
         loadRequestList();
 
-        //Only allow 1 expanded group
-//        listView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
-//            int prevGrp = -1;
-//            @Override
-//            public void onGroupExpand(int i) {
-//                if (i != prevGrp) {
-//                    listView.collapseGroup(prevGrp);
-//                    prevGrp = i;
-//                }
-//            }
-//        });
-//        initData();
-
 
     }
 
@@ -85,34 +71,4 @@ public class TableFragment extends Fragment {
             }
         });
     }
-
-//    private void initData() {
-//
-//
-//        listDataHeader.add("ABC");
-//        listDataHeader.add("ADC");
-//        listDataHeader.add("ASwC");
-//        listDataHeader.add("Asadsa");
-//
-//        List<String> list1 = new ArrayList<>();
-//        list1.add("1");
-//
-//        List<String> list2 = new ArrayList<>();
-//        list2.add("1");
-//        list2.add("2");
-//
-//        List<String> list3 = new ArrayList<>();
-//        list3.add("1");
-//        list3.add("3");
-//        list3.add("4");
-//
-//        List<String> list4 = new ArrayList<>();
-//        list4.add("2");
-//        list4.add("24");
-//
-//        listHashMap.put(listDataHeader.get(0), list1);
-//        listHashMap.put(listDataHeader.get(1), list2);
-//        listHashMap.put(listDataHeader.get(2), list3);
-//        listHashMap.put(listDataHeader.get(3), list4);
-//    }
 }

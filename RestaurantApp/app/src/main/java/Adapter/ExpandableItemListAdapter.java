@@ -15,6 +15,7 @@ import java.util.Map;
 
 import day01.swomfire.restaurantapp.R;
 import model.DishInItemList;
+import utils.StyleUtils;
 
 /**
  * Created by Swomfire on 08-Mar-18.
@@ -95,16 +96,20 @@ public class ExpandableItemListAdapter extends BaseExpandableListAdapter {
         lblListHeader.setText(headerTitle);
         switch (i % 4) {
             case 0:
-                view.setBackgroundColor(view.getResources().getColor(R.color.colorItemGroupColor1));
+                StyleUtils.setGradientBackground(view, new int[]{view.getResources().getColor(R.color.colorItemGroupColor1),
+                        view.getResources().getColor(R.color.colorItemGroupColor1_5)}, StyleUtils.GradientMode.LEFT_RIGHT.getMode());
                 break;
             case 1:
-                view.setBackgroundColor(view.getResources().getColor(R.color.colorItemGroupColor2));
+                StyleUtils.setGradientBackground(view, new int[]{view.getResources().getColor(R.color.colorItemGroupColor2),
+                        view.getResources().getColor(R.color.colorItemGroupColor2_5)}, StyleUtils.GradientMode.LEFT_RIGHT.getMode());
                 break;
             case 2:
-                view.setBackgroundColor(view.getResources().getColor(R.color.colorItemGroupColor3));
+                StyleUtils.setGradientBackground(view, new int[]{view.getResources().getColor(R.color.colorItemGroupColor3),
+                        view.getResources().getColor(R.color.colorItemGroupColor3_5)}, StyleUtils.GradientMode.LEFT_RIGHT.getMode());
                 break;
             case 3:
-                view.setBackgroundColor(view.getResources().getColor(R.color.colorItemGroupColor4));
+                StyleUtils.setGradientBackground(view, new int[]{view.getResources().getColor(R.color.colorItemGroupColor4),
+                        view.getResources().getColor(R.color.colorItemGroupColor4_5)}, StyleUtils.GradientMode.LEFT_RIGHT.getMode());
                 break;
         }
         return view;
@@ -132,16 +137,20 @@ public class ExpandableItemListAdapter extends BaseExpandableListAdapter {
 
         switch (i % 4) {
             case 0:
-                view.setBackgroundColor(view.getResources().getColor(R.color.colorItemGroupColor1));
+                StyleUtils.setGradientBackground(view, new int[]{view.getResources().getColor(R.color.colorItemGroupColor1),
+                        view.getResources().getColor(R.color.colorItemGroupColor1_5)}, StyleUtils.GradientMode.LEFT_RIGHT.getMode());
                 break;
             case 1:
-                view.setBackgroundColor(view.getResources().getColor(R.color.colorItemGroupColor2));
+                StyleUtils.setGradientBackground(view, new int[]{view.getResources().getColor(R.color.colorItemGroupColor2),
+                        view.getResources().getColor(R.color.colorItemGroupColor2_5)}, StyleUtils.GradientMode.LEFT_RIGHT.getMode());
                 break;
             case 2:
-                view.setBackgroundColor(view.getResources().getColor(R.color.colorItemGroupColor3));
+                StyleUtils.setGradientBackground(view, new int[]{view.getResources().getColor(R.color.colorItemGroupColor3),
+                        view.getResources().getColor(R.color.colorItemGroupColor3_5)}, StyleUtils.GradientMode.LEFT_RIGHT.getMode());
                 break;
             case 3:
-                view.setBackgroundColor(view.getResources().getColor(R.color.colorItemGroupColor4));
+                StyleUtils.setGradientBackground(view, new int[]{view.getResources().getColor(R.color.colorItemGroupColor4),
+                        view.getResources().getColor(R.color.colorItemGroupColor4_5)}, StyleUtils.GradientMode.LEFT_RIGHT.getMode());
                 break;
         }
         return view;

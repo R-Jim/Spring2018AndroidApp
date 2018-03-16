@@ -2,8 +2,6 @@ package day01.swomfire.restaurantapp;
 
 
 import android.app.Dialog;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
@@ -11,10 +9,8 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import adapter.ExpandableItemListAdapter;
 import model.DishInItemList;
 
 
@@ -56,9 +52,8 @@ public class RequestOrderItemQuantityDialogFragment extends DialogFragment {
             @Override
             public void onClick(View view) {
                 currentItemQuantityText.setText(itemQuantityText.getText());
-                String[] listCodeAndPosition = String.valueOf(lblId.getText()).split(",");
-                DishInItemList dishInItemList = RequestOrderActivity.getDishInRequestItemList(Integer.parseInt(listCodeAndPosition[0])
-                        , Integer.parseInt(listCodeAndPosition[1]));
+                String position = String.valueOf(lblId.getText());
+                DishInItemList dishInItemList = RequestOrderActivity.getDishInRequestItemList(Integer.parseInt(position));
                 int quantityNew = Integer.valueOf(String.valueOf(itemQuantityText.getText()));
                 if (quantityNew == 0) {
                     dishInItemList.setQuantity(1);

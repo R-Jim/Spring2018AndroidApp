@@ -6,10 +6,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -24,19 +23,18 @@ public class RequestOrderActivity extends AppCompatActivity {
 
     private static RequestOrderItemQuantityDialogFragment requestOrderItemQuantityDialogFragment;
     private static RequestOrderTableDialogFragment requestOrderTableDialogFragment;
-    private static List<DishInItemList> dishInItemLists1;
-    private static List<DishInItemList> dishInItemLists2;
+    private static List<DishInItemList> dishInItemLists;
     private static RecyclerView recyclerView;
     private static ItemRequestRVAdapter itemRequestRVAdapter;
     private static HashMap<String, List<DishInItemList>> listHashMap;
     private static TextView lblNewRequest;
 
-    private static void initRecyclerView(int id, List<DishInItemList> dishInItemLists, int listCode, Activity activity) {
+    private static void initRecyclerView(int id, List<DishInItemList> dishInItemLists, Activity activity) {
 
         recyclerView = (RecyclerView) activity.findViewById(id);
-        itemRequestRVAdapter = new ItemRequestRVAdapter(dishInItemLists, listCode);
-        RecyclerView.LayoutManager iLayoutManager = new LinearLayoutManager(activity.getApplicationContext());
-        recyclerView.setLayoutManager(iLayoutManager);
+        itemRequestRVAdapter = new ItemRequestRVAdapter(dishInItemLists);
+        GridLayoutManager gLayoutManager = new GridLayoutManager(activity.getApplicationContext(), 2);
+        recyclerView.setLayoutManager(gLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(itemRequestRVAdapter);
     }
@@ -52,20 +50,12 @@ public class RequestOrderActivity extends AppCompatActivity {
 
     private static void initRecycleListView(Activity activity) {
         int newQuantity = 0;
-        dishInItemLists1 = new ArrayList<>();
-        dishInItemLists2 = new ArrayList<>();
-        boolean swap = false;
+        dishInItemLists = new ArrayList<>();
         listHashMap = ItemFragment.getListHashMap();
         for (Map.Entry<String, List<DishInItemList>> entry : listHashMap.entrySet()) {
             for (DishInItemList dishInItemList : entry.getValue()) {
                 if (dishInItemList.isSelected()) {
-                    if (!swap) {
-                        dishInItemLists1.add(dishInItemList);
-                        swap = true;
-                    } else {
-                        dishInItemLists2.add(dishInItemList);
-                        swap = false;
-                    }
+                    dishInItemLists.add(dishInItemList);
                     newQuantity += dishInItemList.getQuantity();
                 }
             }
@@ -74,8 +64,7 @@ public class RequestOrderActivity extends AppCompatActivity {
         lblNewRequest = (TextView) activity.findViewById(R.id.lblItemRequestRowNewQuantity);
         lblNewRequest.setText(String.valueOf(newQuantity));
 
-        initRecyclerView(R.id.requestItemRecyclerView1, dishInItemLists1, 1, activity);
-        initRecyclerView(R.id.requestItemRecyclerView2, dishInItemLists2, 2, activity);
+        initRecyclerView(R.id.requestItemRecyclerView, dishInItemLists, activity);
     }
 
     public void backToMenu(View view) {
@@ -114,13 +103,8 @@ public class RequestOrderActivity extends AppCompatActivity {
         requestOrderItemQuantityDialogFragment.show(fm, "fragment_dialog_item_request_quantity");
     }
 
-    public static DishInItemList getDishInRequestItemList(int listCode, int position) {
-        if (listCode == 1) {
-            return dishInItemLists1.get(position);
-        } else if (listCode == 2) {
-            return dishInItemLists2.get(position);
-        }
-        return null;
+    public static DishInItemList getDishInRequestItemList(int position) {
+        return dishInItemLists.get(position);
     }
 
     public static void closeDialog(Activity activity) {

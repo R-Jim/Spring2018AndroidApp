@@ -19,6 +19,7 @@ import java.util.Map;
 import adapter.ItemRequestRVAdapter;
 import model.DishInItemList;
 import utils.APIUtils;
+import utils.StyleUtils;
 
 public class RequestOrderActivity extends AppCompatActivity {
 
@@ -46,9 +47,9 @@ public class RequestOrderActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_request_order);
 
-        APIUtils.setGradientBackground(findViewById(android.R.id.content), R.id.requestOrderLayout,
+        StyleUtils.setGradientBackground(findViewById(android.R.id.content), R.id.requestOrderLayout,
                 new int[]{getColor(R.color.colorDoneOrderBackground1),
-                        getColor(R.color.colorDoneOrderBackground2)});
+                        getColor(R.color.colorDoneOrderBackground2)},StyleUtils.GradientMode.TOP_BOTTOM.getMode());
 
         initRecycleListView(this);
     }

@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import model.DishInItemList;
 import utils.APIUtils;
+import utils.StyleUtils;
 
 
 public class RequestOrderItemQuantityDialogFragment extends DialogFragment {
@@ -34,9 +35,9 @@ public class RequestOrderItemQuantityDialogFragment extends DialogFragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View quantityDialog = inflater.inflate(R.layout.fragment_dialog_item_request_quantity, null);
         builder.setView(quantityDialog);
-        APIUtils.setGradientBackground(quantityDialog, R.id.itemItemQuantityDialog,
+        StyleUtils.setGradientBackground(quantityDialog, R.id.itemItemQuantityDialog,
                 new int[]{view.getResources().getColor(R.color.colorDoneOrderBackground1),
-                        view.getResources().getColor(R.color.colorDoneOrderBackground2)});
+                        view.getResources().getColor(R.color.colorDoneOrderBackground2)},StyleUtils.GradientMode.TOP_BOTTOM.getMode());
         // Get current item quantity
         currentItemQuantityText = view.findViewById(R.id.lblItemRequestRowQuantity);
         quantityOld = Integer.parseInt(String.valueOf(currentItemQuantityText.getText()));

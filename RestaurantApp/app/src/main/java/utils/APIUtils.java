@@ -20,9 +20,5 @@ public class APIUtils {
         return RetrofitClient.getClient(BASE_URL).create(APIService.class);
     }
 
-    public static void setGradientBackground(View view, int id, int[] colors) {
-        GradientDrawable gradientDrawable = new GradientDrawable(
-                GradientDrawable.Orientation.TOP_BOTTOM, colors);
-        view.findViewById(id).setBackground(gradientDrawable);
-    }
+
 }

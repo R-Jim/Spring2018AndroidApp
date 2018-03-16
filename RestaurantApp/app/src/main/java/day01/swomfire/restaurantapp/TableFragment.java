@@ -24,7 +24,6 @@ import utils.APIUtils;
 public class TableFragment extends Fragment {
 
     private RecyclerView rv;
-    private android.widget.ExpandableListAdapter listAdapter;
     private List<OrderRequest> requestList;
 
     private APIService mService;

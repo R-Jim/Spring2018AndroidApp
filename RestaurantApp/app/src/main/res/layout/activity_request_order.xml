@@ -144,7 +144,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:fontFamily="@font/roboto_bold"
-                android:text="Bugger\nCoffee x1"
+                android:text="        Bugger              x1                            Coffee            x1"
                 android:textColor="@color/colorDoneOrderBackgroundLineBreaker">
 
             </TextView>

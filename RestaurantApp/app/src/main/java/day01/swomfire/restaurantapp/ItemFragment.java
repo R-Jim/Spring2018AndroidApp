@@ -3,6 +3,7 @@ package day01.swomfire.restaurantapp;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,9 +15,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import adapter.CustomRVAdapter;
 import adapter.ExpandableItemListAdapter;
+import data.model.Item;
+import data.model.OrderRequest;
+import data.remote.APIService;
 import model.Dish;
 import model.DishInItemList;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import utils.APIUtils;
 
 
 public class ItemFragment extends Fragment {
@@ -37,6 +46,9 @@ public class ItemFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+
+        loadRequestList();
         listView = (ExpandableListView) view.findViewById(R.id.itemExpandableList);
         //Only allow 1 expanded group
         listView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
@@ -82,6 +94,29 @@ public class ItemFragment extends Fragment {
             }
         });
 
+    }
+
+    public void loadRequestList() {
+        APIService mService = APIUtils.getAPIService();
+
+        mService.getItemList().enqueue(new Callback<List<Item>>() {
+            @Override
+            public void onResponse(Call<List<Item>> call, Response<List<Item>> response) {
+                if (response.isSuccessful()) {
+//                    requestList = response.body();
+//
+//                    CustomRVAdapter adapter = new CustomRVAdapter(requestList);
+//                    rv.setAdapter(adapter);
+                    System.out.println("Loaded list " + response.body());
+                    Log.d(this.getClass().getSimpleName(), "GET loaded from API");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Item>> call, Throwable t) {
+                System.out.println("Failed to load item list");
+            }
+        });
     }
 
     private void initData() {

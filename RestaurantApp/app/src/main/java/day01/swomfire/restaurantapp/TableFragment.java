@@ -3,6 +3,8 @@ package day01.swomfire.restaurantapp;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -10,11 +12,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import adapter.CustomRVAdapter;
+import adapter.ItemRequestRVAdapter;
+import adapter.TableRVAdapter;
 import data.model.OrderRequest;
 import data.remote.APIService;
+import model.Table;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -23,11 +29,10 @@ import utils.APIUtils;
 
 public class TableFragment extends Fragment {
 
-    private RecyclerView rv;
     private List<OrderRequest> requestList;
-
-    private APIService mService;
-
+    private RecyclerView recyclerView;
+    private TableRVAdapter tableRVAdapter;
+    private List<Table> tables;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -40,18 +45,18 @@ public class TableFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mService = APIUtils.getAPIService();
-
-        rv = getView().findViewById(R.id.rv_request_list);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
-        rv.setLayoutManager(layoutManager);
-
-        loadRequestList();
+        initTableList();
+        recyclerView = (RecyclerView) getActivity().findViewById(R.id.rv_table_list);
+        tableRVAdapter = new TableRVAdapter(tables);
+        GridLayoutManager gLayoutManager = new GridLayoutManager(getActivity().getApplicationContext(), 1);
+        recyclerView.setLayoutManager(gLayoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setAdapter(tableRVAdapter);
 
 
     }
 
-    public void loadRequestList() {
+/*    public void loadRequestList() {
         mService.getRequestList().enqueue(new Callback<List<OrderRequest>>() {
             @Override
             public void onResponse(Call<List<OrderRequest>> call, Response<List<OrderRequest>> response) {
@@ -70,5 +75,18 @@ public class TableFragment extends Fragment {
                 System.out.println("Failed to load item list");
             }
         });
+    }*/
+
+    private void initTableList() {
+        tables = new ArrayList<>();
+        tables.add(
+                new Table(1, true, null)
+        );
+        tables.add(
+                new Table(2, false, null)
+        );
+        tables.add(
+                new Table(3, true, null)
+        );
     }
 }

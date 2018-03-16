@@ -18,7 +18,6 @@ import java.util.Map;
 
 import adapter.ItemRequestRVAdapter;
 import model.DishInItemList;
-import utils.APIUtils;
 import utils.StyleUtils;
 
 public class RequestOrderActivity extends AppCompatActivity {

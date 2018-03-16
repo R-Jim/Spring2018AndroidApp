@@ -43,9 +43,11 @@ public class RequestFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         mService = APIUtils.getAPIService();
 
+/*
         rv = getView().findViewById(R.id.rv_request_list);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         rv.setLayoutManager(layoutManager);
+*/
 
         loadRequestList();
 

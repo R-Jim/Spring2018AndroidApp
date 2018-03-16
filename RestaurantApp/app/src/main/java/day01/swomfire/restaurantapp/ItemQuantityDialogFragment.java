@@ -36,11 +36,7 @@ public class ItemQuantityDialogFragment extends DialogFragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View quantityDialog = inflater.inflate(R.layout.fragment_dialog_item_quantity, null);
         Drawable background = linearLayout.getBackground();
-        int color = 0;
-        if (background instanceof ColorDrawable) {
-            color = ((ColorDrawable) background).getColor();
-        }
-        quantityDialog.setBackgroundColor(color);
+        quantityDialog.setBackground(background);
         builder.setView(quantityDialog);
 
         // Get current item quantity

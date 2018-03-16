@@ -69,7 +69,22 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/roboto_bold"
-                            android:text="New: 2 0 Items"
+                            android:text="New: "
+                            android:textColor="@color/colorDoneOrderBackgroundNewRequest" />
+
+                        <TextView
+                            android:id="@+id/lblItemRequestRowNewQuantity"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/roboto_bold"
+                            android:text="0"
+                            android:textColor="@color/colorDoneOrderBackgroundNewRequest" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/roboto_bold"
+                            android:text=" Items"
                             android:textColor="@color/colorDoneOrderBackgroundNewRequest" />
                     </LinearLayout>
 
@@ -98,24 +113,32 @@
             android:layout_marginTop="88dp"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/newDishRequest"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:background="@color/colorDoneOrderItemListBackground"
-                android:fontFamily="@font/roboto_bold"
-                android:text="Capuchino\nPizza x1"
-                android:textColor="@color/colorDoneOrderBackgroundNewRequest">
+                android:orientation="horizontal">
 
-            </TextView>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/requestItemRecyclerView1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".5"
+                    android:scrollbars="vertical" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/requestItemRecyclerView2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".5"
+                    android:scrollbars="vertical" />
+            </LinearLayout>
+
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="5dp"
                 android:layout_margin="5dp"
-                android:background="@color/colorDoneOrderBackgroundLineBreaker"></LinearLayout>
+                android:background="@color/colorDoneOrderBackgroundLineBreaker" />
 
             <TextView
                 android:id="@+id/oldDishRequest"
@@ -154,6 +177,7 @@
                 android:background="@android:color/transparent"
                 android:fontFamily="@font/roboto_bold"
                 android:text="CANCEL Request"
+                android:onClick="cancelRequest"
                 android:textColor="@color/colorDoneOrderBackgroundCancel" />
 
             <Button

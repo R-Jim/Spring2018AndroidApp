@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/request_item_row_height"
+    android:gravity="center"
+    android:paddingLeft="50dp">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight=".5"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/lblItemRequestRowHeader"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight=".8"
+            android:fontFamily="@font/roboto_bold"
+            android:text="Pizza"
+            android:textColor="@color/colorDoneOrderBackgroundNewRequest" />
+
+        <TextView
+            android:id="@+id/itemRequestId"
+            android:layout_width="0dp"
+            android:layout_height="0dp" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".2"
+            android:onClick="requestItemQuantityChange">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/roboto_bold"
+                android:text="x"
+                android:textColor="@color/colorDoneOrderBackgroundNewRequest" />
+
+            <TextView
+                android:id="@+id/lblItemRequestRowQuantity"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/roboto_bold"
+                android:text="0"
+                android:textColor="@color/colorDoneOrderBackgroundNewRequest" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>
+

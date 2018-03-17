@@ -20,6 +20,8 @@
     <color name="colorItemGroupColor4">#5b5389</color>
     <color name="colorItemGroupColor4_5">#3c3661</color>
 
+    <color name="colorItemGroupItemQuantityDialogText">#ffffff</color>
+
 
     <color name="colorDoneOrderBackground1">#423354</color>
     <color name="colorDoneOrderBackground2">#261e32</color>
@@ -34,6 +36,9 @@
 
     <color name="colorItemTabBackground">#7b45f9</color>
     <color name="colorItemGroupTextColor">#fcfcfc</color>
+
+    <color name="colorTableGroupAddIconColor">#000000</color>
+    <color name="colorTableGroupAddIconStrokeColor">#8f8f8f</color>
 
 
 </resources>

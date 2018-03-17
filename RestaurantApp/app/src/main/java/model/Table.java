@@ -9,6 +9,15 @@ public class Table {
     private boolean status;
     private Order order;
 
+    public Table(int tableNo, boolean status, Order order) {
+        this.tableNo = tableNo;
+        this.status = status;
+        this.order = order;
+    }
+
+    public Table() {
+
+    }
 
     public int getTableNo() {
         return tableNo;

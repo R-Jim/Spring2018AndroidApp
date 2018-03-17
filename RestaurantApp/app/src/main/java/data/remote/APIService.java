@@ -22,7 +22,7 @@ public interface APIService {
     @GET("/getItem")
     Call<Item> getItem(@Query("itemId") String id);
 
-    @GET("/item")
+    @GET("/items")
     Call<List<Item>> getItemList();
 
     @GET("/requestList")

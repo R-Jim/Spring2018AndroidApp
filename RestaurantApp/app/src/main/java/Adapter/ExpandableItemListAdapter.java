@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import data.model.Category;
 import day01.swomfire.restaurantapp.R;
 import model.DishInItemList;
 import utils.StyleUtils;
@@ -23,18 +24,17 @@ import utils.StyleUtils;
 
 public class ExpandableItemListAdapter extends BaseExpandableListAdapter {
     private Context context;
-    private static List<String> listDataHeader;
-    private static HashMap<String, List<DishInItemList>> listHashMap;
-    private int lastExpandedGroup;
+    private static List<Category> listDataHeader;
+    private static HashMap<Category, List<DishInItemList>> listHashMap;
 
-    public ExpandableItemListAdapter(Context context, List<String> listDataHeader, HashMap<String, List<DishInItemList>> listHashMap) {
+    public ExpandableItemListAdapter(Context context, List<Category> listDataHeader, HashMap<Category, List<DishInItemList>> listHashMap) {
         this.context = context;
         this.listDataHeader = listDataHeader;
         this.listHashMap = listHashMap;
     }
 
 
-    public static HashMap<String, List<DishInItemList>> getListHashMap() {
+    public static HashMap<Category, List<DishInItemList>> getListHashMap() {
         return listHashMap;
     }
 
@@ -82,14 +82,15 @@ public class ExpandableItemListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getGroupView(int i, boolean b, View view, ViewGroup viewGroup) {
-        String headerTitle = (String) getGroup(i);
+        Category category = (Category) getGroup(i);
+        String headerTitle = category.getCategoryId();
         LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         if (b) {
-            lastExpandedGroup = i;
             view = layoutInflater.inflate(R.layout.item_tab_list_group_expanded, null);
         } else {
             view = layoutInflater.inflate(R.layout.item_tab_list_group, null);
-
+            TextView lblDescription = view.findViewById(R.id.lblListItemDescription);
+            lblDescription.setText(category.getDescription());
         }
         TextView lblListHeader = (TextView) view.findViewById(R.id.lblListItemHeader);
         lblListHeader.setTypeface(null, Typeface.BOLD);
@@ -128,7 +129,7 @@ public class ExpandableItemListAdapter extends BaseExpandableListAdapter {
         lblId.setText(i + "," + i1);
 
         TextView lblName = (TextView) view.findViewById(R.id.lblListItem);
-        lblName.setText(dish.getDish().getName());
+        lblName.setText(dish.getDish().getItemName());
         CheckBox checkBox = (CheckBox) view.findViewById(R.id.itemCheckbox);
         checkBox.setChecked(dish.isSelected());
 

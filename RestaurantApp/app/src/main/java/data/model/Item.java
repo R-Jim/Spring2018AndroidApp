@@ -3,6 +3,8 @@ package data.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 /**
  * Created by elpsychris on 03/12/2018.
  */
@@ -20,9 +22,15 @@ public class Item {
     @SerializedName("price")
     @Expose
     private Double price;
-    @SerializedName("isAvailable")
+    @SerializedName("categoryByCategorySeqId")
     @Expose
-    private Boolean isAvailable;
+    private Category category;
+    @SerializedName("available")
+    @Expose
+    private Boolean available;
+    @SerializedName("links")
+    @Expose
+    private List<Link> links = null;
 
     public Integer getSeqId() {
         return seqId;
@@ -56,13 +64,30 @@ public class Item {
         this.price = price;
     }
 
-    public Boolean getIsAvailable() {
-        return isAvailable;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setIsAvailable(Boolean isAvailable) {
-        this.isAvailable = isAvailable;
+    public void setCategory(Category category) {
+        this.category = category;
     }
+
+    public Boolean getAvailable() {
+        return available;
+    }
+
+    public void setAvailable(Boolean available) {
+        this.available = available;
+    }
+
+    public List<Link> getLinks() {
+        return links;
+    }
+
+    public void setLinks(List<Link> links) {
+        this.links = links;
+    }
+
 
     @Override
     public String toString() {
@@ -71,7 +96,7 @@ public class Item {
                 ", itemId='" + itemId + '\'' +
                 ", itemName='" + itemName + '\'' +
                 ", price=" + price +
-                ", isAvailable=" + isAvailable +
+                ", isAvailable=" + available +
                 '}';
     }
 }

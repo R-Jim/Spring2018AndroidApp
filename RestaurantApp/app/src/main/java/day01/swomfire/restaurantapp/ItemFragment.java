@@ -15,12 +15,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import adapter.CustomRVAdapter;
 import adapter.ExpandableItemListAdapter;
+import data.model.Category;
 import data.model.Item;
-import data.model.OrderRequest;
 import data.remote.APIService;
-import model.Dish;
 import model.DishInItemList;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -33,8 +31,10 @@ public class ItemFragment extends Fragment {
 
     private ExpandableListView listView;
     private ExpandableItemListAdapter listAdapter;
-    private List<String> listDataHeader;
-    private static HashMap<String, List<DishInItemList>> listHashMap;
+    private static HashMap<Category, List<DishInItemList>> listHashMap;
+    private List<Item> itemListFromDb;
+    private List<Category> categoryListFromDb;
+    private View view;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -46,9 +46,112 @@ public class ItemFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        this.view = view;
+        loadDishList();
+    }
 
 
-        loadRequestList();
+    private void loadDishList() {
+        APIService mService = APIUtils.getAPIService();
+
+        mService.getItemList().enqueue(new Callback<List<Item>>() {
+            @Override
+            public void onResponse(Call<List<Item>> call, Response<List<Item>> response) {
+                if (response.isSuccessful()) {
+                    itemListFromDb = response.body();
+                    Log.d(this.getClass().getSimpleName(), "GET loaded from API");
+                    loadCategoryList();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Item>> call, Throwable t) {
+                System.out.println("Failed to load item list");
+            }
+        });
+
+    }
+
+    private void loadCategoryList() {
+        APIService mService = APIUtils.getAPIService();
+
+        mService.getCategoryList().enqueue(new Callback<List<Category>>() {
+            @Override
+            public void onResponse(Call<List<Category>> call, Response<List<Category>> response) {
+                if (response.isSuccessful()) {
+                    categoryListFromDb = response.body();
+                    Log.d(this.getClass().getSimpleName(), "GET loaded from API");
+                    initData();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Category>> call, Throwable t) {
+                System.out.println("Failed to load item list");
+            }
+        });
+
+    }
+
+    private void initData() {
+        if (listHashMap == null) {
+            listHashMap = new HashMap<>();
+            for (Category category : categoryListFromDb) {
+                listHashMap.put(category, null);
+            }
+            for (Item item : itemListFromDb) {
+                if (item.getAvailable()) {
+                    for (Map.Entry<Category, List<DishInItemList>> entry : listHashMap.entrySet()) {
+                        if (entry.getKey().getCategoryId().equals(item.getCategory().getCategoryId())) {
+                            List<DishInItemList> dishInItemLists = entry.getValue();
+                            if (dishInItemLists == null) {
+                                dishInItemLists = new ArrayList<>();
+                            }
+                            DishInItemList dishInItemList = createDish(item);
+                            dishInItemLists.add(dishInItemList);
+                            listHashMap.put(entry.getKey(), dishInItemLists);
+                        }
+                    }
+                }
+            }
+        } else {
+            HashMap<Category, List<DishInItemList>> listHashMapBackUp = new HashMap<>();
+            for (Category category : categoryListFromDb) {
+                listHashMapBackUp.put(category, null);
+            }
+            for (Item item : itemListFromDb) {
+                if (item.getAvailable()) {
+                    for (Map.Entry<Category, List<DishInItemList>> entry : listHashMapBackUp.entrySet()) {
+                        if (entry.getKey().getCategoryId().equals(item.getCategory().getCategoryId())) {
+                            List<DishInItemList> dishInItemLists = entry.getValue();
+                            if (dishInItemLists == null) {
+                                dishInItemLists = new ArrayList<>();
+                            }
+                            DishInItemList dishInItemList = createDish(item);
+                            for (Map.Entry<Category, List<DishInItemList>> entry1 : listHashMap.entrySet()) {
+                                for (DishInItemList dishInItemList1 : entry1.getValue()){
+                                    if (dishInItemList.getDish().getItemId().equals(dishInItemList1.getDish().getItemId())){
+                                        dishInItemList.setSelected(dishInItemList1.isSelected());
+                                        dishInItemList.setQuantity(dishInItemList1.getQuantity());
+                                    }
+                                }
+                            }
+
+                            dishInItemLists.add(dishInItemList);
+                            listHashMapBackUp.put(entry.getKey(), dishInItemLists);
+                        }
+                    }
+                }
+            }
+            listHashMap = listHashMapBackUp;
+        }
+
+
+        initExpandableList(view);
+    }
+
+
+    private void initExpandableList(View view) {
         listView = (ExpandableListView) view.findViewById(R.id.itemExpandableList);
         //Only allow 1 expanded group
         listView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
@@ -63,10 +166,10 @@ public class ItemFragment extends Fragment {
             }
         });
         if (listHashMap == null) {
-            initData();
+            loadDishList();
         } else {
             int quantity = 0;
-            for (Map.Entry<String, List<DishInItemList>> entry : listHashMap.entrySet()) {
+            for (Map.Entry<Category, List<DishInItemList>> entry : listHashMap.entrySet()) {
                 for (DishInItemList dishInItemList : entry.getValue()) {
                     if (dishInItemList.isSelected()) {
                         quantity += dishInItemList.getQuantity();
@@ -76,7 +179,7 @@ public class ItemFragment extends Fragment {
             TextView lblQuantity = view.findViewById(R.id.lblNumberOfDishRequested);
             lblQuantity.setText(String.valueOf(quantity));
         }
-        listAdapter = new ExpandableItemListAdapter(getActivity(), listDataHeader, listHashMap);
+        listAdapter = new ExpandableItemListAdapter(getActivity(), categoryListFromDb, listHashMap);
         listView.setAdapter(listAdapter);
 
         listView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
@@ -93,74 +196,13 @@ public class ItemFragment extends Fragment {
                 return true;
             }
         });
-
     }
 
-    public void loadRequestList() {
-        APIService mService = APIUtils.getAPIService();
-
-        mService.getItemList().enqueue(new Callback<List<Item>>() {
-            @Override
-            public void onResponse(Call<List<Item>> call, Response<List<Item>> response) {
-                if (response.isSuccessful()) {
-//                    requestList = response.body();
-//
-//                    CustomRVAdapter adapter = new CustomRVAdapter(requestList);
-//                    rv.setAdapter(adapter);
-                    System.out.println("Loaded list " + response.body());
-                    Log.d(this.getClass().getSimpleName(), "GET loaded from API");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Item>> call, Throwable t) {
-                System.out.println("Failed to load item list");
-            }
-        });
+    private DishInItemList createDish(Item item) {
+        return new DishInItemList(item, 1, false);
     }
 
-    private void initData() {
-        listDataHeader = new ArrayList<>();
-        listHashMap = new HashMap<>();
-
-        listDataHeader.add("Item1");
-        listDataHeader.add("Item2");
-        listDataHeader.add("Item3");
-        listDataHeader.add("Item4");
-
-        List<DishInItemList> list1 = new ArrayList<>();
-
-        list1.add(createDish("Pizza"));
-
-        List<DishInItemList> list2 = new ArrayList<>();
-
-
-        list2.add(createDish("Bugger"));
-        list2.add(createDish("Meat"));
-
-        List<DishInItemList> list3 = new ArrayList<>();
-        list3.add(createDish("Coffee"));
-        list3.add(createDish("cappuccino"));
-        list3.add(createDish("latte"));
-
-        List<DishInItemList> list4 = new ArrayList<>();
-        list4.add(createDish("Steak"));
-        list4.add(createDish("Pork"));
-
-        listHashMap.put(listDataHeader.get(0), list1);
-        listHashMap.put(listDataHeader.get(1), list2);
-        listHashMap.put(listDataHeader.get(2), list3);
-        listHashMap.put(listDataHeader.get(3), list4);
-
-    }
-
-    private DishInItemList createDish(String name) {
-        Dish dish = new Dish();
-        dish.setName(name);
-        return new DishInItemList(dish, 1, false);
-    }
-
-    public static HashMap<String, List<DishInItemList>> getListHashMap() {
+    public static HashMap<Category, List<DishInItemList>> getListHashMap() {
         return listHashMap;
     }
 

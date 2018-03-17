@@ -67,6 +67,7 @@ public class ItemFragment extends Fragment {
             @Override
             public void onFailure(Call<List<Item>> call, Throwable t) {
                 System.out.println("Failed to load item list");
+                loadCategoryList();
             }
         });
 
@@ -88,6 +89,7 @@ public class ItemFragment extends Fragment {
             @Override
             public void onFailure(Call<List<Category>> call, Throwable t) {
                 System.out.println("Failed to load item list");
+                initData();
             }
         });
 
@@ -96,9 +98,24 @@ public class ItemFragment extends Fragment {
     private void initData() {
         if (listHashMap == null) {
             listHashMap = new HashMap<>();
+            addItemAndCategoryToHashmap(listHashMap);
+        } else {
+            HashMap<Category, List<DishInItemList>> listHashMapBackUp = new HashMap<>();
+            addItemAndCategoryToHashmap(listHashMapBackUp);
+            listHashMap = listHashMapBackUp;
+        }
+
+
+        initExpandableList(view);
+    }
+
+    private void addItemAndCategoryToHashmap(HashMap<Category, List<DishInItemList>> listHashMap) {
+        if (categoryListFromDb != null) {
             for (Category category : categoryListFromDb) {
                 listHashMap.put(category, null);
             }
+        }
+        if (itemListFromDb != null) {
             for (Item item : itemListFromDb) {
                 if (item.getAvailable()) {
                     for (Map.Entry<Category, List<DishInItemList>> entry : listHashMap.entrySet()) {
@@ -108,46 +125,24 @@ public class ItemFragment extends Fragment {
                                 dishInItemLists = new ArrayList<>();
                             }
                             DishInItemList dishInItemList = createDish(item);
+                            for (Map.Entry<Category, List<DishInItemList>> entry1 : this.listHashMap.entrySet()) {
+                                if (entry1.getValue() != null) {
+                                    for (DishInItemList dishInItemList1 : entry1.getValue()) {
+                                        if (dishInItemList.getDish().getItemId().equals(dishInItemList1.getDish().getItemId())) {
+                                            dishInItemList.setSelected(dishInItemList1.isSelected());
+                                            dishInItemList.setQuantity(dishInItemList1.getQuantity());
+                                        }
+                                    }
+                                }
+                            }
+
                             dishInItemLists.add(dishInItemList);
                             listHashMap.put(entry.getKey(), dishInItemLists);
                         }
                     }
                 }
             }
-        } else {
-            HashMap<Category, List<DishInItemList>> listHashMapBackUp = new HashMap<>();
-            for (Category category : categoryListFromDb) {
-                listHashMapBackUp.put(category, null);
-            }
-            for (Item item : itemListFromDb) {
-                if (item.getAvailable()) {
-                    for (Map.Entry<Category, List<DishInItemList>> entry : listHashMapBackUp.entrySet()) {
-                        if (entry.getKey().getCategoryId().equals(item.getCategory().getCategoryId())) {
-                            List<DishInItemList> dishInItemLists = entry.getValue();
-                            if (dishInItemLists == null) {
-                                dishInItemLists = new ArrayList<>();
-                            }
-                            DishInItemList dishInItemList = createDish(item);
-                            for (Map.Entry<Category, List<DishInItemList>> entry1 : listHashMap.entrySet()) {
-                                for (DishInItemList dishInItemList1 : entry1.getValue()){
-                                    if (dishInItemList.getDish().getItemId().equals(dishInItemList1.getDish().getItemId())){
-                                        dishInItemList.setSelected(dishInItemList1.isSelected());
-                                        dishInItemList.setQuantity(dishInItemList1.getQuantity());
-                                    }
-                                }
-                            }
-
-                            dishInItemLists.add(dishInItemList);
-                            listHashMapBackUp.put(entry.getKey(), dishInItemLists);
-                        }
-                    }
-                }
-            }
-            listHashMap = listHashMapBackUp;
         }
-
-
-        initExpandableList(view);
     }
 
 
@@ -170,9 +165,11 @@ public class ItemFragment extends Fragment {
         } else {
             int quantity = 0;
             for (Map.Entry<Category, List<DishInItemList>> entry : listHashMap.entrySet()) {
-                for (DishInItemList dishInItemList : entry.getValue()) {
-                    if (dishInItemList.isSelected()) {
-                        quantity += dishInItemList.getQuantity();
+                if (entry.getValue() != null) {
+                    for (DishInItemList dishInItemList : entry.getValue()) {
+                        if (dishInItemList.isSelected()) {
+                            quantity += dishInItemList.getQuantity();
+                        }
                     }
                 }
             }

@@ -40,11 +40,17 @@ public class ExpandableItemListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getGroupCount() {
+        if (listDataHeader == null) {
+            return -1;
+        }
         return listDataHeader.size();
     }
 
     @Override
     public int getChildrenCount(int groupPosition) {
+        if (listHashMap == null) {
+            return -1;
+        }
         return listHashMap.get(listDataHeader.get(groupPosition)).size();
     }
 

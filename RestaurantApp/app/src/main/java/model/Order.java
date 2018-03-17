@@ -2,13 +2,15 @@ package model;
 
 import java.util.List;
 
+import data.model.Item;
+
 /**
  * Created by elpsychris on 03/06/2018.
  */
 
 public class Order {
     private int id;
-    private List<Dish> dish;
+    private List<Item> dish;
 
     public int getId() {
         return id;
@@ -18,11 +20,11 @@ public class Order {
         this.id = id;
     }
 
-    public List<Dish> getDish() {
+    public List<Item> getDish() {
         return dish;
     }
 
-    public void setDish(List<Dish> dish) {
+    public void setDish(List<Item> dish) {
         this.dish = dish;
     }
 }

@@ -10,7 +10,8 @@ import android.widget.TextView;
 import java.util.List;
 
 import day01.swomfire.restaurantapp.R;
-import model.Table;
+import model.Status;
+import data.model.Table;
 
 /**
  * Created by Swomfire on 15-Mar-18.
@@ -36,7 +37,7 @@ public class TableRVAdapter extends RecyclerView.Adapter<TableRVAdapter.MyViewHo
 
     @Override
     public int getItemViewType(int position) {
-        if (tables.get(position).isStatus()) {
+        if (tables.get(position).getStatusByStatusSeqId().getStatusId().equals(Status.AVAIABLE.getStatusId())) {
             return viewType.TABLE_FREE.getViewType();
         } else {
             return viewType.TABLE_ORDERING.getViewType();
@@ -79,7 +80,7 @@ public class TableRVAdapter extends RecyclerView.Adapter<TableRVAdapter.MyViewHo
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Table table = tables.get(position);
-        holder.tableNumber.setText(String.valueOf(table.getTableNo()));
+        holder.tableNumber.setText(String.valueOf(table.getTableId()));
     }
 
 

@@ -3,6 +3,7 @@ package day01.swomfire.restaurantapp;
 import android.app.Dialog;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
@@ -12,8 +13,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import adapter.ExpandableItemListAdapter;
 import model.DishInItemList;
+import utils.StyleUtils;
 
 public class ItemQuantityDialogFragment extends DialogFragment {
     private static View view;
@@ -35,7 +38,7 @@ public class ItemQuantityDialogFragment extends DialogFragment {
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View quantityDialog = inflater.inflate(R.layout.fragment_dialog_item_quantity, null);
-        Drawable background = linearLayout.getBackground();
+        GradientDrawable background = (GradientDrawable) linearLayout.getBackground().getConstantState().newDrawable();
         quantityDialog.setBackground(background);
         builder.setView(quantityDialog);
 

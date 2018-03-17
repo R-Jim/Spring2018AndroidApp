@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -16,7 +17,7 @@ import model.Table;
  */
 
 public class TableRVAdapter extends RecyclerView.Adapter<TableRVAdapter.MyViewHolder> {
-    public static enum viewType {
+    public enum viewType {
         TABLE_FREE(0), TABLE_ORDERING(1);
 
         private int viewType;
@@ -44,13 +45,12 @@ public class TableRVAdapter extends RecyclerView.Adapter<TableRVAdapter.MyViewHo
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-//        private TextView itemRequestId, itemRequestHeader, itemRequestQuantity;
+        private TextView tableNumber;
 
         public MyViewHolder(View tableView) {
             super(tableView);
-/*            itemRequestId = (TextView) itemView.findViewById(R.id.itemRequestId);
-            itemRequestHeader = (TextView) itemView.findViewById(R.id.lblItemRequestRowHeader);
-            itemRequestQuantity = (TextView) itemView.findViewById(R.id.lblItemRequestRowQuantity);*/
+            tableNumber = (TextView) itemView.findViewById(R.id.listTableNumber);
+
         }
     }
 
@@ -78,10 +78,8 @@ public class TableRVAdapter extends RecyclerView.Adapter<TableRVAdapter.MyViewHo
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-/*        DishInItemList dishInItemList = dishInItemLists.get(position);
-        holder.itemRequestId.setText(String.valueOf(position));
-        holder.itemRequestHeader.setText(dishInItemList.getDish().getName());
-        holder.itemRequestQuantity.setText(String.valueOf(dishInItemList.getQuantity()));*/
+        Table table = tables.get(position);
+        holder.tableNumber.setText(String.valueOf(table.getTableNo()));
     }
 
 

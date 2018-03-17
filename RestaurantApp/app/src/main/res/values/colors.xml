@@ -37,5 +37,8 @@
     <color name="colorItemTabBackground">#7b45f9</color>
     <color name="colorItemGroupTextColor">#fcfcfc</color>
 
+    <color name="colorTableGroupAddIconColor">#000000</color>
+    <color name="colorTableGroupAddIconStrokeColor">#8f8f8f</color>
+
 
 </resources>

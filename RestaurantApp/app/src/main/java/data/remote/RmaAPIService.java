@@ -22,7 +22,7 @@ public interface RmaAPIService {
     @GET("/getItem")
     Call<Item> getItem(@Query("itemId") String id);
 
-    @GET("/item")
+    @GET("/items")
     Call<List<Item>> getItemList();
 
     @GET("/requestList")

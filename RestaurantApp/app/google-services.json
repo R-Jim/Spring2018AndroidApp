@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "553842938988",
+    "firebase_url": "https://androidswd-dd972.firebaseio.com",
+    "project_id": "androidswd-dd972",
+    "storage_bucket": "androidswd-dd972.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:553842938988:android:69f918c7e5c005d8",
+        "android_client_info": {
+          "package_name": "day01.swomfire.restaurantapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "553842938988-buaq5s578okl4f6d5201vscqeonhdlj2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "day01.swomfire.restaurantapp",
+            "certificate_hash": "969e21d3fb6f768cecfbce648b7e18b4571abc12"
+          }
+        },
+        {
+          "client_id": "553842938988-adltl7mvkhbabu0jhlelf5rftmhnakr0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAfjh7Q67kxRzl8gxLovEsHmBQI8rl2M6o"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "553842938988-adltl7mvkhbabu0jhlelf5rftmhnakr0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

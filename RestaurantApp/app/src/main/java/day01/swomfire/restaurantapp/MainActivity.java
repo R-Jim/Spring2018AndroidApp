@@ -26,12 +26,15 @@ import android.widget.TextView;
 import android.widget.TabWidget;
 
 
+import com.google.firebase.messaging.FirebaseMessaging;
+
 import adapter.ExpandableItemListAdapter;
 import model.DishInItemList;
 import service.TabHostService;
 import service.TabHostServiceImpl;
 
 public class MainActivity extends AppCompatActivity {
+    private final String FB_TOPIC_REQUESTLIST = "RequestList";
     private FragmentTabHost tabHost;
     //    private ExpandableListView listView;
     private RecyclerView rvReqList;
@@ -45,6 +48,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Subscribe to topic with API
+        FirebaseMessaging.getInstance().subscribeToTopic(FB_TOPIC_REQUESTLIST);
 
         tabWidget = findViewById(android.R.id.tabs);
 

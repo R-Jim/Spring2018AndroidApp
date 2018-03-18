@@ -24,10 +24,11 @@ public class OrderDetailRVAdapter extends RecyclerView.Adapter<OrderDetailRVAdap
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView itemName, itemQuantity;
+        private TextView itemPosition, itemName, itemQuantity;
 
         public MyViewHolder(View itemView) {
             super(itemView);
+            this.itemPosition = (TextView) itemView.findViewById(R.id.itemOrderDetailId);
             this.itemName = (TextView) itemView.findViewById(R.id.itemOrderDetailName);
             this.itemQuantity = (TextView) itemView.findViewById(R.id.itemOrderDetailQuantity);
         }
@@ -50,6 +51,7 @@ public class OrderDetailRVAdapter extends RecyclerView.Adapter<OrderDetailRVAdap
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         DishInReceipt dishInReceipt = dishInReceipts.get(position);
         holder.itemName.setText(dishInReceipt.getDish().getItemName());
+        holder.itemPosition.setText(String.valueOf(position));
         holder.itemQuantity.setText(String.valueOf(dishInReceipt.getQuantity()));
     }
 

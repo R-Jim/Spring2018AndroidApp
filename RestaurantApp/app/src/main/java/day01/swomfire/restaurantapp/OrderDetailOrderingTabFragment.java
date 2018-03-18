@@ -1,5 +1,6 @@
 package day01.swomfire.restaurantapp;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -22,6 +23,7 @@ import model.DishInReceipt;
 public class OrderDetailOrderingTabFragment extends Fragment {
     private RecyclerView recyclerView;
     private OrderDetailRVAdapter orderDetailOrderingRVAdapter;
+    private List<DishInReceipt> dishInReceipts;
 
     @Nullable
     @Override
@@ -32,7 +34,7 @@ public class OrderDetailOrderingTabFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        List<DishInReceipt> dishInReceipts = new ArrayList<DishInReceipt>();
+        dishInReceipts = new ArrayList<DishInReceipt>();
         Item item = new Item();
         item.setItemName("Pizza");
         dishInReceipts.add(
@@ -48,6 +50,18 @@ public class OrderDetailOrderingTabFragment extends Fragment {
                 )
         );
 
+        SharedPreferences pref = getActivity().getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
+        if (pref != null) {
+            SharedPreferences.Editor editor = pref.edit();
+            String itemPositionAndQuantity = pref.getString("itemPositionAndNewQuantity", null);
+            editor.clear();
+            editor.apply();
+            if (itemPositionAndQuantity != null) {
+                String[] positionAndQuantity = itemPositionAndQuantity.split(",");
+                dishInReceipts.get(Integer.parseInt(positionAndQuantity[0])).setQuantity(Integer.parseInt(positionAndQuantity[1]));
+            }
+        }
+
         initRecycleView(dishInReceipts);
     }
 
@@ -59,5 +73,7 @@ public class OrderDetailOrderingTabFragment extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(orderDetailOrderingRVAdapter);
     }
+
+
 
 }

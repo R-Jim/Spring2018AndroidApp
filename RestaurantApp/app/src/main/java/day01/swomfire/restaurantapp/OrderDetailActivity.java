@@ -1,6 +1,9 @@
 package day01.swomfire.restaurantapp;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTabHost;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,7 +15,7 @@ import android.widget.TextView;
 public class OrderDetailActivity extends AppCompatActivity {
     public final String ORDERED_TAB = "ORDERED_TAB";
     public final String ORDERING_TAB = "ORDERING_TAB";
-
+    private OrderDetailQuantityDialogFragment orderDetailQuantityDialogFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +53,7 @@ public class OrderDetailActivity extends AppCompatActivity {
             View viewBar = view.findViewById(R.id.vTopBar);
             viewBar.setBackgroundColor(getColor(R.color.colorComTabTextSelected));
         });
+
     }
 
     private void setNewTab(Context ctx, FragmentTabHost tabHost, String tag, String title) {
@@ -63,6 +67,20 @@ public class OrderDetailActivity extends AppCompatActivity {
         TextView tvTitle = view.findViewById(R.id.tvTabTitle);
         tvTitle.setText(title);
         return view;
+    }
+
+    public void requestItemQuantityChange(View view) {
+        FragmentManager fm = getSupportFragmentManager();
+        orderDetailQuantityDialogFragment = new OrderDetailQuantityDialogFragment();
+        orderDetailQuantityDialogFragment.setUp(view);
+        View parent = (View) view.getParent().getParent();
+        TextView id = parent.findViewById(R.id.itemOrderDetailId);
+        TextView quantity = view.findViewById(R.id.itemOrderDetailQuantity);
+        Bundle bundle = new Bundle();
+        String[] ItemPositionAndQuantity = {id.getText().toString(), quantity.getText().toString()};
+        bundle.putStringArray("ItemPositionAndQuantity", ItemPositionAndQuantity);
+        orderDetailQuantityDialogFragment.setArguments(bundle);
+        orderDetailQuantityDialogFragment.show(fm, "fragment_dialog_order_detail_quantity");
     }
 
 }

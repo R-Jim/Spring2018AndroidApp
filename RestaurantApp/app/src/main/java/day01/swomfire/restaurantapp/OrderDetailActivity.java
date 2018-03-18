@@ -72,7 +72,6 @@ public class OrderDetailActivity extends AppCompatActivity {
     public void requestItemQuantityChange(View view) {
         FragmentManager fm = getSupportFragmentManager();
         orderDetailQuantityDialogFragment = new OrderDetailQuantityDialogFragment();
-        orderDetailQuantityDialogFragment.setUp(view);
         View parent = (View) view.getParent().getParent();
         TextView id = parent.findViewById(R.id.itemOrderDetailId);
         TextView quantity = view.findViewById(R.id.itemOrderDetailQuantity);

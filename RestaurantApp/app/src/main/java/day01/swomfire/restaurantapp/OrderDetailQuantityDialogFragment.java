@@ -22,14 +22,8 @@ import utils.StyleUtils;
 
 
 public class OrderDetailQuantityDialogFragment extends DialogFragment {
-    private static View view;
     private TextView itemQuantityText;
-    private TextView lblId;
     private String[] itemPositionAndQuantity = null;
-
-    public void setUp(View view) {
-        this.view = view;
-    }
 
     @NonNull
     @Override
@@ -40,17 +34,14 @@ public class OrderDetailQuantityDialogFragment extends DialogFragment {
         View quantityDialog = inflater.inflate(R.layout.fragment_dialog_item_request_quantity, null);
         builder.setView(quantityDialog);
         StyleUtils.setGradientBackground(quantityDialog, R.id.itemItemQuantityDialog,
-                new int[]{view.getResources().getColor(R.color.colorDoneOrderBackground1),
-                        view.getResources().getColor(R.color.colorDoneOrderBackground2)}, StyleUtils.GradientMode.TOP_BOTTOM.getMode());
+                new int[]{getContext().getResources().getColor(R.color.colorDoneOrderBackground1),
+                        getContext().getResources().getColor(R.color.colorDoneOrderBackground2)}, StyleUtils.GradientMode.TOP_BOTTOM.getMode());
         // Get current item quantity
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             itemPositionAndQuantity = bundle.getStringArray("ItemPositionAndQuantity");
         }
 
-        View parent1 = (View) view.getParent();
-        View parent2 = (View) parent1.getParent();
-        lblId = parent2.findViewById(R.id.itemOrderDetailId);
 
         // Set Quantity for dialog
         itemQuantityText = quantityDialog.findViewById(R.id.itemItemQuantityDialogQuantity);

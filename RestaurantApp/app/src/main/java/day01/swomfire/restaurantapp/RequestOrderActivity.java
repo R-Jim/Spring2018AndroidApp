@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import adapter.ExpandableItemListAdapter;
 import adapter.ItemRequestRVAdapter;
 import data.model.Category;
 import model.DishInItemList;
@@ -49,7 +50,7 @@ public class RequestOrderActivity extends AppCompatActivity {
 
         StyleUtils.setGradientBackground(findViewById(android.R.id.content), R.id.requestOrderLayout,
                 new int[]{getColor(R.color.colorDoneOrderBackground1),
-                        getColor(R.color.colorDoneOrderBackground2)},StyleUtils.GradientMode.TOP_BOTTOM.getMode());
+                        getColor(R.color.colorDoneOrderBackground2)}, StyleUtils.GradientMode.TOP_BOTTOM.getMode());
 
         initRecycleListView(this);
     }
@@ -57,7 +58,7 @@ public class RequestOrderActivity extends AppCompatActivity {
     private static void initRecycleListView(Activity activity) {
         int newQuantity = 0;
         dishInItemLists = new ArrayList<>();
-        listHashMap = ItemFragment.getListHashMap();
+        listHashMap = ExpandableItemListAdapter.getListHashMap();
         for (Map.Entry<Category, List<DishInItemList>> entry : listHashMap.entrySet()) {
             for (DishInItemList dishInItemList : entry.getValue()) {
                 if (dishInItemList.isSelected()) {

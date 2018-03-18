@@ -55,10 +55,18 @@ public class OrderDetailOrderingTabFragment extends Fragment {
             SharedPreferences.Editor editor = pref.edit();
             String itemPositionAndQuantity = pref.getString("itemPositionAndNewQuantity", null);
             editor.clear();
-            editor.apply();
+            editor.commit();
             if (itemPositionAndQuantity != null) {
                 String[] positionAndQuantity = itemPositionAndQuantity.split(",");
-                dishInReceipts.get(Integer.parseInt(positionAndQuantity[0])).setQuantity(Integer.parseInt(positionAndQuantity[1]));
+                int position = Integer.parseInt(positionAndQuantity[0]);
+                int quantity = Integer.parseInt(positionAndQuantity[1]);
+                if (quantity > 0) {
+                    DishInReceipt dishInReceipt = dishInReceipts.get(position);
+                    dishInReceipt.setQuantity(quantity);
+                } else {
+                    dishInReceipts.remove(position);
+                }
+
             }
         }
 
@@ -73,7 +81,6 @@ public class OrderDetailOrderingTabFragment extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(orderDetailOrderingRVAdapter);
     }
-
 
 
 }

@@ -1,7 +1,11 @@
 package model;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 
+import data.model.Category;
 import data.model.Item;
 
 /**
@@ -41,5 +45,26 @@ public class DishInItemList {
         this.dish = dish;
         this.quantity = quantity;
         this.selected = selected;
+    }
+
+    public static HashMap<String, List<DishInItemList>> convertHashmapToStringKey(HashMap<Category, List<DishInItemList>> listHashMap) {
+        HashMap<String, List<DishInItemList>> stringListHashMap = new HashMap<>();
+        for (Map.Entry<Category, List<DishInItemList>> entry : listHashMap.entrySet()) {
+            stringListHashMap.put(entry.getKey().getCategoryId(), entry.getValue());
+        }
+        return stringListHashMap;
+    }
+
+    public static HashMap<Category, List<DishInItemList>> convertHashmapToCategoryKey(HashMap<String, List<DishInItemList>> listHashMap, List<Category> categories) {
+        HashMap<Category, List<DishInItemList>> categoryListHashMap = new HashMap<>();
+        for (Map.Entry<String, List<DishInItemList>> entry : listHashMap.entrySet()) {
+            for (Category category : categories) {
+                if (category.getCategoryId().equals(entry.getKey())) {
+                    categoryListHashMap.put(category, entry.getValue());
+
+                }
+            }
+        }
+        return categoryListHashMap;
     }
 }

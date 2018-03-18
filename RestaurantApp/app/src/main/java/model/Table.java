@@ -5,24 +5,43 @@ package model;
  */
 
 public class Table {
-    private int tableNo;
-    private boolean status;
+    private int seqId;
+    private int tableId;
+    private Status status;
     private Order order;
 
-
-    public int getTableNo() {
-        return tableNo;
+    public Table(int seqId, int tableId, Status status, Order order) {
+        this.seqId = seqId;
+        this.tableId = tableId;
+        this.status = status;
+        this.order = order;
     }
 
-    public void setTableNo(int tableNo) {
-        this.tableNo = tableNo;
+    public Table() {
+
     }
 
-    public boolean isStatus() {
+    public int getSeqId() {
+        return seqId;
+    }
+
+    public void setSeqId(int seqId) {
+        this.seqId = seqId;
+    }
+
+    public int getTableId() {
+        return tableId;
+    }
+
+    public void setTableId(int tableId) {
+        this.tableId = tableId;
+    }
+
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 

@@ -48,7 +48,7 @@ public class ItemRequestRVAdapter extends RecyclerView.Adapter<ItemRequestRVAdap
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         DishInItemList dishInItemList = dishInItemLists.get(position);
         holder.itemRequestId.setText(String.valueOf(position));
-        holder.itemRequestHeader.setText(dishInItemList.getDish().getName());
+        holder.itemRequestHeader.setText(dishInItemList.getDish().getItemName());
         holder.itemRequestQuantity.setText(String.valueOf(dishInItemList.getQuantity()));
     }
 

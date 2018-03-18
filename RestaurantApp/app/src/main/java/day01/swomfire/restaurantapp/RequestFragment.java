@@ -64,7 +64,7 @@ public class RequestFragment extends Fragment {
     }
 
     public void loadRequestList() {
-        mService.getRequestList().enqueue(new Callback<List<OrderRequest>>() {
+        mService.getRequestOrderList().enqueue(new Callback<List<OrderRequest>>() {
             @Override
             public void onResponse(Call<List<OrderRequest>> call, Response<List<OrderRequest>> response) {
                 if (response.isSuccessful()) {
@@ -79,7 +79,7 @@ public class RequestFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<OrderRequest>> call, Throwable t) {
-                System.out.println("Failed to load item list");
+                System.out.println("Failed to load Order Request list");
             }
         });
     }

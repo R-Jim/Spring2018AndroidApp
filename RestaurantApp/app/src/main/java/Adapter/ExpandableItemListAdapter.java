@@ -13,8 +13,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import data.model.Category;
 import day01.swomfire.restaurantapp.R;
 import model.DishInItemList;
+import utils.StyleUtils;
 
 /**
  * Created by Swomfire on 08-Mar-18.
@@ -22,28 +24,33 @@ import model.DishInItemList;
 
 public class ExpandableItemListAdapter extends BaseExpandableListAdapter {
     private Context context;
-    private static List<String> listDataHeader;
-    private static HashMap<String, List<DishInItemList>> listHashMap;
-    private int lastExpandedGroup;
+    private static List<Category> listDataHeader;
+    private static HashMap<Category, List<DishInItemList>> listHashMap;
 
-    public ExpandableItemListAdapter(Context context, List<String> listDataHeader, HashMap<String, List<DishInItemList>> listHashMap) {
+    public ExpandableItemListAdapter(Context context, List<Category> listDataHeader, HashMap<Category, List<DishInItemList>> listHashMap) {
         this.context = context;
         this.listDataHeader = listDataHeader;
         this.listHashMap = listHashMap;
     }
 
 
-    public static HashMap<String, List<DishInItemList>> getListHashMap() {
+    public static HashMap<Category, List<DishInItemList>> getListHashMap() {
         return listHashMap;
     }
 
     @Override
     public int getGroupCount() {
+        if (listDataHeader == null) {
+            return -1;
+        }
         return listDataHeader.size();
     }
 
     @Override
     public int getChildrenCount(int groupPosition) {
+        if (listHashMap == null) {
+            return -1;
+        }
         return listHashMap.get(listDataHeader.get(groupPosition)).size();
     }
 
@@ -81,30 +88,35 @@ public class ExpandableItemListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getGroupView(int i, boolean b, View view, ViewGroup viewGroup) {
-        String headerTitle = (String) getGroup(i);
+        Category category = (Category) getGroup(i);
+        String headerTitle = category.getCategoryId();
         LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         if (b) {
-            lastExpandedGroup = i;
             view = layoutInflater.inflate(R.layout.item_tab_list_group_expanded, null);
         } else {
             view = layoutInflater.inflate(R.layout.item_tab_list_group, null);
-
+            TextView lblDescription = view.findViewById(R.id.lblListItemDescription);
+            lblDescription.setText(category.getDescription());
         }
         TextView lblListHeader = (TextView) view.findViewById(R.id.lblListItemHeader);
         lblListHeader.setTypeface(null, Typeface.BOLD);
         lblListHeader.setText(headerTitle);
         switch (i % 4) {
             case 0:
-                view.setBackgroundColor(view.getResources().getColor(R.color.colorItemGroupColor1));
+                StyleUtils.setGradientBackground(view, new int[]{view.getResources().getColor(R.color.colorItemGroupColor1),
+                        view.getResources().getColor(R.color.colorItemGroupColor1_5)}, StyleUtils.GradientMode.LEFT_RIGHT.getMode());
                 break;
             case 1:
-                view.setBackgroundColor(view.getResources().getColor(R.color.colorItemGroupColor2));
+                StyleUtils.setGradientBackground(view, new int[]{view.getResources().getColor(R.color.colorItemGroupColor2),
+                        view.getResources().getColor(R.color.colorItemGroupColor2_5)}, StyleUtils.GradientMode.LEFT_RIGHT.getMode());
                 break;
             case 2:
-                view.setBackgroundColor(view.getResources().getColor(R.color.colorItemGroupColor3));
+                StyleUtils.setGradientBackground(view, new int[]{view.getResources().getColor(R.color.colorItemGroupColor3),
+                        view.getResources().getColor(R.color.colorItemGroupColor3_5)}, StyleUtils.GradientMode.LEFT_RIGHT.getMode());
                 break;
             case 3:
-                view.setBackgroundColor(view.getResources().getColor(R.color.colorItemGroupColor4));
+                StyleUtils.setGradientBackground(view, new int[]{view.getResources().getColor(R.color.colorItemGroupColor4),
+                        view.getResources().getColor(R.color.colorItemGroupColor4_5)}, StyleUtils.GradientMode.LEFT_RIGHT.getMode());
                 break;
         }
         return view;
@@ -123,7 +135,7 @@ public class ExpandableItemListAdapter extends BaseExpandableListAdapter {
         lblId.setText(i + "," + i1);
 
         TextView lblName = (TextView) view.findViewById(R.id.lblListItem);
-        lblName.setText(dish.getDish().getName());
+        lblName.setText(dish.getDish().getItemName());
         CheckBox checkBox = (CheckBox) view.findViewById(R.id.itemCheckbox);
         checkBox.setChecked(dish.isSelected());
 
@@ -132,16 +144,20 @@ public class ExpandableItemListAdapter extends BaseExpandableListAdapter {
 
         switch (i % 4) {
             case 0:
-                view.setBackgroundColor(view.getResources().getColor(R.color.colorItemGroupColor1));
+                StyleUtils.setGradientBackground(view, new int[]{view.getResources().getColor(R.color.colorItemGroupColor1),
+                        view.getResources().getColor(R.color.colorItemGroupColor1_5)}, StyleUtils.GradientMode.LEFT_RIGHT.getMode());
                 break;
             case 1:
-                view.setBackgroundColor(view.getResources().getColor(R.color.colorItemGroupColor2));
+                StyleUtils.setGradientBackground(view, new int[]{view.getResources().getColor(R.color.colorItemGroupColor2),
+                        view.getResources().getColor(R.color.colorItemGroupColor2_5)}, StyleUtils.GradientMode.LEFT_RIGHT.getMode());
                 break;
             case 2:
-                view.setBackgroundColor(view.getResources().getColor(R.color.colorItemGroupColor3));
+                StyleUtils.setGradientBackground(view, new int[]{view.getResources().getColor(R.color.colorItemGroupColor3),
+                        view.getResources().getColor(R.color.colorItemGroupColor3_5)}, StyleUtils.GradientMode.LEFT_RIGHT.getMode());
                 break;
             case 3:
-                view.setBackgroundColor(view.getResources().getColor(R.color.colorItemGroupColor4));
+                StyleUtils.setGradientBackground(view, new int[]{view.getResources().getColor(R.color.colorItemGroupColor4),
+                        view.getResources().getColor(R.color.colorItemGroupColor4_5)}, StyleUtils.GradientMode.LEFT_RIGHT.getMode());
                 break;
         }
         return view;

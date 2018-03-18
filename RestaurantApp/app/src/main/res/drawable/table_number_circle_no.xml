@@ -4,7 +4,6 @@
         android:height="120dp">
         <shape
             android:shape="oval">
-
             <solid android:color="#7bb9ff" />
         </shape>
     </item>
@@ -13,7 +12,6 @@
         android:gravity="right">
         <shape
             android:shape="oval">
-
             <solid android:color="#f02f53" />
         </shape>
     </item>

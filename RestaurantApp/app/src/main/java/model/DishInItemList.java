@@ -2,20 +2,22 @@ package model;
 
 import java.util.concurrent.ThreadLocalRandom;
 
+import data.model.Item;
+
 /**
  * Created by Swomfire on 14-Mar-18.
  */
 
 public class DishInItemList {
-    private Dish dish;
+    private Item dish;
     private int quantity;
     private boolean selected;
 
-    public Dish getDish() {
+    public Item getDish() {
         return dish;
     }
 
-    public void setDish(Dish dish) {
+    public void setDish(Item dish) {
         this.dish = dish;
     }
 
@@ -35,7 +37,7 @@ public class DishInItemList {
         this.selected = selected;
     }
 
-    public DishInItemList(Dish dish, int quantity, boolean selected) {
+    public DishInItemList(Item dish, int quantity, boolean selected) {
         this.dish = dish;
         this.quantity = quantity;
         this.selected = selected;

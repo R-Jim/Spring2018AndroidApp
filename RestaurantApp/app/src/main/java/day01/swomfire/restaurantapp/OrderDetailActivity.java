@@ -24,16 +24,16 @@ public class OrderDetailActivity extends AppCompatActivity {
 
         FragmentTabHost tabHost = findViewById(R.id.tabhost);
         tabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
-
-        setNewTab(this,
-                tabHost,
-                ORDERING_TAB,
-                getResources().getString(R.string.ordering_tab_title));
-
-        setNewTab(this,
-                tabHost,
-                ORDERED_TAB,
-                getResources().getString(R.string.ordered_tab_title));
+        View tab1 = View.inflate(getBaseContext(), R.layout.tabwidget_req_list_indicator, null);
+        View tab2 = View.inflate(getBaseContext(), R.layout.tabwidget_table_list_indicator, null);
+        tabHost.addTab(tabHost.newTabSpec(ORDERING_TAB)
+                        .setIndicator(tab1),
+                RequestFragment.class,
+                null);
+        tabHost.addTab(tabHost.newTabSpec(ORDERED_TAB)
+                        .setIndicator(tab2),
+                RequestFragment.class,
+                null);
 
         tabHost.setOnTabChangedListener(tabId -> {
             for (int i = 0; i < tabHost.getTabWidget().getChildCount(); i++) {

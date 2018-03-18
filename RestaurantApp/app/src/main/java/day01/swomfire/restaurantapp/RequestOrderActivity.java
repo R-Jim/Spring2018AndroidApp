@@ -17,7 +17,9 @@ import java.util.List;
 import java.util.Map;
 
 import adapter.ItemRequestRVAdapter;
+import data.model.Category;
 import model.DishInItemList;
+import utils.StyleUtils;
 
 public class RequestOrderActivity extends AppCompatActivity {
 
@@ -26,7 +28,7 @@ public class RequestOrderActivity extends AppCompatActivity {
     private static List<DishInItemList> dishInItemLists;
     private static RecyclerView recyclerView;
     private static ItemRequestRVAdapter itemRequestRVAdapter;
-    private static HashMap<String, List<DishInItemList>> listHashMap;
+    private static HashMap<Category, List<DishInItemList>> listHashMap;
     private static TextView lblNewRequest;
 
     private static void initRecyclerView(int id, List<DishInItemList> dishInItemLists, Activity activity) {
@@ -45,6 +47,10 @@ public class RequestOrderActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_request_order);
 
+        StyleUtils.setGradientBackground(findViewById(android.R.id.content), R.id.requestOrderLayout,
+                new int[]{getColor(R.color.colorDoneOrderBackground1),
+                        getColor(R.color.colorDoneOrderBackground2)},StyleUtils.GradientMode.TOP_BOTTOM.getMode());
+
         initRecycleListView(this);
     }
 
@@ -52,7 +58,7 @@ public class RequestOrderActivity extends AppCompatActivity {
         int newQuantity = 0;
         dishInItemLists = new ArrayList<>();
         listHashMap = ItemFragment.getListHashMap();
-        for (Map.Entry<String, List<DishInItemList>> entry : listHashMap.entrySet()) {
+        for (Map.Entry<Category, List<DishInItemList>> entry : listHashMap.entrySet()) {
             for (DishInItemList dishInItemList : entry.getValue()) {
                 if (dishInItemList.isSelected()) {
                     dishInItemLists.add(dishInItemList);
@@ -82,7 +88,7 @@ public class RequestOrderActivity extends AppCompatActivity {
 
 
     public void cancelRequest(View view) {
-        for (Map.Entry<String, List<DishInItemList>> entry : listHashMap.entrySet()) {
+        for (Map.Entry<Category, List<DishInItemList>> entry : listHashMap.entrySet()) {
             for (DishInItemList dishInItemList : entry.getValue()) {
                 if (dishInItemList.isSelected()) {
                     dishInItemList.setSelected(false);
@@ -101,6 +107,8 @@ public class RequestOrderActivity extends AppCompatActivity {
         requestOrderItemQuantityDialogFragment = new RequestOrderItemQuantityDialogFragment();
         requestOrderItemQuantityDialogFragment.setUp(view);
         requestOrderItemQuantityDialogFragment.show(fm, "fragment_dialog_item_request_quantity");
+
+
     }
 
     public static DishInItemList getDishInRequestItemList(int position) {

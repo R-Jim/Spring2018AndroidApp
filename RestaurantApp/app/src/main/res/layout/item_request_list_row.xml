@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="@dimen/request_item_row_height"
-    android:orientation="vertical"
-    android:gravity="center">
+    android:gravity="center"
+    android:orientation="vertical">
 
     <android.support.v7.widget.CardView
         android:id="@+id/cardView"
+        app:cardElevation="0dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:cardBackgroundColor="@android:color/transparent">
 
 
         <RelativeLayout
             android:id="@+id/relativeLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:background="@color/colorDoneOrderItemListBackground"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingLeft="30dp">
-
 
             <TextView
                 android:id="@+id/lblItemRequestRowHeader"
@@ -38,24 +38,31 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/lblItemRequestRowHeader"
-                android:onClick="requestItemQuantityChange">
+                android:layout_toRightOf="@id/lblItemRequestRowHeader">
 
-
-                <TextView
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:fontFamily="@font/roboto_bold"
-                    android:text="x"
-                    android:textColor="@color/colorDoneOrderBackgroundNewRequest" />
+                    android:layout_height="wrap_content"
+                    android:background="#28000000"
+                    android:onClick="requestItemQuantityChange"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp">
 
-                <TextView
-                    android:id="@+id/lblItemRequestRowQuantity"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:fontFamily="@font/roboto_bold"
-                    android:text="0"
-                    android:textColor="@color/colorDoneOrderBackgroundNewRequest" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/roboto_bold"
+                        android:text="x"
+                        android:textColor="@color/colorDoneOrderBackgroundNewRequest" />
+
+                    <TextView
+                        android:id="@+id/lblItemRequestRowQuantity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/roboto_bold"
+                        android:text="0"
+                        android:textColor="@color/colorDoneOrderBackgroundNewRequest" />
+                </LinearLayout>
 
             </LinearLayout>
         </RelativeLayout>

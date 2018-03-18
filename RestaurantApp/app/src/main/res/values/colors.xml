@@ -10,26 +10,42 @@
     <color name="colorActive">#5294bb</color>
     <color name="colorInactive">#bcbcbc</color>
 
+    <color name="colorItemGroupDivider">#eb878787</color>
     <color name="colorItemGroupColor1">#41c9c5</color>
+    <color name="colorItemGroupColor1_5">#299c99</color>
     <color name="colorItemGroupColor2">#4fa2d1</color>
+    <color name="colorItemGroupColor2_5">#387ea6</color>
     <color name="colorItemGroupColor3">#4875a9</color>
+    <color name="colorItemGroupColor3_5">#2c5380</color>
     <color name="colorItemGroupColor4">#5b5389</color>
+    <color name="colorItemGroupColor4_5">#3c3661</color>
+
+    <color name="colorItemGroupItemQuantityDialogText">#ffffff</color>
 
 
-    <color name="colorDoneOrderBackground">#ffffff</color>
+    <color name="colorDoneOrderBackground1">#423354</color>
+    <color name="colorDoneOrderBackground2">#261e32</color>
+
+
     <color name="colorDoneOrderItemListBackground">#ffffff</color>
     <color name="colorDoneOrderBackgroundConfirm">#00e676</color>
     <color name="colorDoneOrderBackgroundCancel">#FF3D00</color>
-    <color name="colorDoneOrderBackgroundNewRequest">#303F9F</color>
-    <color name="colorDoneOrderBackgroundLineBreaker">#63605f</color>
+    <color name="colorDoneOrderBackgroundNewRequest">#FFD54F</color>
+    <color name="colorDoneOrderBackgroundLineBreaker">#ffffff</color>
 
 
     <color name="colorItemTabBackground">#7b45f9</color>
     <color name="colorItemGroupTextColor">#fcfcfc</color>
 
+
     <color name="colorComTabBg">#ffa939</color>
     <color name="colorComTabBgPressed">#e07c19</color>
     <color name="colorComTabTextSelected">#ffffff</color>
     <color name="colorComTabTextUnselected">#ac7026</color>
+
+    <color name="colorTableGroupAddIconColor">#000000</color>
+    <color name="colorTableGroupAddIconStrokeColor">#8f8f8f</color>
+
+
 
 </resources>

@@ -25,21 +25,6 @@ public class TabHostServiceImpl implements TabHostService {
     private TabHost.TabSpec tab;
 
 
-//    public enum TAB {
-//        REQLIST("REQUEST_LIST_TAB"),
-//        TABLELIST("TABLE_LIST_TAB"),
-//        DISHLIST("DISH_LIST_TAB");
-//
-//        public String tabName;
-//
-//        TAB(String tabName) {
-//            this.tabName = tabName;
-//        }
-//
-//
-//    }
-//    ;
-
     public TabHostServiceImpl(Context context) {
         this.context = context;
     }
@@ -51,9 +36,6 @@ public class TabHostServiceImpl implements TabHostService {
         for (int i = 0; i < tabHost.getTabWidget().getChildCount(); i++) {
             View ivTopBar = tabHost.getTabWidget().getChildAt(i).findViewById(R.id.vTopBar);
             ivTopBar.setVisibility(View.INVISIBLE);
-/*            TextView tabTitle = tabHost.getTabWidget().getChildAt(i).findViewById(R.id.tab_title);
-            tabTitle.setTextColor(ContextCompat.getColor(tabHost.getContext(), R.color.colorTabInactive));*/
-
         }
 
         // Change icon to inactive ones
@@ -87,18 +69,10 @@ public class TabHostServiceImpl implements TabHostService {
                 ItemFragment.class,
                 null);
 
-//        tab = tabHost.newTabSpec("tableTab").setIndicator("", context.getResources().getDrawable(R.drawable.ic_tab_assignment_24dp));
-//        tabHost.addTab(tab, TableFragment.class, null);
-
-//        tabHost.addTab(tabHost.newTabSpec("itemTab").setIndicator("", context.getResources().getDrawable(R.drawable.item_tab_icon)),
-//                ItemFragment.class, null);
-
     }
 
     @Override
     public void tabChooseIndicator(FragmentTabHost tabHost, String switchCase) {
-/*        TextView tabTitle = tabHost.getTabWidget().getChildAt(tabHost.getCurrentTab()).findViewById(R.id.tab_title);
-        tabTitle.setTextColor(ContextCompat.getColor(tabHost.getContext(), R.color.colorTabActive));*/
         View ivTopBar = tabHost.getTabWidget().getChildAt(tabHost.getCurrentTab()).findViewById(R.id.vTopBar);
         ivTopBar.setVisibility(View.VISIBLE);
 

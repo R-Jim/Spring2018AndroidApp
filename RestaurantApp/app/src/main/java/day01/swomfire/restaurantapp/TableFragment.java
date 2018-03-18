@@ -18,17 +18,19 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import adapter.TableRVAdapter;
-import data.remote.APIService;
+import data.remote.RmaAPIService;
 import model.Status;
 import data.model.Table;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import utils.APIUtils;
+import utils.RmaAPIUtils;
 
 
 public class TableFragment extends Fragment {
+
 
     private RecyclerView recyclerView;
     private TableRVAdapter tableRVAdapter;
@@ -36,6 +38,7 @@ public class TableFragment extends Fragment {
     private Spinner spinner;
     private static final String[] paths = {"All", "Free", "Ordering"};
     private TextView totalTable;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,7 +52,9 @@ public class TableFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 
         super.onViewCreated(view, savedInstanceState);
+
         totalTable = view.findViewById(R.id.lblNumberOfTable);
+
 
         initSpinner(view);
         tables = new ArrayList<>();
@@ -59,7 +64,7 @@ public class TableFragment extends Fragment {
     }
 
     public void loadRequestList() {
-        APIService mService = APIUtils.getAPIService();
+        RmaAPIService mService = RmaAPIUtils.getAPIService();
         mService.getTableList().enqueue(new Callback<List<Table>>() {
             @Override
             public void onResponse(Call<List<Table>> call, Response<List<Table>> response) {

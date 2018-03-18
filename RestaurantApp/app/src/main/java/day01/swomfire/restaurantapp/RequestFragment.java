@@ -1,7 +1,5 @@
 package day01.swomfire.restaurantapp;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -16,18 +14,18 @@ import java.util.List;
 
 import adapter.CustomRVAdapter;
 import data.model.OrderRequest;
-import data.remote.APIService;
+import data.remote.RmaAPIService;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import utils.APIUtils;
+import utils.RmaAPIUtils;
 
 public class RequestFragment extends Fragment {
     private RecyclerView rv;
     private android.widget.ExpandableListAdapter listAdapter;
     private List<OrderRequest> requestList;
 
-    private APIService mService;
+    private RmaAPIService mService;
 
 
     @Override
@@ -35,19 +33,17 @@ public class RequestFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        return inflater.inflate(R.layout.fragment_table, container, false);
+        return inflater.inflate(R.layout.fragment_request, container, false);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mService = APIUtils.getAPIService();
+        mService = RmaAPIUtils.getAPIService();
 
-/*
         rv = getView().findViewById(R.id.rv_request_list);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         rv.setLayoutManager(layoutManager);
-*/
 
         loadRequestList();
 
@@ -68,7 +64,7 @@ public class RequestFragment extends Fragment {
     }
 
     public void loadRequestList() {
-        mService.getRequestList().enqueue(new Callback<List<OrderRequest>>() {
+        mService.getRequestOrderList().enqueue(new Callback<List<OrderRequest>>() {
             @Override
             public void onResponse(Call<List<OrderRequest>> call, Response<List<OrderRequest>> response) {
                 if (response.isSuccessful()) {
@@ -83,7 +79,7 @@ public class RequestFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<OrderRequest>> call, Throwable t) {
-                System.out.println("Failed to load item list");
+                System.out.println("Failed to load Order Request list");
             }
         });
     }

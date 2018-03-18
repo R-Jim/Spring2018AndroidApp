@@ -39,4 +39,10 @@
         <item name="android:textColor">@color/colorItemGroupTextColor</item>
         <item name="android:background">@color/colorPrimary</item>
     </style>
+
+    <style name="orderDetailTextStyle">
+        <item name="android:fontFamily">@font/roboto_bold</item>
+        <item name="android:textSize">14dp</item>
+        <item name="android:textColor">@color/colorOrderDetailTableInfoTextColor</item>
+    </style>
 </resources>

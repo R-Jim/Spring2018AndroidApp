@@ -18,7 +18,7 @@ import retrofit2.http.Query;
  * Created by elpsychris on 03/12/2018.
  */
 
-public interface APIService {
+public interface RmaAPIService {
 
     // Synchronous declaration
     @GET("/getItem")
@@ -35,4 +35,7 @@ public interface APIService {
 
     @GET("/categories")
     Call<List<Category>> getCategoryList();
+
+    @GET("/requests")
+    Call<List<OrderRequest>> getRequestOrderList();
 }

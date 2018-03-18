@@ -18,12 +18,12 @@ import java.util.Map;
 import adapter.ExpandableItemListAdapter;
 import data.model.Category;
 import data.model.Item;
-import data.remote.APIService;
+import data.remote.RmaAPIService;
 import model.DishInItemList;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import utils.APIUtils;
+import utils.RmaAPIUtils;
 
 
 public class ItemFragment extends Fragment {
@@ -52,7 +52,7 @@ public class ItemFragment extends Fragment {
 
 
     private void loadDishList() {
-        APIService mService = APIUtils.getAPIService();
+        RmaAPIService mService = RmaAPIUtils.getAPIService();
 
         mService.getItemList().enqueue(new Callback<List<Item>>() {
             @Override
@@ -74,7 +74,7 @@ public class ItemFragment extends Fragment {
     }
 
     private void loadCategoryList() {
-        APIService mService = APIUtils.getAPIService();
+        RmaAPIService mService = RmaAPIUtils.getAPIService();
 
         mService.getCategoryList().enqueue(new Callback<List<Category>>() {
             @Override

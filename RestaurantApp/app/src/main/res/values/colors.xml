@@ -7,7 +7,7 @@
     <color name="colorTabActive">#FFD54F</color>
     <color name="colorTabInactive">#ffffff</color>
     <color name="colorTabSelectedBackground">#3F51B5</color>
-    <color name="colorActive">#3399ff</color>
+    <color name="colorActive">#5294bb</color>
     <color name="colorInactive">#bcbcbc</color>
 
     <color name="colorItemGroupDivider">#eb878787</color>
@@ -36,6 +36,21 @@
 
     <color name="colorItemTabBackground">#7b45f9</color>
     <color name="colorItemGroupTextColor">#fcfcfc</color>
+
+
+    <color name="colorComTabBg">#ffa939</color>
+    <color name="colorComTabBgPressed">#e07c19</color>
+    <color name="colorComTabTextSelected">#FFD54F</color>
+    <color name="colorComTabTextUnselected">#ffffff</color>
+
+    <color name="colorOrderDetailTableInfoTextColor">#ffffff</color>
+    <color name="colorOrderDetailTableInfoBGColor">#2c5380</color>
+
+    <color name="colorOrderDetailTableTabContentBGColor">#5b5389</color>
+
+    <color name="colorOrderDetailTableOrderedTextColor">#ffffff</color>
+
+    <color name="colorOrderDetailTabWidgetBGColor">#2c5380</color>
 
     <color name="colorTableGroupAddIconColor">#000000</color>
     <color name="colorTableGroupAddIconStrokeColor">#8f8f8f</color>

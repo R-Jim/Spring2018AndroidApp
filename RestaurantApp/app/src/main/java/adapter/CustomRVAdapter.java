@@ -56,9 +56,9 @@ public class CustomRVAdapter extends RecyclerView.Adapter<CustomRVAdapter.Reques
 
     @Override
     public void onBindViewHolder(@NonNull RequestViewHolder holder, int position) {
-        holder.tvTableId.setText(requestList.get(position).getTableId() + "");
-        holder.tvDishName.setText(requestList.get(position).getItem().getItemName());
-        holder.tvDishDiscr.setText(requestList.get(position).getItem().getItemId());
+        holder.tvTableId.setText(requestList.get(position).getTableNo() + "");
+        holder.tvDishName.setText(requestList.get(position).getItemName());
+        holder.tvDishDiscr.setText(requestList.get(position).getItemSeq());
     }
 
 

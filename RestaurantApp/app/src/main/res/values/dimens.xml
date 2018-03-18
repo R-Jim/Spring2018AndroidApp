@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="item_tab_item_list_size">10dp</dimen>
+    <dimen name="item_tab_order_detail_list_size">15dp</dimen>
+    <dimen name="item_tab_order_detail_text_size">18dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="tab_height">50dp</dimen>
+    <dimen name="order_detail_tab_height">50dp</dimen>
     <dimen name="request_item_row_height">40dp</dimen>
     <dimen name="table_row_height">80dp</dimen>
+    <dimen name="setting_item_size">18dp</dimen>
+    <dimen name="cardview_default_padding">5dp</dimen>
+    <dimen name="about_text_size">25dp</dimen>
+    <dimen name="setting_img_margin">10dp</dimen>
+    <dimen name="card_setting_min_height">70dp</dimen>
 </resources>

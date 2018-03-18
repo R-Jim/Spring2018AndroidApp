@@ -26,12 +26,16 @@ import android.widget.TextView;
 import android.widget.TabWidget;
 
 
+import com.google.firebase.messaging.FirebaseMessaging;
+
 import adapter.ExpandableItemListAdapter;
 import model.DishInItemList;
 import service.TabHostService;
 import service.TabHostServiceImpl;
 
 public class MainActivity extends AppCompatActivity {
+    private final String FB_TOPIC_REQUESTLIST = "RequestList";
+
     private FragmentTabHost tabHost;
     //    private ExpandableListView listView;
     private RecyclerView rvReqList;
@@ -46,6 +50,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Subscribe to topic with API
+        FirebaseMessaging.getInstance().subscribeToTopic(FB_TOPIC_REQUESTLIST);
+
         tabWidget = findViewById(android.R.id.tabs);
 
         setSupportActionBar((Toolbar) findViewById(R.id.my_toolbar));
@@ -56,10 +63,23 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void showPopup(View v) {
-        PopupMenu popup = new PopupMenu(this, v);
-        popup.getMenu().add("View statistic");
-        popup.getMenu().add("Dashboard");
-        popup.getMenu().add("Bla bla");
+        PopupMenu popup = new PopupMenu(MainActivity.this, v);
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                Intent intent;
+                if (item.getTitle().equals(getResources().getString(R.string.popup_setting))) {
+                    intent = new Intent(MainActivity.this, SettingActivity.class);
+                    startActivity(intent);
+                }
+                if (item.getTitle().equals(getResources().getString(R.string.popup_logout))) {
+//                    Waiting for implementation
+                }
+
+                return true;
+            }
+        });
+
         getMenuInflater().inflate(R.menu.menu, popup.getMenu());
         popup.show();
     }
@@ -165,6 +185,11 @@ public class MainActivity extends AppCompatActivity {
         lblNumberOfDishRequested.setText(String.valueOf(quantity));
     }
 
+    public void onRequestCardClick(View view) {
+        Intent intent = new Intent(this, OrderDetailActivity.class);
+        startActivity(intent);
+    }
+    
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

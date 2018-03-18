@@ -35,6 +35,7 @@ import service.TabHostServiceImpl;
 
 public class MainActivity extends AppCompatActivity {
     private final String FB_TOPIC_REQUESTLIST = "RequestList";
+
     private FragmentTabHost tabHost;
     //    private ExpandableListView listView;
     private RecyclerView rvReqList;
@@ -62,10 +63,23 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void showPopup(View v) {
-        PopupMenu popup = new PopupMenu(this, v);
-        popup.getMenu().add("View statistic");
-        popup.getMenu().add("Dashboard");
-        popup.getMenu().add("Bla bla");
+        PopupMenu popup = new PopupMenu(MainActivity.this, v);
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                Intent intent;
+                if (item.getTitle().equals(getResources().getString(R.string.popup_setting))) {
+                    intent = new Intent(MainActivity.this, SettingActivity.class);
+                    startActivity(intent);
+                }
+                if (item.getTitle().equals(getResources().getString(R.string.popup_logout))) {
+//                    Waiting for implementation
+                }
+
+                return true;
+            }
+        });
+
         getMenuInflater().inflate(R.menu.menu, popup.getMenu());
         popup.show();
     }

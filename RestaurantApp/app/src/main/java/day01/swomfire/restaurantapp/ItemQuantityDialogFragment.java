@@ -19,17 +19,11 @@ import model.DishInItemList;
 import utils.StyleUtils;
 
 public class ItemQuantityDialogFragment extends DialogFragment {
-    private static View view;
-    private static LinearLayout linearLayout;
     private int quantityOld;
     private TextView currentItemQuantityText;
     private TextView itemQuantityText;
     private TextView lblId;
 
-    public void setUp(View view, LinearLayout linearLayout) {
-        this.view = view;
-        this.linearLayout = linearLayout;
-    }
 
     @NonNull
     @Override
@@ -38,7 +32,8 @@ public class ItemQuantityDialogFragment extends DialogFragment {
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View quantityDialog = inflater.inflate(R.layout.fragment_dialog_item_quantity, null);
-        GradientDrawable background = (GradientDrawable) linearLayout.getBackground().getConstantState().newDrawable();
+        View view = getActivity().findViewById(R.id.itemItem);
+        GradientDrawable background = (GradientDrawable) view.getBackground().getConstantState().newDrawable();
         quantityDialog.setBackground(background);
         builder.setView(quantityDialog);
 
@@ -71,7 +66,7 @@ public class ItemQuantityDialogFragment extends DialogFragment {
                     quantity += (quantityNew - quantityOld);
                     lblNumberOfDishRequested.setText(String.valueOf(quantity));
                 }
-                MainActivity.closeDialog();
+                ItemQuantityDialogFragment.this.dismiss();
             }
         });
         // Add button edit

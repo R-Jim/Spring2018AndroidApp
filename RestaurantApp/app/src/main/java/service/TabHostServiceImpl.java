@@ -22,7 +22,6 @@ public class TabHostServiceImpl implements TabHostService {
 
     private Context context;
     private ImageView imageView;
-    private TabHost.TabSpec tab;
 
 
     public TabHostServiceImpl(Context context) {

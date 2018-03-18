@@ -51,7 +51,9 @@ public class OrderDetailRVAdapter extends RecyclerView.Adapter<OrderDetailRVAdap
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         DishInReceipt dishInReceipt = dishInReceipts.get(position);
         holder.itemName.setText(dishInReceipt.getDish().getItemName());
-        holder.itemPosition.setText(String.valueOf(position));
+        if (holder.itemPosition != null) {
+            holder.itemPosition.setText(String.valueOf(position));
+        }
         holder.itemQuantity.setText(String.valueOf(dishInReceipt.getQuantity()));
     }
 

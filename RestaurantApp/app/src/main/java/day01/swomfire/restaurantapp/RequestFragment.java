@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import adapter.CustomRVAdapter;
@@ -44,21 +45,7 @@ public class RequestFragment extends Fragment {
         rv = getView().findViewById(R.id.rv_request_list);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         rv.setLayoutManager(layoutManager);
-
         loadRequestList();
-
-        //Only allow 1 expanded group
-//        listView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
-//            int prevGrp = -1;
-//            @Override
-//            public void onGroupExpand(int i) {
-//                if (i != prevGrp) {
-//                    listView.collapseGroup(prevGrp);
-//                    prevGrp = i;
-//                }
-//            }
-//        });
-//        initData();
 
 
     }
@@ -80,6 +67,7 @@ public class RequestFragment extends Fragment {
             @Override
             public void onFailure(Call<List<OrderRequest>> call, Throwable t) {
                 System.out.println("Failed to load Order Request list");
+
             }
         });
     }

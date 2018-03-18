@@ -1,6 +1,8 @@
 package day01.swomfire.restaurantapp;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -9,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
+
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,7 +35,7 @@ public class ItemFragment extends Fragment {
 
     private ExpandableListView listView;
     private ExpandableItemListAdapter listAdapter;
-    private static HashMap<Category, List<DishInItemList>> listHashMap;
+    private HashMap<Category, List<DishInItemList>> listHashMap;
     private List<Item> itemListFromDb;
     private List<Category> categoryListFromDb;
     private View view;
@@ -193,14 +197,21 @@ public class ItemFragment extends Fragment {
                 return true;
             }
         });
+        SharedPreferences appSharedPrefs = PreferenceManager
+                .getDefaultSharedPreferences(getActivity().getApplicationContext());
+        SharedPreferences.Editor prefsEditor = appSharedPrefs.edit();
+        HashMap<String, List<DishInItemList>> stringListHashMap = DishInItemList.convertHashmapToStringKey(listHashMap);
+        Gson gson = new Gson();
+        String json = gson.toJson(stringListHashMap);
+        prefsEditor.putString("listDishInListStringHashMap", json);
+        json = gson.toJson(categoryListFromDb);
+        prefsEditor.putString("listCategory", json);
+        prefsEditor.commit();
     }
 
     private DishInItemList createDish(Item item) {
         return new DishInItemList(item, 1, false);
     }
 
-    public static HashMap<Category, List<DishInItemList>> getListHashMap() {
-        return listHashMap;
-    }
 
 }

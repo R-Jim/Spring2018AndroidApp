@@ -33,6 +33,7 @@
         app:cardMaxElevation="1dp"
         app:cardPreventCornerOverlap="true"
         app:cardUseCompatPadding="true"
+        android:minHeight="@dimen/card_setting_min_height"
         app:contentPadding="10dp"
         app:contentPaddingBottom="0dp">
 
@@ -44,11 +45,12 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_account_circle" />
+                android:src="@drawable/ic_account_circle"
+                android:layout_marginRight="@dimen/setting_img_margin"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:paddingLeft="@dimen/cardview_default_padding">
 
@@ -70,6 +72,7 @@
         android:id="@+id/cv_credential"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:minHeight="@dimen/card_setting_min_height"
         android:onClick="onNotiChangeClick"
         app:cardCornerRadius="0dp"
         app:cardElevation="0.7dp"
@@ -87,7 +90,8 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_notifications" />
+                android:src="@drawable/ic_notifications"
+                android:layout_marginRight="@dimen/setting_img_margin"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -127,6 +131,7 @@
         app:cardPreventCornerOverlap="true"
         app:cardUseCompatPadding="true"
         app:contentPadding="10dp"
+        android:minHeight="@dimen/card_setting_min_height"
         app:contentPaddingBottom="0dp">
 
         <LinearLayout
@@ -137,7 +142,8 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_remove_circle" />
+                android:src="@drawable/ic_remove_circle"
+                android:layout_marginRight="@dimen/setting_img_margin"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -182,7 +188,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/setting_staffid_title"
-                android:textSize="@dimen/setting_item_size"
                 android:textStyle="bold" />
         </LinearLayout>
     </android.support.v7.widget.CardView>

@@ -24,25 +24,31 @@ public class OrderDetailActivity extends AppCompatActivity {
 
         FragmentTabHost tabHost = findViewById(R.id.tabhost);
         tabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
-        View tab1 = View.inflate(getBaseContext(), R.layout.tabwidget_req_list_indicator, null);
-        View tab2 = View.inflate(getBaseContext(), R.layout.tabwidget_table_list_indicator, null);
+        View tab1 = View.inflate(getBaseContext(), R.layout.tabwidget_order_detail_ordering_indicator, null);
+        View tab2 = View.inflate(getBaseContext(), R.layout.tabwidget_order_detail_ordered_indicator, null);
         tabHost.addTab(tabHost.newTabSpec(ORDERING_TAB)
                         .setIndicator(tab1),
-                RequestFragment.class,
+                OrderDetailOrderingTabFragment.class,
                 null);
         tabHost.addTab(tabHost.newTabSpec(ORDERED_TAB)
                         .setIndicator(tab2),
-                RequestFragment.class,
+                OrderDetailOrderedTabFragment.class,
                 null);
 
         tabHost.setOnTabChangedListener(tabId -> {
             for (int i = 0; i < tabHost.getTabWidget().getChildCount(); i++) {
-                TextView tv = tabHost.getTabWidget().getChildAt(i).findViewById(R.id.tvTabTitle);
+                View view = tabHost.getTabWidget().getChildAt(i);
+                TextView tv = view.findViewById(R.id.tvTabTitle);
                 tv.setTextColor(getColor(R.color.colorComTabTextUnselected));
-            }
 
-            TextView tv = tabHost.getTabWidget().getChildAt(tabHost.getCurrentTab()).findViewById(R.id.tvTabTitle);
+                View viewBar = view.findViewById(R.id.vTopBar);
+                viewBar.setBackgroundColor(getColor(R.color.colorComTabTextUnselected));
+            }
+            View view = tabHost.getTabWidget().getChildAt(tabHost.getCurrentTab());
+            TextView tv = view.findViewById(R.id.tvTabTitle);
             tv.setTextColor(getColor(R.color.colorComTabTextSelected));
+            View viewBar = view.findViewById(R.id.vTopBar);
+            viewBar.setBackgroundColor(getColor(R.color.colorComTabTextSelected));
         });
     }
 

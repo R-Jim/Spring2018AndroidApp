@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorOrderDetailTabWidgetBGColor"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/order_detail_tab_height"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/tvTabTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="5dp"
+            android:fontFamily="@font/roboto_bold"
+            android:text="Ordered"
+            android:textColor="@color/colorDoneOrderItemListBackground"
+            android:textSize="@dimen/item_tab_order_detail_text_size" />
+    </LinearLayout>
+
+
+    <View
+        android:id="@+id/vTopBar"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="@color/colorDoneOrderItemListBackground" />
+</LinearLayout>

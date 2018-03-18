@@ -40,12 +40,20 @@
 
     <color name="colorComTabBg">#ffa939</color>
     <color name="colorComTabBgPressed">#e07c19</color>
-    <color name="colorComTabTextSelected">#ffffff</color>
-    <color name="colorComTabTextUnselected">#ac7026</color>
+    <color name="colorComTabTextSelected">#FFD54F</color>
+    <color name="colorComTabTextUnselected">#ffffff</color>
+
+    <color name="colorOrderDetailTableInfoTextColor">#ffffff</color>
+    <color name="colorOrderDetailTableInfoBGColor">#2c5380</color>
+
+    <color name="colorOrderDetailTableTabContentBGColor">#5b5389</color>
+
+    <color name="colorOrderDetailTableOrderedTextColor">#ffffff</color>
+
+    <color name="colorOrderDetailTabWidgetBGColor">#2c5380</color>
 
     <color name="colorTableGroupAddIconColor">#000000</color>
     <color name="colorTableGroupAddIconStrokeColor">#8f8f8f</color>
-
 
 
 </resources>

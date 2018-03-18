@@ -2,9 +2,9 @@
 <android.support.v4.app.FragmentTabHost xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tabhost"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/tabhost"
     tools:context="day01.swomfire.restaurantapp.OrderDetailActivity">
 
     <RelativeLayout
@@ -12,6 +12,7 @@
         android:layout_height="match_parent"
         android:orientation="horizontal"
         android:weightSum="8">
+
         <android.support.design.widget.AppBarLayout
             android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
@@ -21,45 +22,97 @@
             <android.support.v7.widget.Toolbar
                 android:id="@+id/my_toolbar"
                 android:layout_width="match_parent"
-                app:title="Order Detail"
                 android:layout_height="?attr/actionBarSize"
                 android:background="?attr/colorPrimary"
-                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                app:title="Order Detail" />
 
         </android.support.design.widget.AppBarLayout>
+
+        <LinearLayout
+            android:id="@+id/tabTableInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/appBarLayout"
+            android:background="@color/colorOrderDetailTableInfoBGColor"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/orderDetailTextStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".5"
+                    android:text="Table: 01" />
+
+                <TextView
+                    style="@style/orderDetailTextStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".5"
+                    android:text="Recipt: 01" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/orderDetailTextStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".5"
+                    android:text="Total: 100000000" />
+
+                <TextView
+                    style="@style/orderDetailTextStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".5"
+                    android:text="Date: 01/01/2018" />
+            </LinearLayout>
+
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/tabWidget"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/appBarLayout"
+            android:layout_below="@id/tabTableInfo"
             android:orientation="vertical">
 
             <TabWidget
                 android:id="@android:id/tabs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:layout_weight=".8"
                 android:background="#FFFFFF"
-                android:layout_gravity="center_vertical"
+                android:elevation="4dp"
                 android:orientation="horizontal" />
 
-            <FrameLayout
-                android:id="@+id/realtabcontent"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@id/tabWidget"
-                android:layout_above="@id/tabWidget"/>
-
-            <FrameLayout
-                android:id="@android:id/tabcontent"
-                android:layout_width="0dp"
-                android:layout_height="0dp" />
         </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/realtabcontent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/tabWidget"
+            android:background="@color/colorOrderDetailTableTabContentBGColor" />
+
+        <FrameLayout
+            android:id="@android:id/tabcontent"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/colorOrderDetailTableTabContentBGColor" />
+
     </RelativeLayout>
-
-
-
 
 
 </android.support.v4.app.FragmentTabHost>

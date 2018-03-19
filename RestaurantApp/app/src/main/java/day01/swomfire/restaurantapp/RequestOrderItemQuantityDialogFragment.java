@@ -2,6 +2,7 @@ package day01.swomfire.restaurantapp;
 
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
@@ -16,8 +17,7 @@ import utils.StyleUtils;
 
 
 public class RequestOrderItemQuantityDialogFragment extends DialogFragment {
-    private static View view;
-    private int quantityOld;
+    private View view;
     private TextView currentItemQuantityText;
     private TextView itemQuantityText;
     private TextView lblId;
@@ -35,11 +35,10 @@ public class RequestOrderItemQuantityDialogFragment extends DialogFragment {
         View quantityDialog = inflater.inflate(R.layout.fragment_dialog_item_request_quantity, null);
         builder.setView(quantityDialog);
         StyleUtils.setGradientBackground(quantityDialog, R.id.itemItemQuantityDialog,
-                new int[]{view.getResources().getColor(R.color.colorDoneOrderBackground1),
-                        view.getResources().getColor(R.color.colorDoneOrderBackground2)},StyleUtils.GradientMode.TOP_BOTTOM.getMode());
+                new int[]{getContext().getResources().getColor(R.color.colorDoneOrderBackground1),
+                        getContext().getResources().getColor(R.color.colorDoneOrderBackground2)}, StyleUtils.GradientMode.TOP_BOTTOM.getMode());
         // Get current item quantity
         currentItemQuantityText = view.findViewById(R.id.lblItemRequestRowQuantity);
-        quantityOld = Integer.parseInt(String.valueOf(currentItemQuantityText.getText()));
 
         View parent1 = (View) view.getParent();
         View parent2 = (View) parent1.getParent();
@@ -51,48 +50,44 @@ public class RequestOrderItemQuantityDialogFragment extends DialogFragment {
 
         // Change button edit
         Button btnChange = quantityDialog.findViewById(R.id.btnItemItemQuantityDialogChange);
-        btnChange.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                currentItemQuantityText.setText(itemQuantityText.getText());
-                String position = String.valueOf(lblId.getText());
-                DishInItemList dishInItemList = RequestOrderActivity.getDishInRequestItemList(Integer.parseInt(position));
-                int quantityNew = Integer.valueOf(String.valueOf(itemQuantityText.getText()));
-                if (quantityNew == 0) {
-                    dishInItemList.setQuantity(1);
-                    dishInItemList.setSelected(false);
-                } else {
-                    dishInItemList.setQuantity(quantityNew);
-                }
-                RequestOrderActivity.closeDialog(getActivity());
-
+        btnChange.setOnClickListener(view -> {
+            currentItemQuantityText.setText(itemQuantityText.getText());
+            String position = String.valueOf(lblId.getText());
+            DishInItemList dishInItemList = RequestOrderActivity.getDishInRequestItemList(Integer.parseInt(position));
+            int quantityNew = Integer.valueOf(String.valueOf(itemQuantityText.getText()));
+            if (quantityNew == 0) {
+                dishInItemList.setQuantity(1);
+                dishInItemList.setSelected(false);
+            } else {
+                dishInItemList.setQuantity(quantityNew);
             }
+            RequestOrderItemQuantityDialogFragment.this.dismiss();
         });
         // Add button edit
         Button btnAdd = quantityDialog.findViewById(R.id.btnItemItemQuantityDialogAdd);
-        btnAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int quantity = Integer.parseInt(String.valueOf(itemQuantityText.getText()));
-                if (++quantity <= 10) {
-                    itemQuantityText.setText(String.valueOf(quantity));
+        btnAdd.setOnClickListener(view -> {
+            int quantity = Integer.parseInt(String.valueOf(itemQuantityText.getText()));
+            if (++quantity <= 10) {
+                itemQuantityText.setText(String.valueOf(quantity));
 
-                }
             }
         });
         // Sub button edit
         Button btnSub = quantityDialog.findViewById(R.id.btnItemItemQuantityDialogSub);
-        btnSub.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int quantity = Integer.parseInt(String.valueOf(itemQuantityText.getText()));
-                if (--quantity >= 0) {
-                    itemQuantityText.setText(String.valueOf(quantity));
-                }
+        btnSub.setOnClickListener(view -> {
+            int quantity = Integer.parseInt(String.valueOf(itemQuantityText.getText()));
+            if (--quantity >= 0) {
+                itemQuantityText.setText(String.valueOf(quantity));
             }
         });
 
         // Create the AlertDialog object and return it
         return builder.create();
+    }
+
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        super.onDismiss(dialog);
+        RequestOrderActivity.initRecycleListView(getActivity());
     }
 }

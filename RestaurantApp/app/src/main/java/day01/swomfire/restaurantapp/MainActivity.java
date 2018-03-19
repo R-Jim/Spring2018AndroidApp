@@ -37,13 +37,6 @@ public class MainActivity extends AppCompatActivity {
     private final String FB_TOPIC_REQUESTLIST = "RequestList";
 
     private FragmentTabHost tabHost;
-    //    private ExpandableListView listView;
-    private RecyclerView rvReqList;
-    private ExpandableListView listView;
-    private TabWidget tabWidget;
-
-    private static ItemQuantityDialogFragment itemQuantityDialogFragment;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,9 +46,8 @@ public class MainActivity extends AppCompatActivity {
         // Subscribe to topic with API
         FirebaseMessaging.getInstance().subscribeToTopic(FB_TOPIC_REQUESTLIST);
 
-        tabWidget = findViewById(android.R.id.tabs);
 
-        setSupportActionBar((Toolbar) findViewById(R.id.my_toolbar));
+        setSupportActionBar(findViewById(R.id.my_toolbar));
 ////        listView = findViewById(R.id.tableExpandableList);
 
         initTabWidget();
@@ -64,20 +56,17 @@ public class MainActivity extends AppCompatActivity {
 
     public void showPopup(View v) {
         PopupMenu popup = new PopupMenu(MainActivity.this, v);
-        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                Intent intent;
-                if (item.getTitle().equals(getResources().getString(R.string.popup_setting))) {
-                    intent = new Intent(MainActivity.this, SettingActivity.class);
-                    startActivity(intent);
-                }
-                if (item.getTitle().equals(getResources().getString(R.string.popup_logout))) {
-//                    Waiting for implementation
-                }
-
-                return true;
+        popup.setOnMenuItemClickListener(item -> {
+            Intent intent;
+            if (item.getTitle().equals(getResources().getString(R.string.popup_setting))) {
+                intent = new Intent(MainActivity.this, SettingActivity.class);
+                startActivity(intent);
             }
+            if (item.getTitle().equals(getResources().getString(R.string.popup_logout))) {
+//                    Waiting for implementation
+            }
+
+            return true;
         });
 
         getMenuInflater().inflate(R.menu.menu, popup.getMenu());
@@ -132,27 +121,22 @@ public class MainActivity extends AppCompatActivity {
     private void initTabWidget() {
         final TabHostService tabHostService = new TabHostServiceImpl(this);
         // get tabHost
-        tabHost = (FragmentTabHost) findViewById(R.id.tabhost);
+        tabHost = findViewById(R.id.tabhost);
         tabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
 
         tabHostService.tabInitializer(tabHost);
 
         tabHost.setOnTabChangedListener(
-                new TabHost.OnTabChangeListener() {
-
-                    @Override
-                    public void onTabChanged(String tabId) {
-                        tabHostService.tabIconReset(tabHost);
-                        tabHostService.tabChooseIndicator(tabHost, tabId);
-                    }
+                tabId -> {
+                    tabHostService.tabIconReset(tabHost);
+                    tabHostService.tabChooseIndicator(tabHost, tabId);
                 }
         );
     }
 
     public void itemQuantityChange(View view) {
         FragmentManager fm = getSupportFragmentManager();
-        itemQuantityDialogFragment = new ItemQuantityDialogFragment();
-        LinearLayout thisItemTab = findViewById(R.id.itemItem);
+        ItemQuantityDialogFragment itemQuantityDialogFragment = new ItemQuantityDialogFragment();
         itemQuantityDialogFragment.show(fm, "fragment_dialog_item_quantity");
     }
 
@@ -164,10 +148,10 @@ public class MainActivity extends AppCompatActivity {
     public void selectItemToRequest(View view) {
         View view1 = (View) view.getParent();
         View view2 = (View) view1.getParent();
-        TextView lblId = (TextView) view2.findViewById(R.id.lblListItemId);
+        TextView lblId = view2.findViewById(R.id.lblListItemId);
         DishInItemList dishInItemList = ExpandableItemListAdapter.findDish(String.valueOf(lblId.getText()));
 
-        CheckBox thisBox = (CheckBox) view.findViewById(R.id.itemCheckbox);
+        CheckBox thisBox = view.findViewById(R.id.itemCheckbox);
         dishInItemList.setSelected(thisBox.isChecked());
         TextView lblNumberOfDishRequested = findViewById(R.id.lblNumberOfDishRequested);
         String quantityStr = String.valueOf(lblNumberOfDishRequested.getText());
@@ -182,9 +166,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void onRequestCardClick(View view) {
         Intent intent = new Intent(this, OrderDetailActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, 2);
+        TextView tableId = view.findViewById(R.id.tv_table_id);
+        OrderDetailActivity.setTableId(String.valueOf(tableId.getText()));
     }
-    
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -194,15 +180,35 @@ public class MainActivity extends AppCompatActivity {
                 String message = data.getStringExtra("restartItemFragment");
                 if (message != null) {
                     if (tabHost.getCurrentTabTag().equals("DISH_LIST_TAB")) {
-                        Fragment frg = null;
-                        frg = getSupportFragmentManager().findFragmentByTag("DISH_LIST_TAB");
+                        Fragment frg = getSupportFragmentManager().findFragmentByTag("DISH_LIST_TAB");
                         final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                         ft.detach(frg);
                         ft.attach(frg);
                         ft.commit();
                     }
                 }
+            } else if (resultCode == 3) {
+                String message = data.getStringExtra("tableId");
+                if (message != null) {
+                    tabHost.setCurrentTab(2);
+                    RequestOrderActivity.setTableId(message);
+                }
             }
         }
+    }
+
+    public void addNewRequestToTable(View view) {
+        tabHost.setCurrentTab(2);
+        view = (View) view.getParent().getParent().getParent();
+        TextView tableId = view.findViewById(R.id.listTableNumber);
+        RequestOrderActivity.setTableId(String.valueOf(tableId.getText()));
+    }
+
+    public void toOrderDetail(View view) {
+        Intent intent = new Intent(MainActivity.this, OrderDetailActivity.class);
+        view = (View) view.getParent().getParent().getParent();
+        TextView tableId = view.findViewById(R.id.listTableNumber);
+        OrderDetailActivity.setTableId(String.valueOf(tableId.getText()));
+        startActivityForResult(intent, 2);
     }
 }

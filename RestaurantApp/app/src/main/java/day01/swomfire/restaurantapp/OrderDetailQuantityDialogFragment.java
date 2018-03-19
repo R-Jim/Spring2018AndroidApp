@@ -49,39 +49,30 @@ public class OrderDetailQuantityDialogFragment extends DialogFragment {
 
         // Change button edit
         Button btnChange = quantityDialog.findViewById(R.id.btnItemItemQuantityDialogChange);
-        btnChange.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int quantityNew = Integer.valueOf(String.valueOf(itemQuantityText.getText()));
-                String[] itemPositionAndNewQuantity = {itemPositionAndQuantity[0], String.valueOf(quantityNew)};
-                SharedPreferences pref = getActivity().getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
-                SharedPreferences.Editor editor = pref.edit();
-                editor.putString("itemPositionAndNewQuantity", itemPositionAndNewQuantity[0] + "," + itemPositionAndNewQuantity[1]);
-                editor.commit();
-                OrderDetailQuantityDialogFragment.this.dismiss();
-            }
+        btnChange.setOnClickListener(view -> {
+            int quantityNew = Integer.valueOf(String.valueOf(itemQuantityText.getText()));
+            String[] itemPositionAndNewQuantity = {itemPositionAndQuantity[0], String.valueOf(quantityNew)};
+            SharedPreferences pref = getActivity().getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
+            SharedPreferences.Editor editor = pref.edit();
+            editor.putString("itemPositionAndNewQuantity", itemPositionAndNewQuantity[0] + "," + itemPositionAndNewQuantity[1]);
+            editor.commit();
+            OrderDetailQuantityDialogFragment.this.dismiss();
         });
         // Add button edit
         Button btnAdd = quantityDialog.findViewById(R.id.btnItemItemQuantityDialogAdd);
-        btnAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int quantity = Integer.parseInt(String.valueOf(itemQuantityText.getText()));
-                if (++quantity <= 10) {
-                    itemQuantityText.setText(String.valueOf(quantity));
+        btnAdd.setOnClickListener(view -> {
+            int quantity = Integer.parseInt(String.valueOf(itemQuantityText.getText()));
+            if (++quantity <= 10) {
+                itemQuantityText.setText(String.valueOf(quantity));
 
-                }
             }
         });
         // Sub button edit
         Button btnSub = quantityDialog.findViewById(R.id.btnItemItemQuantityDialogSub);
-        btnSub.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int quantity = Integer.parseInt(String.valueOf(itemQuantityText.getText()));
-                if (--quantity >= 0) {
-                    itemQuantityText.setText(String.valueOf(quantity));
-                }
+        btnSub.setOnClickListener(view -> {
+            int quantity = Integer.parseInt(String.valueOf(itemQuantityText.getText()));
+            if (--quantity >= 0) {
+                itemQuantityText.setText(String.valueOf(quantity));
             }
         });
 
@@ -92,8 +83,7 @@ public class OrderDetailQuantityDialogFragment extends DialogFragment {
     @Override
     public void onDismiss(DialogInterface dialog) {
         super.onDismiss(dialog);
-        Fragment frg = null;
-        frg = getActivity().getSupportFragmentManager().findFragmentByTag("ORDERING_TAB");
+        Fragment frg = getActivity().getSupportFragmentManager().findFragmentByTag("ORDERING_TAB");
         final android.support.v4.app.FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
         ft.detach(frg);
         ft.attach(frg);

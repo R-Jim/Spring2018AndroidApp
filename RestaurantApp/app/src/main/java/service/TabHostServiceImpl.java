@@ -21,7 +21,6 @@ import day01.swomfire.restaurantapp.TableFragment;
 public class TabHostServiceImpl implements TabHostService {
 
     private Context context;
-    private ImageView imageView;
 
 
     public TabHostServiceImpl(Context context) {
@@ -77,16 +76,16 @@ public class TabHostServiceImpl implements TabHostService {
 
         switch (switchCase) {
             case REQUEST_TAB_ID:
-                imageView = (ImageView) tabHost.getTabWidget().getChildAt(0).findViewById(R.id.tab_icon);
+                ImageView imageView = tabHost.getTabWidget().getChildAt(0).findViewById(R.id.tab_icon);
                 imageView.setImageResource(R.drawable.ic_tab_assignment_24dp_active);
 
                 break;
             case TABLE_TAB_ID:
-                imageView = (ImageView) tabHost.getTabWidget().getChildAt(1).findViewById(R.id.tab_icon);
+                imageView = tabHost.getTabWidget().getChildAt(1).findViewById(R.id.tab_icon);
                 imageView.setImageResource(R.drawable.ic_tab_table_24dp_active);
                 break;
             case DISH_TAB_ID:
-                imageView = (ImageView) tabHost.getTabWidget().getChildAt(2).findViewById(R.id.tab_icon);
+                imageView = tabHost.getTabWidget().getChildAt(2).findViewById(R.id.tab_icon);
                 imageView.setImageResource(R.drawable.ic_tab_dish_24dp_active);
                 break;
         }

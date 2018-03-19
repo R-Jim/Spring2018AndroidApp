@@ -21,20 +21,17 @@ import model.DishInReceipt;
 
 
 public class OrderDetailOrderingTabFragment extends Fragment {
-    private RecyclerView recyclerView;
-    private OrderDetailRVAdapter orderDetailOrderingRVAdapter;
-    private List<DishInReceipt> dishInReceipts;
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_order_detail_ordering_tab, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        dishInReceipts = new ArrayList<DishInReceipt>();
+        List<DishInReceipt> dishInReceipts = new ArrayList<>();
         Item item = new Item();
         item.setItemName("Pizza");
         dishInReceipts.add(
@@ -74,8 +71,8 @@ public class OrderDetailOrderingTabFragment extends Fragment {
     }
 
     private void initRecycleView(List<DishInReceipt> dishInReceipts) {
-        recyclerView = (RecyclerView) getActivity().findViewById(R.id.orderDetail);
-        orderDetailOrderingRVAdapter = new OrderDetailRVAdapter(dishInReceipts, R.layout.item_order_detail_ordering_list_row);
+        RecyclerView recyclerView = (RecyclerView) getActivity().findViewById(R.id.orderDetail);
+        OrderDetailRVAdapter orderDetailOrderingRVAdapter = new OrderDetailRVAdapter(dishInReceipts, R.layout.item_order_detail_ordering_list_row);
         GridLayoutManager gLayoutManager = new GridLayoutManager(getActivity().getApplicationContext(), 1);
         recyclerView.setLayoutManager(gLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());

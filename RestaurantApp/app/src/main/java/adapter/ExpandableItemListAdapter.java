@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import data.model.Category;
 import day01.swomfire.restaurantapp.R;
@@ -27,10 +26,10 @@ public class ExpandableItemListAdapter extends BaseExpandableListAdapter {
     private static List<Category> listDataHeader;
     private static HashMap<Category, List<DishInItemList>> listHashMap;
 
-    public ExpandableItemListAdapter(Context context, List<Category> listDataHeader, HashMap<Category, List<DishInItemList>> listHashMap) {
+    public ExpandableItemListAdapter(Context context, List<Category> listCategoryDataHeader, HashMap<Category, List<DishInItemList>> listDishHashMap) {
         this.context = context;
-        this.listDataHeader = listDataHeader;
-        this.listHashMap = listHashMap;
+        listDataHeader = listCategoryDataHeader;
+        listHashMap = listDishHashMap;
     }
 
 
@@ -98,7 +97,7 @@ public class ExpandableItemListAdapter extends BaseExpandableListAdapter {
             TextView lblDescription = view.findViewById(R.id.lblListItemDescription);
             lblDescription.setText(category.getDescription());
         }
-        TextView lblListHeader = (TextView) view.findViewById(R.id.lblListItemHeader);
+        TextView lblListHeader = view.findViewById(R.id.lblListItemHeader);
         lblListHeader.setTypeface(null, Typeface.BOLD);
         lblListHeader.setText(headerTitle);
         switch (i % 4) {
@@ -131,15 +130,15 @@ public class ExpandableItemListAdapter extends BaseExpandableListAdapter {
         }
 
         //Set information form child to view
-        TextView lblId = (TextView) view.findViewById(R.id.lblListItemId);
+        TextView lblId = view.findViewById(R.id.lblListItemId);
         lblId.setText(i + "," + i1);
 
-        TextView lblName = (TextView) view.findViewById(R.id.lblListItem);
+        TextView lblName = view.findViewById(R.id.lblListItem);
         lblName.setText(dish.getDish().getItemName());
-        CheckBox checkBox = (CheckBox) view.findViewById(R.id.itemCheckbox);
+        CheckBox checkBox = view.findViewById(R.id.itemCheckbox);
         checkBox.setChecked(dish.isSelected());
 
-        TextView lblQuantity = (TextView) view.findViewById(R.id.lblItemItemQuantity);
+        TextView lblQuantity = view.findViewById(R.id.lblItemItemQuantity);
         lblQuantity.setText(String.valueOf(dish.getQuantity()));
 
         switch (i % 4) {

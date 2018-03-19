@@ -3,6 +3,7 @@ package day01.swomfire.restaurantapp;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -34,21 +35,20 @@ public class ItemFragment extends Fragment {
 
 
     private ExpandableListView listView;
-    private ExpandableItemListAdapter listAdapter;
     private HashMap<Category, List<DishInItemList>> listHashMap;
     private List<Item> itemListFromDb;
     private List<Category> categoryListFromDb;
     private View view;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_dish, container, false);
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         this.view = view;
         loadDishList();
@@ -151,7 +151,7 @@ public class ItemFragment extends Fragment {
 
 
     private void initExpandableList(View view) {
-        listView = (ExpandableListView) view.findViewById(R.id.itemExpandableList);
+        listView = view.findViewById(R.id.itemExpandableList);
         //Only allow 1 expanded group
         listView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
             int prevGrp = -1;
@@ -180,22 +180,19 @@ public class ItemFragment extends Fragment {
             TextView lblQuantity = view.findViewById(R.id.lblNumberOfDishRequested);
             lblQuantity.setText(String.valueOf(quantity));
         }
-        listAdapter = new ExpandableItemListAdapter(getActivity(), categoryListFromDb, listHashMap);
+        ExpandableItemListAdapter listAdapter = new ExpandableItemListAdapter(getActivity(), categoryListFromDb, listHashMap);
         listView.setAdapter(listAdapter);
 
-        listView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
-            @Override
-            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+        listView.setOnGroupClickListener((parent, v, groupPosition, id) -> {
 
-                if (!parent.isGroupExpanded(groupPosition)) {
-                    parent.expandGroup(groupPosition);
-                } else {
-                    parent.collapseGroup(groupPosition);
-                }
-                parent.setSelectedGroup(groupPosition);
-
-                return true;
+            if (!parent.isGroupExpanded(groupPosition)) {
+                parent.expandGroup(groupPosition);
+            } else {
+                parent.collapseGroup(groupPosition);
             }
+            parent.setSelectedGroup(groupPosition);
+
+            return true;
         });
         SharedPreferences appSharedPrefs = PreferenceManager
                 .getDefaultSharedPreferences(getActivity().getApplicationContext());

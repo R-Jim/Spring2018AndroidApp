@@ -1,13 +1,11 @@
 package day01.swomfire.restaurantapp;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTabHost;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TabHost;
 import android.widget.TextView;
@@ -15,14 +13,24 @@ import android.widget.TextView;
 public class OrderDetailActivity extends AppCompatActivity {
     public final String ORDERED_TAB = "ORDERED_TAB";
     public final String ORDERING_TAB = "ORDERING_TAB";
-    private OrderDetailQuantityDialogFragment orderDetailQuantityDialogFragment;
+    private static String tableId;
+
+    public static void setTableId(String id) {
+        tableId = id;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_detail);
+        setUpTab();
 
-        setSupportActionBar((Toolbar) findViewById(R.id.my_toolbar));
+        TextView lblTableId = findViewById(R.id.orderDetailTableId);
+        lblTableId.setText(tableId);
+    }
+
+    private void setUpTab() {
+        setSupportActionBar(findViewById(R.id.my_toolbar));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         FragmentTabHost tabHost = findViewById(R.id.tabhost);
@@ -53,7 +61,6 @@ public class OrderDetailActivity extends AppCompatActivity {
             View viewBar = view.findViewById(R.id.vTopBar);
             viewBar.setBackgroundColor(getColor(R.color.colorComTabTextSelected));
         });
-
     }
 
     private void setNewTab(Context ctx, FragmentTabHost tabHost, String tag, String title) {
@@ -71,7 +78,7 @@ public class OrderDetailActivity extends AppCompatActivity {
 
     public void requestItemQuantityChange(View view) {
         FragmentManager fm = getSupportFragmentManager();
-        orderDetailQuantityDialogFragment = new OrderDetailQuantityDialogFragment();
+        OrderDetailQuantityDialogFragment orderDetailQuantityDialogFragment = new OrderDetailQuantityDialogFragment();
         View parent = (View) view.getParent().getParent();
         TextView id = parent.findViewById(R.id.itemOrderDetailId);
         TextView quantity = view.findViewById(R.id.itemOrderDetailQuantity);
@@ -82,4 +89,11 @@ public class OrderDetailActivity extends AppCompatActivity {
         orderDetailQuantityDialogFragment.show(fm, "fragment_dialog_order_detail_quantity");
     }
 
+    public void addNewRequestToTable(View view) {
+        Intent i = new Intent(this, MainActivity.class);
+        i.putExtra("tableId", tableId);
+        setResult(3, i);
+        tableId = null;
+        this.finish();
+    }
 }

@@ -10,7 +10,8 @@
         android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:cardBackgroundColor="@android:color/transparent">
+        app:cardBackgroundColor="@android:color/transparent"
+        app:cardElevation="0dp">
 
 
         <RelativeLayout
@@ -29,13 +30,13 @@
 
                 <LinearLayout
                     android:id="@+id/tableLinear"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight=".3"
                     android:orientation="horizontal">
 
                     <android.support.constraint.ConstraintLayout
                         android:layout_width="wrap_content"
+                        android:onClick="chooseRequestTable"
                         android:layout_height="wrap_content">
 
                         <ImageView
@@ -44,7 +45,7 @@
                             android:layout_height="60dp"
                             android:paddingBottom="5dp"
                             android:paddingTop="5dp"
-                            android:src="@drawable/table_number_square_no" />
+                            android:src="@drawable/table_number_square_yes" />
 
                         <TextView
                             android:id="@+id/listTableNumber"
@@ -56,47 +57,8 @@
                             android:textSize="25dp" />
                     </android.support.constraint.ConstraintLayout>
                 </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight=".3"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-
-                    <android.support.constraint.ConstraintLayout
-                        android:layout_width="0dp"
-                        android:layout_height="50dp"
-                        android:layout_weight=".1"
-                        android:onClick="chooseTable">
-
-                        <ImageButton
-                            android:layout_width="match_parent"
-                            android:onClick="toOrderDetail"
-                            android:layout_height="match_parent"
-                            android:background="@android:color/transparent"
-                            android:src="@drawable/table_ordering_order_icon" />
-                    </android.support.constraint.ConstraintLayout>
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight=".2"
-                        android:fontFamily="@font/roboto_italic"
-                        android:text="Ordering"
-                        android:textSize="24dp" />
-                </LinearLayout>
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:layout_alignBottom="@+id/tableContent"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:background="@color/colorTableGroupAddIconStrokeColor">
-
-            </LinearLayout>
         </RelativeLayout>
     </android.support.v7.widget.CardView>
 </LinearLayout>

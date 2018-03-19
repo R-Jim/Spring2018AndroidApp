@@ -45,9 +45,11 @@ public class RequestFragment extends Fragment {
         rv = getView().findViewById(R.id.rv_request_list);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         rv.setLayoutManager(layoutManager);
-        loadRequestList();
+        //loadRequestList();
 
-
+        initList();
+        CustomRVAdapter adapter = new CustomRVAdapter(requestList);
+        rv.setAdapter(adapter);
     }
 
     public void loadRequestList() {
@@ -70,6 +72,15 @@ public class RequestFragment extends Fragment {
 
             }
         });
+    }
+
+    private void initList() {
+        requestList = new ArrayList<>();
+        OrderRequest orderRequest = new OrderRequest();
+        orderRequest.setTableNo("4");
+        orderRequest.setItemSeq("213");
+        orderRequest.setItemName("Capu");
+        requestList.add(orderRequest);
     }
 
 }

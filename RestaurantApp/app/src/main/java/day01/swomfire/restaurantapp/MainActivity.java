@@ -41,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
 
     private static ItemQuantityDialogFragment itemQuantityDialogFragment;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -149,7 +148,6 @@ public class MainActivity extends AppCompatActivity {
     public void itemQuantityChange(View view) {
         FragmentManager fm = getSupportFragmentManager();
         itemQuantityDialogFragment = new ItemQuantityDialogFragment();
-        LinearLayout thisItemTab = findViewById(R.id.itemItem);
         itemQuantityDialogFragment.show(fm, "fragment_dialog_item_quantity");
     }
 
@@ -179,7 +177,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void onRequestCardClick(View view) {
         Intent intent = new Intent(this, OrderDetailActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, 2);
+        TextView tableId = view.findViewById(R.id.tv_table_id);
+        OrderDetailActivity.setTableId(String.valueOf(tableId.getText()));
     }
 
     @Override
@@ -199,6 +199,13 @@ public class MainActivity extends AppCompatActivity {
                         ft.commit();
                     }
                 }
+            } else if (resultCode == 3) {
+                String message = data.getStringExtra("tableId");
+                if (message != null) {
+                    tabHost.setCurrentTab(2);
+                    String tableId = message;
+                    RequestOrderActivity.setTableId(tableId);
+                }
             }
         }
     }
@@ -208,5 +215,13 @@ public class MainActivity extends AppCompatActivity {
         view = (View) view.getParent().getParent().getParent();
         TextView tableId = view.findViewById(R.id.listTableNumber);
         RequestOrderActivity.setTableId(String.valueOf(tableId.getText()));
+    }
+
+    public void toOrderDetail(View view) {
+        Intent intent = new Intent(MainActivity.this, OrderDetailActivity.class);
+        view = (View) view.getParent().getParent().getParent();
+        TextView tableId = view.findViewById(R.id.listTableNumber);
+        OrderDetailActivity.setTableId(String.valueOf(tableId.getText()));
+        startActivityForResult(intent, 2);
     }
 }

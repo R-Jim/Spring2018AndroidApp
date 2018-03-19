@@ -16,12 +16,23 @@ public class OrderDetailActivity extends AppCompatActivity {
     public final String ORDERED_TAB = "ORDERED_TAB";
     public final String ORDERING_TAB = "ORDERING_TAB";
     private OrderDetailQuantityDialogFragment orderDetailQuantityDialogFragment;
+    private static String tableId;
+
+    public static void setTableId(String id) {
+        tableId = id;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_detail);
+        setUpTab();
 
+        TextView lblTableId = findViewById(R.id.orderDetailTableId);
+        lblTableId.setText(tableId);
+    }
+
+    private void setUpTab() {
         setSupportActionBar((Toolbar) findViewById(R.id.my_toolbar));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -53,7 +64,6 @@ public class OrderDetailActivity extends AppCompatActivity {
             View viewBar = view.findViewById(R.id.vTopBar);
             viewBar.setBackgroundColor(getColor(R.color.colorComTabTextSelected));
         });
-
     }
 
     private void setNewTab(Context ctx, FragmentTabHost tabHost, String tag, String title) {
@@ -82,4 +92,11 @@ public class OrderDetailActivity extends AppCompatActivity {
         orderDetailQuantityDialogFragment.show(fm, "fragment_dialog_order_detail_quantity");
     }
 
+    public void addNewRequestToTable(View view) {
+        Intent i = new Intent(this, MainActivity.class);
+        i.putExtra("tableId", tableId);
+        setResult(3, i);
+        tableId = null;
+        this.finish();
+    }
 }

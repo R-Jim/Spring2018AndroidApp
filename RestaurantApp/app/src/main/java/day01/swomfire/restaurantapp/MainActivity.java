@@ -37,9 +37,6 @@ public class MainActivity extends AppCompatActivity {
     private final String FB_TOPIC_REQUESTLIST = "RequestList";
 
     private FragmentTabHost tabHost;
-    //    private ExpandableListView listView;
-    private RecyclerView rvReqList;
-    private ExpandableListView listView;
     private TabWidget tabWidget;
 
     private static ItemQuantityDialogFragment itemQuantityDialogFragment;
@@ -184,7 +181,7 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, OrderDetailActivity.class);
         startActivity(intent);
     }
-    
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -204,5 +201,12 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    public void addNewRequestToTable(View view) {
+        tabHost.setCurrentTab(2);
+        view = (View) view.getParent().getParent().getParent();
+        TextView tableId = view.findViewById(R.id.listTableNumber);
+        RequestOrderActivity.setTableId(String.valueOf(tableId.getText()));
     }
 }

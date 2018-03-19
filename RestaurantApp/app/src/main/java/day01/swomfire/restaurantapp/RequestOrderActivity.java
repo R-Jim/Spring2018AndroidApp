@@ -11,6 +11,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -45,6 +46,10 @@ public class RequestOrderActivity extends AppCompatActivity {
         recyclerView.setAdapter(itemRequestRVAdapter);
     }
 
+
+    public static void setTableId(String id) {
+        tableId = id;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -133,5 +138,14 @@ public class RequestOrderActivity extends AppCompatActivity {
 
         //TODO: reload table's list receipt if has one
 
+    }
+
+    public void confirmRequest(View view) {
+        if (tableId != null) {
+
+        } else {
+            Toast toast = Toast.makeText(getApplicationContext(), "Please choose a table first", Toast.LENGTH_SHORT);
+            toast.show();
+        }
     }
 }

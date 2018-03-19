@@ -1,6 +1,7 @@
 package day01.swomfire.restaurantapp;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -19,18 +20,20 @@ import java.util.Map;
 import adapter.ExpandableItemListAdapter;
 import adapter.ItemRequestRVAdapter;
 import data.model.Category;
+import data.model.Table;
 import model.DishInItemList;
 import utils.StyleUtils;
 
 public class RequestOrderActivity extends AppCompatActivity {
 
-    private static RequestOrderItemQuantityDialogFragment requestOrderItemQuantityDialogFragment;
-    private static RequestOrderTableDialogFragment requestOrderTableDialogFragment;
+    private RequestOrderItemQuantityDialogFragment requestOrderItemQuantityDialogFragment;
+    private RequestOrderTableDialogFragment requestOrderTableDialogFragment;
     private static List<DishInItemList> dishInItemLists;
     private static RecyclerView recyclerView;
     private static ItemRequestRVAdapter itemRequestRVAdapter;
     private static HashMap<Category, List<DishInItemList>> listHashMap;
     private static TextView lblNewRequest;
+    private static String tableId;
 
     private static void initRecyclerView(int id, List<DishInItemList> dishInItemLists, Activity activity) {
 
@@ -55,7 +58,7 @@ public class RequestOrderActivity extends AppCompatActivity {
         initRecycleListView(this);
     }
 
-    private static void initRecycleListView(Activity activity) {
+    public static void initRecycleListView(Activity activity) {
         int newQuantity = 0;
         dishInItemLists = new ArrayList<>();
         listHashMap = ExpandableItemListAdapter.getListHashMap();
@@ -66,6 +69,10 @@ public class RequestOrderActivity extends AppCompatActivity {
                     newQuantity += dishInItemList.getQuantity();
                 }
             }
+        }
+        if (tableId != null) {
+            TextView requestOrderTable = activity.findViewById(R.id.requestOrderTableId);
+            requestOrderTable.setText(tableId);
         }
 
         lblNewRequest = (TextView) activity.findViewById(R.id.lblItemRequestRowNewQuantity);
@@ -100,6 +107,7 @@ public class RequestOrderActivity extends AppCompatActivity {
         Intent i = new Intent(this, MainActivity.class);
         i.putExtra("restartItemFragment", "TRUE");
         setResult(5, i);
+        tableId = null;
         this.finish();
     }
 
@@ -116,8 +124,14 @@ public class RequestOrderActivity extends AppCompatActivity {
         return dishInItemLists.get(position);
     }
 
-    public static void closeDialog(Activity activity) {
-        requestOrderItemQuantityDialogFragment.dismiss();
-        initRecycleListView(activity);
+    public void chooseRequestTable(View view) {
+        requestOrderTableDialogFragment.dismiss();
+        TextView table = view.findViewById(R.id.listTableNumber);
+        TextView requestOrderTable = findViewById(R.id.requestOrderTableId);
+        tableId = String.valueOf(table.getText());
+        requestOrderTable.setText(tableId);
+
+        //TODO: reload table's list receipt if has one
+
     }
 }

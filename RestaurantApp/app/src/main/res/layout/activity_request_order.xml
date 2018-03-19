@@ -2,9 +2,9 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="#000000"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#000000"
     tools:context="day01.swomfire.restaurantapp.RequestOrderActivity">
 
     <RelativeLayout
@@ -47,6 +47,7 @@
                         android:src="@drawable/table_number_circle_no" />
 
                     <TextView
+                        android:id="@+id/requestOrderTableId"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center"

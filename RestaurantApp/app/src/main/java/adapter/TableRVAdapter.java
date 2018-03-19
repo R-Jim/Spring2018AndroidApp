@@ -18,12 +18,12 @@ import data.model.Table;
  */
 
 public class TableRVAdapter extends RecyclerView.Adapter<TableRVAdapter.MyViewHolder> {
-    public enum viewType {
-        TABLE_FREE(0), TABLE_ORDERING(1);
+    public enum RVViewType {
+        TABLE_FREE(0), TABLE_ORDERING(1), TABLE_CHOOSE_FREE(2), TABLE_CHOOSE_ORDERING(3);
 
         private int viewType;
 
-        viewType(int viewType) {
+        RVViewType(int viewType) {
             this.viewType = viewType;
         }
 
@@ -32,15 +32,37 @@ public class TableRVAdapter extends RecyclerView.Adapter<TableRVAdapter.MyViewHo
         }
     }
 
+    public enum RVViewMode {
+        TABLE_TAB(0), REQUEST_ORDER_CHOOSE_TABLE(1);
+        private int viewMode;
+
+        RVViewMode(int viewMode) {
+            this.viewMode = viewMode;
+        }
+
+        public int getViewMode() {
+            return viewMode;
+        }
+    }
+
 
     private List<Table> tables;
+    private int viewMode;
 
     @Override
     public int getItemViewType(int position) {
-        if (tables.get(position).getStatusByStatusSeqId().getStatusId().equals(Status.AVAIABLE.getStatusId())) {
-            return viewType.TABLE_FREE.getViewType();
+        if (viewMode == RVViewMode.TABLE_TAB.getViewMode()) {
+            if (tables.get(position).getStatusByStatusSeqId().getStatusId().equals(Status.AVAIABLE.getStatusId())) {
+                return RVViewType.TABLE_FREE.getViewType();
+            } else {
+                return RVViewType.TABLE_ORDERING.getViewType();
+            }
         } else {
-            return viewType.TABLE_ORDERING.getViewType();
+            if (tables.get(position).getStatusByStatusSeqId().getStatusId().equals(Status.AVAIABLE.getStatusId())) {
+                return RVViewType.TABLE_CHOOSE_FREE.getViewType();
+            } else {
+                return RVViewType.TABLE_CHOOSE_ORDERING.getViewType();
+            }
         }
     }
 
@@ -55,8 +77,9 @@ public class TableRVAdapter extends RecyclerView.Adapter<TableRVAdapter.MyViewHo
         }
     }
 
-    public TableRVAdapter(List<Table> tables) {
+    public TableRVAdapter(List<Table> tables, int viewMode) {
         this.tables = tables;
+        this.viewMode = viewMode;
     }
 
     @NonNull
@@ -71,6 +94,14 @@ public class TableRVAdapter extends RecyclerView.Adapter<TableRVAdapter.MyViewHo
             case 1:
                 tableView = LayoutInflater.from(parent.getContext())
                         .inflate(R.layout.table_list_row_ordering, parent, false);
+                break;
+            case 2:
+                tableView = LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.table_list_row_choosing_free, parent, false);
+                break;
+            case 3:
+                tableView = LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.table_list_row_choosing_ordering, parent, false);
                 break;
         }
 

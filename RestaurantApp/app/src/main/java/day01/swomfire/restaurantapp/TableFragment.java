@@ -84,7 +84,7 @@ public class TableFragment extends Fragment {
 
     private void initRecycleView(List<Table> tables) {
         recyclerView = (RecyclerView) getActivity().findViewById(R.id.rv_table_list);
-        tableRVAdapter = new TableRVAdapter(tables);
+        tableRVAdapter = new TableRVAdapter(tables, TableRVAdapter.RVViewMode.TABLE_TAB.getViewMode());
         GridLayoutManager gLayoutManager = new GridLayoutManager(getActivity().getApplicationContext(), 1);
         recyclerView.setLayoutManager(gLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());

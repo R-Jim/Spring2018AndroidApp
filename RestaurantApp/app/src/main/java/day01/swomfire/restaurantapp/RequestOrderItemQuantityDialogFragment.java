@@ -2,6 +2,7 @@ package day01.swomfire.restaurantapp;
 
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
@@ -36,7 +37,7 @@ public class RequestOrderItemQuantityDialogFragment extends DialogFragment {
         builder.setView(quantityDialog);
         StyleUtils.setGradientBackground(quantityDialog, R.id.itemItemQuantityDialog,
                 new int[]{view.getResources().getColor(R.color.colorDoneOrderBackground1),
-                        view.getResources().getColor(R.color.colorDoneOrderBackground2)},StyleUtils.GradientMode.TOP_BOTTOM.getMode());
+                        view.getResources().getColor(R.color.colorDoneOrderBackground2)}, StyleUtils.GradientMode.TOP_BOTTOM.getMode());
         // Get current item quantity
         currentItemQuantityText = view.findViewById(R.id.lblItemRequestRowQuantity);
         quantityOld = Integer.parseInt(String.valueOf(currentItemQuantityText.getText()));
@@ -64,8 +65,7 @@ public class RequestOrderItemQuantityDialogFragment extends DialogFragment {
                 } else {
                     dishInItemList.setQuantity(quantityNew);
                 }
-                RequestOrderActivity.closeDialog(getActivity());
-
+                RequestOrderItemQuantityDialogFragment.this.dismiss();
             }
         });
         // Add button edit
@@ -94,5 +94,11 @@ public class RequestOrderItemQuantityDialogFragment extends DialogFragment {
 
         // Create the AlertDialog object and return it
         return builder.create();
+    }
+
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        super.onDismiss(dialog);
+        RequestOrderActivity.initRecycleListView(getActivity());
     }
 }

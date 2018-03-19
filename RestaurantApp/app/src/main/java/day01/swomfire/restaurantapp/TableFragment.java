@@ -1,6 +1,7 @@
 package day01.swomfire.restaurantapp;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -32,16 +33,13 @@ import utils.RmaAPIUtils;
 public class TableFragment extends Fragment {
 
 
-    private RecyclerView recyclerView;
-    private TableRVAdapter tableRVAdapter;
     private List<Table> tables;
-    private Spinner spinner;
     private static final String[] paths = {"All", "Free", "Ordering"};
     private TextView totalTable;
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
@@ -49,7 +47,7 @@ public class TableFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
         super.onViewCreated(view, savedInstanceState);
 
@@ -83,8 +81,8 @@ public class TableFragment extends Fragment {
     }
 
     private void initRecycleView(List<Table> tables) {
-        recyclerView = (RecyclerView) getActivity().findViewById(R.id.rv_table_list);
-        tableRVAdapter = new TableRVAdapter(tables, TableRVAdapter.RVViewMode.TABLE_TAB.getViewMode());
+        RecyclerView recyclerView = getActivity().findViewById(R.id.rv_table_list);
+        TableRVAdapter tableRVAdapter = new TableRVAdapter(tables, TableRVAdapter.RVViewMode.TABLE_TAB.getViewMode());
         GridLayoutManager gLayoutManager = new GridLayoutManager(getActivity().getApplicationContext(), 1);
         recyclerView.setLayoutManager(gLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -92,7 +90,7 @@ public class TableFragment extends Fragment {
     }
 
     private void initSpinner(View view) {
-        spinner = (Spinner) view.findViewById(R.id.tableFilterSpinner);
+        Spinner spinner = view.findViewById(R.id.tableFilterSpinner);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),
                 R.layout.table_spinner_item, paths);
 

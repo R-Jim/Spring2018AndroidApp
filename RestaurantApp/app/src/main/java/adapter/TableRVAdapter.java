@@ -66,13 +66,13 @@ public class TableRVAdapter extends RecyclerView.Adapter<TableRVAdapter.MyViewHo
         }
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    class MyViewHolder extends RecyclerView.ViewHolder {
 
         private TextView tableNumber;
 
-        public MyViewHolder(View tableView) {
+        MyViewHolder(View tableView) {
             super(tableView);
-            tableNumber = (TextView) itemView.findViewById(R.id.listTableNumber);
+            tableNumber = itemView.findViewById(R.id.listTableNumber);
 
         }
     }

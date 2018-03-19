@@ -35,7 +35,7 @@ public class StyleUtils {
         view.setBackground(gradientDrawable);
     }
 
-    public static enum GradientMode {
+    public enum GradientMode {
         LEFT_RIGHT("L_R"), RIGHT_LEFT("R_L"), TOP_BOTTOM("T_B"), BOTTOM_TOP("B_T");
 
         private String mode;

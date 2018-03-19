@@ -26,9 +26,9 @@ public class ItemRequestRVAdapter extends RecyclerView.Adapter<ItemRequestRVAdap
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            itemRequestId = (TextView) itemView.findViewById(R.id.itemRequestId);
-            itemRequestHeader = (TextView) itemView.findViewById(R.id.lblItemRequestRowHeader);
-            itemRequestQuantity = (TextView) itemView.findViewById(R.id.lblItemRequestRowQuantity);
+            itemRequestId = itemView.findViewById(R.id.itemRequestId);
+            itemRequestHeader = itemView.findViewById(R.id.lblItemRequestRowHeader);
+            itemRequestQuantity = itemView.findViewById(R.id.lblItemRequestRowQuantity);
         }
     }
 

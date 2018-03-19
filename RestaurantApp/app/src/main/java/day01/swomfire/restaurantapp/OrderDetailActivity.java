@@ -1,13 +1,11 @@
 package day01.swomfire.restaurantapp;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTabHost;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TabHost;
 import android.widget.TextView;
@@ -15,7 +13,6 @@ import android.widget.TextView;
 public class OrderDetailActivity extends AppCompatActivity {
     public final String ORDERED_TAB = "ORDERED_TAB";
     public final String ORDERING_TAB = "ORDERING_TAB";
-    private OrderDetailQuantityDialogFragment orderDetailQuantityDialogFragment;
     private static String tableId;
 
     public static void setTableId(String id) {
@@ -33,7 +30,7 @@ public class OrderDetailActivity extends AppCompatActivity {
     }
 
     private void setUpTab() {
-        setSupportActionBar((Toolbar) findViewById(R.id.my_toolbar));
+        setSupportActionBar(findViewById(R.id.my_toolbar));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         FragmentTabHost tabHost = findViewById(R.id.tabhost);
@@ -81,7 +78,7 @@ public class OrderDetailActivity extends AppCompatActivity {
 
     public void requestItemQuantityChange(View view) {
         FragmentManager fm = getSupportFragmentManager();
-        orderDetailQuantityDialogFragment = new OrderDetailQuantityDialogFragment();
+        OrderDetailQuantityDialogFragment orderDetailQuantityDialogFragment = new OrderDetailQuantityDialogFragment();
         View parent = (View) view.getParent().getParent();
         TextView id = parent.findViewById(R.id.itemOrderDetailId);
         TextView quantity = view.findViewById(R.id.itemOrderDetailQuantity);

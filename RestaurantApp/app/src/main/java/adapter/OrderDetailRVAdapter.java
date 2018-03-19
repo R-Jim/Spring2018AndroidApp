@@ -10,7 +10,6 @@ import android.widget.TextView;
 import java.util.List;
 
 import day01.swomfire.restaurantapp.R;
-import model.DishInItemList;
 import model.DishInReceipt;
 
 /**
@@ -22,15 +21,15 @@ public class OrderDetailRVAdapter extends RecyclerView.Adapter<OrderDetailRVAdap
     private List<DishInReceipt> dishInReceipts;
     private int layoutId;
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    class MyViewHolder extends RecyclerView.ViewHolder {
 
         private TextView itemPosition, itemName, itemQuantity;
 
-        public MyViewHolder(View itemView) {
+        MyViewHolder(View itemView) {
             super(itemView);
-            this.itemPosition = (TextView) itemView.findViewById(R.id.itemOrderDetailId);
-            this.itemName = (TextView) itemView.findViewById(R.id.itemOrderDetailName);
-            this.itemQuantity = (TextView) itemView.findViewById(R.id.itemOrderDetailQuantity);
+            this.itemPosition = itemView.findViewById(R.id.itemOrderDetailId);
+            this.itemName = itemView.findViewById(R.id.itemOrderDetailName);
+            this.itemQuantity = itemView.findViewById(R.id.itemOrderDetailQuantity);
         }
     }
 

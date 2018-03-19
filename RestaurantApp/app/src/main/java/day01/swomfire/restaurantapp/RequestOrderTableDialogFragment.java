@@ -1,10 +1,8 @@
 package day01.swomfire.restaurantapp;
 
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -26,10 +24,9 @@ import utils.RmaAPIUtils;
 
 public class RequestOrderTableDialogFragment extends DialogFragment {
 
-    private RecyclerView recyclerView;
-    private TableRVAdapter tableRVAdapter;
     private List<Table> tables;
 
+    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
@@ -62,8 +59,8 @@ public class RequestOrderTableDialogFragment extends DialogFragment {
     }
 
     private void initRV(View view) {
-        recyclerView = (RecyclerView) view.findViewById(R.id.requestOrderChooseTable);
-        tableRVAdapter = new TableRVAdapter(tables, TableRVAdapter.RVViewMode.REQUEST_ORDER_CHOOSE_TABLE.getViewMode());
+        RecyclerView recyclerView = view.findViewById(R.id.requestOrderChooseTable);
+        TableRVAdapter tableRVAdapter = new TableRVAdapter(tables, TableRVAdapter.RVViewMode.REQUEST_ORDER_CHOOSE_TABLE.getViewMode());
         GridLayoutManager gLayoutManager = new GridLayoutManager(getActivity().getApplicationContext(), 2);
         recyclerView.setLayoutManager(gLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());

@@ -51,45 +51,36 @@ public class ItemQuantityDialogFragment extends DialogFragment {
 
         // Change button edit
         Button btnChange = quantityDialog.findViewById(R.id.btnItemItemQuantityDialogChange);
-        btnChange.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                currentItemQuantityText.setText(itemQuantityText.getText());
-                DishInItemList dishInItemList = ExpandableItemListAdapter.findDish(String.valueOf(lblId.getText()));
-                int quantityNew = Integer.valueOf(String.valueOf(itemQuantityText.getText()));
-                dishInItemList.setQuantity(quantityNew);
+        btnChange.setOnClickListener(view1 -> {
+            currentItemQuantityText.setText(itemQuantityText.getText());
+            DishInItemList dishInItemList = ExpandableItemListAdapter.findDish(String.valueOf(lblId.getText()));
+            int quantityNew = Integer.valueOf(String.valueOf(itemQuantityText.getText()));
+            dishInItemList.setQuantity(quantityNew);
 
-                if (dishInItemList.isSelected()) {
-                    TextView lblNumberOfDishRequested = getActivity().findViewById(R.id.lblNumberOfDishRequested);
-                    String quantityStr = String.valueOf(lblNumberOfDishRequested.getText());
-                    int quantity = Integer.parseInt(quantityStr);
-                    quantity += (quantityNew - quantityOld);
-                    lblNumberOfDishRequested.setText(String.valueOf(quantity));
-                }
-                ItemQuantityDialogFragment.this.dismiss();
+            if (dishInItemList.isSelected()) {
+                TextView lblNumberOfDishRequested = getActivity().findViewById(R.id.lblNumberOfDishRequested);
+                String quantityStr = String.valueOf(lblNumberOfDishRequested.getText());
+                int quantity = Integer.parseInt(quantityStr);
+                quantity += (quantityNew - quantityOld);
+                lblNumberOfDishRequested.setText(String.valueOf(quantity));
             }
+            ItemQuantityDialogFragment.this.dismiss();
         });
         // Add button edit
         Button btnAdd = quantityDialog.findViewById(R.id.btnItemItemQuantityDialogAdd);
-        btnAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int quantity = Integer.parseInt(String.valueOf(itemQuantityText.getText()));
-                if (++quantity <= 10) {
-                    itemQuantityText.setText(String.valueOf(quantity));
+        btnAdd.setOnClickListener(view12 -> {
+            int quantity = Integer.parseInt(String.valueOf(itemQuantityText.getText()));
+            if (++quantity <= 10) {
+                itemQuantityText.setText(String.valueOf(quantity));
 
-                }
             }
         });
         // Sub button edit
         Button btnSub = quantityDialog.findViewById(R.id.btnItemItemQuantityDialogSub);
-        btnSub.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int quantity = Integer.parseInt(String.valueOf(itemQuantityText.getText()));
-                if (--quantity >= 1) {
-                    itemQuantityText.setText(String.valueOf(quantity));
-                }
+        btnSub.setOnClickListener(view13 -> {
+            int quantity = Integer.parseInt(String.valueOf(itemQuantityText.getText()));
+            if (--quantity >= 1) {
+                itemQuantityText.setText(String.valueOf(quantity));
             }
         });
 

@@ -27,19 +27,15 @@ import utils.StyleUtils;
 
 public class RequestOrderActivity extends AppCompatActivity {
 
-    private RequestOrderItemQuantityDialogFragment requestOrderItemQuantityDialogFragment;
     private RequestOrderTableDialogFragment requestOrderTableDialogFragment;
     private static List<DishInItemList> dishInItemLists;
-    private static RecyclerView recyclerView;
-    private static ItemRequestRVAdapter itemRequestRVAdapter;
     private static HashMap<Category, List<DishInItemList>> listHashMap;
-    private static TextView lblNewRequest;
     private static String tableId;
 
     private static void initRecyclerView(int id, List<DishInItemList> dishInItemLists, Activity activity) {
 
-        recyclerView = (RecyclerView) activity.findViewById(id);
-        itemRequestRVAdapter = new ItemRequestRVAdapter(dishInItemLists);
+        RecyclerView recyclerView = (RecyclerView) activity.findViewById(id);
+        ItemRequestRVAdapter itemRequestRVAdapter = new ItemRequestRVAdapter(dishInItemLists);
         GridLayoutManager gLayoutManager = new GridLayoutManager(activity.getApplicationContext(), 2);
         recyclerView.setLayoutManager(gLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -80,7 +76,7 @@ public class RequestOrderActivity extends AppCompatActivity {
             requestOrderTable.setText(tableId);
         }
 
-        lblNewRequest = (TextView) activity.findViewById(R.id.lblItemRequestRowNewQuantity);
+        TextView lblNewRequest = activity.findViewById(R.id.lblItemRequestRowNewQuantity);
         lblNewRequest.setText(String.valueOf(newQuantity));
 
         initRecyclerView(R.id.requestItemRecyclerView, dishInItemLists, activity);
@@ -118,7 +114,7 @@ public class RequestOrderActivity extends AppCompatActivity {
 
     public void requestItemQuantityChange(View view) {
         FragmentManager fm = getSupportFragmentManager();
-        requestOrderItemQuantityDialogFragment = new RequestOrderItemQuantityDialogFragment();
+        RequestOrderItemQuantityDialogFragment requestOrderItemQuantityDialogFragment = new RequestOrderItemQuantityDialogFragment();
         requestOrderItemQuantityDialogFragment.setUp(view);
         requestOrderItemQuantityDialogFragment.show(fm, "fragment_dialog_item_request_quantity");
 

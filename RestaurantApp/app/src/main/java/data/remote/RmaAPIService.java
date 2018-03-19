@@ -38,4 +38,7 @@ public interface RmaAPIService {
 
     @GET("/requests")
     Call<List<OrderRequest>> getRequestOrderList();
+
+    @POST("/authenticate")
+    Call<Boolean> getAuthenticate();
 }

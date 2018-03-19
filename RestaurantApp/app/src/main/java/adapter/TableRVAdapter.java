@@ -50,7 +50,7 @@ public class TableRVAdapter extends RecyclerView.Adapter<TableRVAdapter.MyViewHo
 
         public MyViewHolder(View tableView) {
             super(tableView);
-            tableNumber = (TextView) itemView.findViewById(R.id.listTableNumber);
+            tableNumber = (TextView) tableView.findViewById(R.id.listTableNumber);
 
         }
     }

@@ -20,7 +20,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
+            android:background="@color/colorPrimary"
             android:onClick="addNewRequestToTable"
-            android:text="+" />
+            style="@style/textStyle"
+            android:text="Order More +"
+            android:textColor="@color/colorOrderDetailTableInfoTextColor" />
     </RelativeLayout>
 </FrameLayout>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#423354</color>
+    <color name="colorPrimary">#ab1414</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorTabBackground">#e0e0eb</color>
@@ -23,15 +23,18 @@
     <color name="colorItemGroupItemQuantityDialogText">#ffffff</color>
 
 
-    <color name="colorDoneOrderBackground1">#423354</color>
-    <color name="colorDoneOrderBackground2">#261e32</color>
+    <color name="colorDoneOrderBackground1">#ffffff</color>
+    <color name="colorDoneOrderBackground2">#cacaca</color>
 
 
     <color name="colorDoneOrderItemListBackground">#ffffff</color>
-    <color name="colorDoneOrderBackgroundConfirm">#00e676</color>
-    <color name="colorDoneOrderBackgroundCancel">#FF3D00</color>
+    <color name="colorDoneOrderBackgroundConfirm">#149154</color>
+    <color name="colorDoneOrderBackgroundCancel">#FFD54F</color>
     <color name="colorDoneOrderBackgroundNewRequest">#FFD54F</color>
-    <color name="colorDoneOrderBackgroundLineBreaker">#ffffff</color>
+
+    <color name="colorOrderDetailTableOrderingTextColor">#ffffff</color>
+    <color name="colorDoneOrderBackgroundLineBreaker">#ab1414</color>
+    <color name="colorDoneOrderOrderedTextColor">#303030</color>
 
 
     <color name="colorItemTabBackground">#7b45f9</color>
@@ -40,17 +43,17 @@
 
     <color name="colorComTabBg">#ffa939</color>
     <color name="colorComTabBgPressed">#e07c19</color>
-    <color name="colorComTabTextSelected">#FFD54F</color>
+    <color name="colorComTabTextSelected">#ab1414</color>
     <color name="colorComTabTextUnselected">#ffffff</color>
 
     <color name="colorOrderDetailTableInfoTextColor">#ffffff</color>
-    <color name="colorOrderDetailTableInfoBGColor">#2c5380</color>
+    <color name="colorOrderDetailTableInfoBGColor">#ab1414</color>
 
     <color name="colorOrderDetailTableTabContentBGColor">#5b5389</color>
 
-    <color name="colorOrderDetailTableOrderedTextColor">#ffffff</color>
+    <color name="colorOrderDetailTableOrderedTextColor">#2e2e2e</color>
 
-    <color name="colorOrderDetailTabWidgetBGColor">#2c5380</color>
+    <color name="colorOrderDetailTabWidgetBGColor">#ffffff</color>
 
     <color name="colorTableGroupAddIconColor">#000000</color>
     <color name="colorTableGroupAddIconStrokeColor">#8f8f8f</color>

@@ -17,7 +17,8 @@
             android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            app:elevation="0dp">
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/my_toolbar"
@@ -116,14 +117,12 @@
             android:id="@+id/realtabcontent"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/tabWidget"
-            android:background="@color/colorOrderDetailTableTabContentBGColor" />
+            android:layout_below="@id/tabWidget" />
 
         <FrameLayout
             android:id="@android:id/tabcontent"
             android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:background="@color/colorOrderDetailTableTabContentBGColor" />
+            android:layout_height="0dp" />
 
     </RelativeLayout>
 

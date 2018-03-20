@@ -51,13 +51,14 @@ public class OrderDetailActivity extends AppCompatActivity {
                 View view = tabHost.getTabWidget().getChildAt(i);
                 TextView tv = view.findViewById(R.id.tvTabTitle);
                 tv.setTextColor(getColor(R.color.colorComTabTextUnselected));
-
+                view.setBackgroundColor(getColor(R.color.colorPrimary));
                 View viewBar = view.findViewById(R.id.vTopBar);
                 viewBar.setBackgroundColor(getColor(R.color.colorComTabTextUnselected));
             }
             View view = tabHost.getTabWidget().getChildAt(tabHost.getCurrentTab());
             TextView tv = view.findViewById(R.id.tvTabTitle);
             tv.setTextColor(getColor(R.color.colorComTabTextSelected));
+            view.setBackgroundColor(getColor(R.color.colorComTabTextUnselected));
             View viewBar = view.findViewById(R.id.vTopBar);
             viewBar.setBackgroundColor(getColor(R.color.colorComTabTextSelected));
         });

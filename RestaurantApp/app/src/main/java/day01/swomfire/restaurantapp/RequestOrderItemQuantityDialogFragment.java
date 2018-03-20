@@ -35,8 +35,8 @@ public class RequestOrderItemQuantityDialogFragment extends DialogFragment {
         View quantityDialog = inflater.inflate(R.layout.fragment_dialog_item_request_quantity, null);
         builder.setView(quantityDialog);
         StyleUtils.setGradientBackground(quantityDialog, R.id.itemItemQuantityDialog,
-                new int[]{getContext().getResources().getColor(R.color.colorDoneOrderBackground1),
-                        getContext().getResources().getColor(R.color.colorDoneOrderBackground2)}, StyleUtils.GradientMode.TOP_BOTTOM.getMode());
+                new int[]{getContext().getResources().getColor(R.color.colorPrimary),
+                        getContext().getResources().getColor(R.color.colorPrimary)}, StyleUtils.GradientMode.TOP_BOTTOM.getMode());
         // Get current item quantity
         currentItemQuantityText = view.findViewById(R.id.lblItemRequestRowQuantity);
 

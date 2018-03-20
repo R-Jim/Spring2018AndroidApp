@@ -16,15 +16,17 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingBottom="10dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_bold"
                 android:text="Order Detail"
-                android:textColor="@color/colorDoneOrderBackgroundLineBreaker"
+                android:textColor="@color/colorOrderDetailTableInfoTextColor"
                 android:textSize="22dp" />
 
             <LinearLayout
@@ -102,7 +104,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/roboto_bold"
                             android:text="Current: 2 Items"
-                            android:textColor="@color/colorDoneOrderBackgroundLineBreaker" />
+                            android:textColor="@color/colorOrderDetailTableInfoTextColor" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -114,7 +116,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="60dp"
-            android:layout_marginTop="88dp"
+            android:layout_marginTop="98dp"
             android:orientation="vertical">
 
             <LinearLayout
@@ -146,7 +148,7 @@
                 android:layout_marginRight="10dp"
                 android:fontFamily="@font/roboto_bold"
                 android:text="        Bugger              x1                            Coffee            x1"
-                android:textColor="@color/colorDoneOrderBackgroundLineBreaker">
+                android:textColor="@color/colorDoneOrderOrderedTextColor">
 
             </TextView>
         </LinearLayout>
@@ -167,7 +169,7 @@
                 android:fontFamily="@font/roboto_bold"
                 android:onClick="backToMenu"
                 android:text="Return"
-                android:textColor="@color/colorDoneOrderBackgroundLineBreaker" />
+                android:textColor="@color/colorDoneOrderOrderedTextColor" />
 
             <Button
                 android:layout_width="0dp"
@@ -177,7 +179,7 @@
                 android:fontFamily="@font/roboto_bold"
                 android:onClick="cancelRequest"
                 android:text="CANCEL Request"
-                android:textColor="@color/colorDoneOrderBackgroundCancel" />
+                android:textColor="@color/colorPrimary" />
 
             <Button
                 android:layout_width="0dp"

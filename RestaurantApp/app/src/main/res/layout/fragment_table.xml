@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#afafaf"
     tools:context="day01.swomfire.restaurantapp.TableFragment">
 
     <LinearLayout
@@ -78,6 +79,7 @@
         android:id="@+id/rv_table_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="6dp"
         android:layout_marginTop="45dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 

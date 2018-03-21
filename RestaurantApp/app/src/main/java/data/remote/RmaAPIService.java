@@ -52,5 +52,8 @@ public interface RmaAPIService {
     Call<Boolean> sendReceiptToServer(@Body OrderRequest orderRequest);
 
     @GET("/receipts/{id}")
-    Call<Receipt> getReceipt(@Path("id") Integer receiptSeq);
+    Call<Receipt> getReceiptByReceiptId(@Path("id") Integer receiptSeq);
+
+    @GET("/tables/{id}/receipts")
+    Call<Receipt> getReceiptByTableId(@Path("id") int tableSeq);
 }

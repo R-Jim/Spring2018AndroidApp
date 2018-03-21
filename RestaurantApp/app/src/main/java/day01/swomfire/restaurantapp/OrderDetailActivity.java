@@ -46,9 +46,10 @@ public class OrderDetailActivity extends AppCompatActivity {
         TextView lblTableId = findViewById(R.id.orderDetailTableId);
         lblTableId.setText(tableId);
 
-        TextView lblReceiptId = findViewById(R.id.orderDetailReceiptId);
-        lblReceiptId.setText(String.valueOf(receiptId));
-
+        if (receiptId != null) {
+            TextView lblReceiptId = findViewById(R.id.orderDetailReceiptId);
+            lblReceiptId.setText(String.valueOf(receiptId));
+        }
         loadOrderDetail();
     }
 
@@ -101,28 +102,54 @@ public class OrderDetailActivity extends AppCompatActivity {
        }*/
     private void loadOrderDetail() {
         RmaAPIService rmaAPIService = RmaAPIUtils.getAPIService();
-        rmaAPIService.getReceipt(receiptId).enqueue(new Callback<Receipt>() {
-            @Override
-            public void onResponse(Call<Receipt> call, Response<Receipt> response) {
-                if (response.isSuccessful()) {
-                    Receipt receipt = response.body();
-                    TextView lblTotal = findViewById(R.id.orderDetailTotal);
-                    lblTotal.setText(String.valueOf((receipt.getTotal() != null) ? receipt.getTotal() : "0"));
-                    TextView lblDate = findViewById(R.id.orderDetailDate);
-                    Date date = new Date(receipt.getIssueDate());
-                    lblDate.setText(String.valueOf(ParseUtils.parseDateToStringFormat(date)));
+        if (receiptId != null) {
+            rmaAPIService.getReceiptByReceiptId(receiptId).enqueue(new Callback<Receipt>() {
+                @Override
+                public void onResponse(Call<Receipt> call, Response<Receipt> response) {
+                    if (response.isSuccessful()) {
+                        Receipt receipt = response.body();
+                        TextView lblTotal = findViewById(R.id.orderDetailTotal);
+                        lblTotal.setText(String.valueOf((receipt.getTotal() != null) ? receipt.getTotal() : "0"));
+                        TextView lblDate = findViewById(R.id.orderDetailDate);
+                        Date date = new Date(receipt.getIssueDate());
+                        lblDate.setText(String.valueOf(ParseUtils.parseDateToStringFormat(date)));
 
 
-                    Log.d(this.getClass().getSimpleName(), "GET loaded from API");
+                        Log.d(this.getClass().getSimpleName(), "GET loaded from API");
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<Receipt> call, Throwable t) {
-                System.out.println("Failed to load Order Request list");
+                @Override
+                public void onFailure(Call<Receipt> call, Throwable t) {
+                    System.out.println("Failed to load Order Request list");
 
-            }
-        });
+                }
+            });
+        } else {
+            rmaAPIService.getReceiptByTableId(Integer.parseInt(tableId)).enqueue(new Callback<Receipt>() {
+                @Override
+                public void onResponse(Call<Receipt> call, Response<Receipt> response) {
+                    if (response.isSuccessful()) {
+                        Receipt receipt = response.body();
+                        TextView lblTotal = findViewById(R.id.orderDetailTotal);
+                        lblTotal.setText(String.valueOf((receipt.getTotal() != null) ? receipt.getTotal() : "0"));
+                        TextView lblDate = findViewById(R.id.orderDetailDate);
+                        Date date = new Date(receipt.getIssueDate());
+                        lblDate.setText(String.valueOf(ParseUtils.parseDateToStringFormat(date)));
+
+                        TextView lblReceiptId = findViewById(R.id.orderDetailReceiptId);
+                        lblReceiptId.setText(String.valueOf(receipt.getSeqId()));
+                        Log.d(this.getClass().getSimpleName(), "GET loaded from API");
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Receipt> call, Throwable t) {
+                    System.out.println("Failed to load Order Request list");
+
+                }
+            });
+        }
     }
 
     public void requestItemQuantityChange(View view) {

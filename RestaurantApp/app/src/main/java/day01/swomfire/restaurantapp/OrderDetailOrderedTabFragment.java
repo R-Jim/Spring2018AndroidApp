@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,10 +17,16 @@ import java.util.List;
 
 import adapter.OrderDetailRVAdapter;
 import data.model.Item;
+import data.remote.RmaAPIService;
 import model.DishInReceipt;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import utils.RmaAPIUtils;
 
 
 public class OrderDetailOrderedTabFragment extends Fragment {
+    private List<DishInReceipt> dishInReceipts;
 
     @Nullable
     @Override
@@ -30,30 +37,28 @@ public class OrderDetailOrderedTabFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        List<DishInReceipt> dishInReceipts = new ArrayList<DishInReceipt>();
-        Item item = new Item();
-        item.setItemName("Sushi");
-        dishInReceipts.add(
-                new DishInReceipt(
-                        item, 2
-                )
-        );
-        Item item1 = new Item();
-        item1.setItemName("Chicken");
-        dishInReceipts.add(
-                new DishInReceipt(
-                        item1, 3
-                )
-        );
-        Item item2 = new Item();
-        item2.setItemName("Bugger");
-        dishInReceipts.add(
-                new DishInReceipt(
-                        item2, 4
-                )
-        );
 
-        initRecycleView(dishInReceipts);
+        loadOrderedList();
+    }
+
+    private void loadOrderedList() {
+/*        RmaAPIService rmaAPIService = RmaAPIUtils.getAPIService();
+        rmaAPIService.getReceipt(receiptId).enqueue(new Callback<List<Receipt>>() {
+            @Override
+            public void onResponse(Call<List<Receipt>> call, Response<List<Receipt>> response) {
+                if (response.isSuccessful()) {
+                    dishInReceipts = response.body();
+                    initRecycleView(dishInReceipts);
+                    Log.d(this.getClass().getSimpleName(), "GET loaded from API");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Receipt> call, Throwable t) {
+                System.out.println("Failed to load Order Request list");
+
+            }
+        });*/
     }
 
     private void initRecycleView(List<DishInReceipt> dishInReceipts) {

@@ -77,9 +77,9 @@ public class RequestFragment extends Fragment {
     private void initList() {
         requestList = new ArrayList<>();
         OrderRequest orderRequest = new OrderRequest();
-        orderRequest.setTableNo("4");
+/*        orderRequest.setTableNo("4");
         orderRequest.setItemSeq("213");
-        orderRequest.setItemName("Capu");
+        orderRequest.setItemName("Capu");*/
         requestList.add(orderRequest);
     }
 

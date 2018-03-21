@@ -12,7 +12,7 @@ import java.util.List;
 public class Item {
     @SerializedName("seqId")
     @Expose
-    private Integer seqId;
+    private Long seqId;
     @SerializedName("itemId")
     @Expose
     private String itemId;
@@ -32,11 +32,11 @@ public class Item {
     @Expose
     private List<Link> links = null;
 
-    public Integer getSeqId() {
+    public Long getSeqId() {
         return seqId;
     }
 
-    public void setSeqId(Integer seqId) {
+    public void setSeqId(Long seqId) {
         this.seqId = seqId;
     }
 

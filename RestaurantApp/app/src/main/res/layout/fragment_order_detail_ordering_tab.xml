@@ -23,7 +23,7 @@
             android:background="@color/colorPrimary"
             android:onClick="addNewRequestToTable"
             style="@style/textStyle"
-            android:text="Order More +"
+            android:text="Order More"
             android:textColor="@color/colorOrderDetailTableInfoTextColor" />
     </RelativeLayout>
 </FrameLayout>

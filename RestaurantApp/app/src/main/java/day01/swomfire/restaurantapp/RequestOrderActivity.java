@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,8 +22,16 @@ import java.util.Map;
 import adapter.ExpandableItemListAdapter;
 import adapter.ItemRequestRVAdapter;
 import data.model.Category;
+import data.model.OrderDetail;
+import data.model.OrderRequest;
 import data.model.Table;
+import data.remote.RmaAPIService;
 import model.DishInItemList;
+import model.Order;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import utils.RmaAPIUtils;
 import utils.StyleUtils;
 
 public class RequestOrderActivity extends AppCompatActivity {
@@ -142,11 +151,58 @@ public class RequestOrderActivity extends AppCompatActivity {
 
     public void confirmRequest(View view) {
         if (tableId != null) {
-
+            sendReceiptToServer();
         } else {
             Toast toast = Toast.makeText(getApplicationContext(), "Please choose a table first", Toast.LENGTH_SHORT);
             toast.show();
         }
     }
 
+    private void sendReceiptToServer() {
+        List<OrderDetail> orderDetails = new ArrayList<>();
+        if (listHashMap != null) {
+            for (Map.Entry<Category, List<DishInItemList>> entry : listHashMap.entrySet()) {
+                for (DishInItemList dishInItemList : entry.getValue()) {
+                    if (dishInItemList.isSelected()) {
+                        OrderDetail orderDetail = new OrderDetail();
+                        Long itemSeq = dishInItemList.getDish().getSeqId();
+                        Integer quantity = dishInItemList.getQuantity();
+                        orderDetail.setItemSeq(itemSeq);
+                        orderDetail.setQuantity(quantity);
+                        orderDetails.add(orderDetail);
+                    }
+                }
+            }
+        }
+        if (!orderDetails.isEmpty()) {
+            //Todo call post method to server
+            RmaAPIService mService = RmaAPIUtils.getAPIService();
+            OrderRequest orderRequest = new OrderRequest();
+            orderRequest.setTableId(Long.parseLong(tableId));
+            orderRequest.setOrderDetailList(orderDetails);
+            mService.sendReceiptToServer(orderRequest).enqueue(new Callback<Boolean>() {
+                @Override
+                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                    if (response.isSuccessful()) {
+                        if (response.body()) {
+                            Toast toast = Toast.makeText(getApplicationContext(), "Receipt sent to server", Toast.LENGTH_SHORT);
+                            toast.show();
+                        } else {
+                            Toast toast = Toast.makeText(getApplicationContext(), "Failed to send Receipt to server", Toast.LENGTH_SHORT);
+                            toast.show();
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Boolean> call, Throwable t) {
+                    Toast toast = Toast.makeText(getApplicationContext(), "Failed to send Receipt to server", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+            });
+        } else {
+            Toast toast = Toast.makeText(getApplicationContext(), "Please choose some items", Toast.LENGTH_SHORT);
+            toast.show();
+        }
+    }
 }

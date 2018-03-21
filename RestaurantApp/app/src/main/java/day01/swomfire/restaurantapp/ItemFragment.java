@@ -55,7 +55,7 @@ public class ItemFragment extends Fragment {
     }
 
 
-    private void loadDishList() {
+    public void loadDishList() {
         RmaAPIService mService = RmaAPIUtils.getAPIService();
 
         mService.getItemList().enqueue(new Callback<List<Item>>() {

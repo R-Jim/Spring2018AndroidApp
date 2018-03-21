@@ -6,17 +6,35 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTabHost;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TabHost;
 import android.widget.TextView;
+
+import java.sql.Timestamp;
+import java.util.Date;
+import java.util.List;
+
+import data.model.Receipt;
+import data.remote.RmaAPIService;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import utils.ParseUtils;
+import utils.RmaAPIUtils;
 
 public class OrderDetailActivity extends AppCompatActivity {
     public final String ORDERED_TAB = "ORDERED_TAB";
     public final String ORDERING_TAB = "ORDERING_TAB";
     private static String tableId;
+    private static Integer receiptId;
 
     public static void setTableId(String id) {
         tableId = id;
+    }
+
+    public static void setReceiptIdId(Integer id) {
+        receiptId = id;
     }
 
     @Override
@@ -27,6 +45,11 @@ public class OrderDetailActivity extends AppCompatActivity {
 
         TextView lblTableId = findViewById(R.id.orderDetailTableId);
         lblTableId.setText(tableId);
+
+        TextView lblReceiptId = findViewById(R.id.orderDetailReceiptId);
+        lblReceiptId.setText(String.valueOf(receiptId));
+
+        loadOrderDetail();
     }
 
     private void setUpTab() {
@@ -64,17 +87,42 @@ public class OrderDetailActivity extends AppCompatActivity {
         });
     }
 
-    private void setNewTab(Context ctx, FragmentTabHost tabHost, String tag, String title) {
+/*    private void setNewTab(Context ctx, FragmentTabHost tabHost, String tag, String title) {
         TabHost.TabSpec tabSpec = tabHost.newTabSpec(tag);
         tabSpec.setIndicator(getTabIndicator(ctx, title));
         tabHost.addTab(tabSpec, ComTabFragment.class, null);
-    }
+    }*/
 
-    private View getTabIndicator(Context ctx, String title) {
-        View view = View.inflate(this, R.layout.tab_layout_order_detail, null);
-        TextView tvTitle = view.findViewById(R.id.tvTabTitle);
-        tvTitle.setText(title);
-        return view;
+    /*   private View getTabIndicator(Context ctx, String title) {
+           View view = View.inflate(this, R.layout.tab_layout_order_detail, null);
+           TextView tvTitle = view.findViewById(R.id.tvTabTitle);
+           tvTitle.setText(title);
+           return view;
+       }*/
+    private void loadOrderDetail() {
+        RmaAPIService rmaAPIService = RmaAPIUtils.getAPIService();
+        rmaAPIService.getReceipt(receiptId).enqueue(new Callback<Receipt>() {
+            @Override
+            public void onResponse(Call<Receipt> call, Response<Receipt> response) {
+                if (response.isSuccessful()) {
+                    Receipt receipt = response.body();
+                    TextView lblTotal = findViewById(R.id.orderDetailTotal);
+                    lblTotal.setText(String.valueOf((receipt.getTotal() != null) ? receipt.getTotal() : "0"));
+                    TextView lblDate = findViewById(R.id.orderDetailDate);
+                    Date date = new Date(receipt.getIssueDate());
+                    lblDate.setText(String.valueOf(ParseUtils.parseDateToStringFormat(date)));
+
+
+                    Log.d(this.getClass().getSimpleName(), "GET loaded from API");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Receipt> call, Throwable t) {
+                System.out.println("Failed to load Order Request list");
+
+            }
+        });
     }
 
     public void requestItemQuantityChange(View view) {
@@ -95,6 +143,7 @@ public class OrderDetailActivity extends AppCompatActivity {
         i.putExtra("tableId", tableId);
         setResult(3, i);
         tableId = null;
+        receiptId = null;
         this.finish();
     }
 }

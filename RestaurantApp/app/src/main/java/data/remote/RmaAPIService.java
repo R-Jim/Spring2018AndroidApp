@@ -7,6 +7,8 @@ import java.util.Observable;
 import data.model.Category;
 import data.model.Item;
 import data.model.OrderRequest;
+import data.model.Receipt;
+import data.model.Request;
 import data.model.Table;
 import retrofit2.Call;
 import retrofit2.Response;
@@ -17,6 +19,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 /**
@@ -32,8 +35,8 @@ public interface RmaAPIService {
     @GET("/items")
     Call<List<Item>> getItemList();
 
-    @GET("/requestList")
-    Call<List<OrderRequest>> getRequestList();
+    @GET("/requests")
+    Call<List<Request>> getRequestList();
 
     @GET("/tables")
     Call<List<Table>> getTableList();
@@ -47,4 +50,7 @@ public interface RmaAPIService {
     @POST("/orders")
     @Headers({"Content-Type: application/json"})
     Call<Boolean> sendReceiptToServer(@Body OrderRequest orderRequest);
+
+    @GET("/receipts/{id}")
+    Call<Receipt> getReceipt(@Path("id") Integer receiptSeq);
 }

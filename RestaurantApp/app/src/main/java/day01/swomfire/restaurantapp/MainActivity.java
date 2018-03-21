@@ -48,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
 
 
         setSupportActionBar(findViewById(R.id.my_toolbar));
-////        listView = findViewById(R.id.tableExpandableList);
 
         initTabWidget();
     }
@@ -168,7 +167,9 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, OrderDetailActivity.class);
         startActivityForResult(intent, 2);
         TextView tableId = view.findViewById(R.id.tv_table_id);
+        TextView receiptId = view.findViewById(R.id.tv_receipt_id);
         OrderDetailActivity.setTableId(String.valueOf(tableId.getText()));
+        OrderDetailActivity.setReceiptIdId(Integer.parseInt(String.valueOf(receiptId.getText())));
     }
 
     @Override

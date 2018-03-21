@@ -11,6 +11,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import data.model.OrderRequest;
+import data.model.Request;
 import day01.swomfire.restaurantapp.R;
 
 /**
@@ -29,18 +30,20 @@ public class CustomRVAdapter extends RecyclerView.Adapter<CustomRVAdapter.Reques
         TextView tvTableId;
         TextView tvDishName;
         TextView tvDishDiscr;
+        TextView tvReceiptId;
 
         public RequestViewHolder(View itemView) {
             super(itemView);
-            cv = (CardView) itemView.findViewById(R.id.cv_request_item);
-            tvTableId = (TextView) itemView.findViewById(R.id.tv_table_id);
-            tvDishName = (TextView) itemView.findViewById(R.id.tv_dish_name);
-            tvDishDiscr = (TextView) itemView.findViewById(R.id.tv_description);
+            cv = itemView.findViewById(R.id.cv_request_item);
+            tvTableId = itemView.findViewById(R.id.tv_table_id);
+            tvDishName = itemView.findViewById(R.id.tv_dish_name);
+            tvDishDiscr = itemView.findViewById(R.id.tv_description);
+            tvReceiptId = itemView.findViewById(R.id.tv_receipt_id);
         }
     }
 
     // Data for the RV
-    private List<OrderRequest> requestList;
+    private List<Request> requestList;
 
     public CustomRVAdapter(List requestList) {
         this.requestList = requestList;
@@ -56,7 +59,10 @@ public class CustomRVAdapter extends RecyclerView.Adapter<CustomRVAdapter.Reques
 
     @Override
     public void onBindViewHolder(@NonNull RequestViewHolder holder, int position) {
-        holder.tvTableId.setText(requestList.get(position).getTableId() + "");
+        holder.tvTableId.setText(String.valueOf(requestList.get(position).getTableId()));
+        holder.tvDishName.setText(String.valueOf(requestList.get(position).getItemSeq()));
+        holder.tvReceiptId.setText(String.valueOf(requestList.get(position).getReceiptSeq()));
+        //holder.tvDishDiscr.setText(requestList.get(position).getTableId() + "");
     }
 
 

@@ -60,16 +60,28 @@
                         style="@style/orderDetailTextStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="0155" />
+                        android:text="" />
                 </LinearLayout>
 
 
-                <TextView
-                    style="@style/orderDetailTextStyle"
+                <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight=".5"
-                    android:text="Recipt: 01" />
+                    android:layout_weight=".5">
+
+                    <TextView
+                        style="@style/orderDetailTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Receipt: " />
+
+                    <TextView
+                        android:id="@+id/orderDetailReceiptId"
+                        style="@style/orderDetailTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="" />
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -77,19 +89,43 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <TextView
-                    style="@style/orderDetailTextStyle"
+                <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight=".5"
-                    android:text="Total: 100000000" />
+                    android:layout_weight=".5">
 
-                <TextView
-                    style="@style/orderDetailTextStyle"
+                    <TextView
+                        style="@style/orderDetailTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Total: " />
+
+                    <TextView
+                        android:id="@+id/orderDetailTotal"
+                        style="@style/orderDetailTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="" />
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight=".5"
-                    android:text="Date: 01/01/2018" />
+                    android:layout_weight=".5">
+
+                    <TextView
+                        style="@style/orderDetailTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Date: " />
+
+                    <TextView
+                        android:id="@+id/orderDetailDate"
+                        style="@style/orderDetailTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="" />
+                </LinearLayout>
             </LinearLayout>
 
         </LinearLayout>

@@ -63,11 +63,13 @@ public class RequestOrderActivity extends AppCompatActivity {
         int newQuantity = 0;
         dishInItemLists = new ArrayList<>();
         listHashMap = ExpandableItemListAdapter.getListHashMap();
-        for (Map.Entry<Category, List<DishInItemList>> entry : listHashMap.entrySet()) {
-            for (DishInItemList dishInItemList : entry.getValue()) {
-                if (dishInItemList.isSelected()) {
-                    dishInItemLists.add(dishInItemList);
-                    newQuantity += dishInItemList.getQuantity();
+        if (listHashMap != null) {
+            for (Map.Entry<Category, List<DishInItemList>> entry : listHashMap.entrySet()) {
+                for (DishInItemList dishInItemList : entry.getValue()) {
+                    if (dishInItemList.isSelected()) {
+                        dishInItemLists.add(dishInItemList);
+                        newQuantity += dishInItemList.getQuantity();
+                    }
                 }
             }
         }
@@ -97,11 +99,13 @@ public class RequestOrderActivity extends AppCompatActivity {
 
 
     public void cancelRequest(View view) {
-        for (Map.Entry<Category, List<DishInItemList>> entry : listHashMap.entrySet()) {
-            for (DishInItemList dishInItemList : entry.getValue()) {
-                if (dishInItemList.isSelected()) {
-                    dishInItemList.setSelected(false);
-                    dishInItemList.setQuantity(1);
+        if (listHashMap != null) {
+            for (Map.Entry<Category, List<DishInItemList>> entry : listHashMap.entrySet()) {
+                for (DishInItemList dishInItemList : entry.getValue()) {
+                    if (dishInItemList.isSelected()) {
+                        dishInItemList.setSelected(false);
+                        dishInItemList.setQuantity(1);
+                    }
                 }
             }
         }

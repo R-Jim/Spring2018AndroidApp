@@ -8,7 +8,7 @@ import data.remote.RetrofitClient;
  */
 
 public class RmaAPIUtils {
-    public static final String LOCAL_IP = "http://192.168.1.4";
+    public static final String LOCAL_IP = "http://10.82.139.247";
     public static final String PORT = "8080";
     public static final String BASE_URL = LOCAL_IP + ":" + PORT;
 

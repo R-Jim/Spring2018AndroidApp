@@ -23,8 +23,11 @@
     <color name="colorItemGroupItemQuantityDialogText">#ffffff</color>
 
 
-    <color name="colorDoneOrderBackground1">#ffffff</color>
-    <color name="colorDoneOrderBackground2">#cacaca</color>
+    <color name="colorDoneOrderBackground1">#f2f2f2</color>
+    <color name="colorDoneOrderBackground2">#f2f2f2</color>
+
+    <color name="colorOrderDetailDialogBackground1">#ab1414</color>
+    <color name="colorOrderDetailDialogBackground2">#700000</color>
 
 
     <color name="colorDoneOrderItemListBackground">#ffffff</color>

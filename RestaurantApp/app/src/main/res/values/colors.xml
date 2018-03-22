@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#ab1414</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimaryDark">#ab1414</color>
+    <color name="colorAccent">#FFD54F</color>
     <color name="colorTabBackground">#e0e0eb</color>
     <color name="colorTabActive">#FFD54F</color>
     <color name="colorTabInactive">#ffffff</color>
-    <color name="colorTabSelectedBackground">#3F51B5</color>
+    <color name="colorTabSelectedBackground">#ab1414</color>
     <color name="colorActive">#5294bb</color>
     <color name="colorInactive">#bcbcbc</color>
 
@@ -61,5 +61,7 @@
     <color name="colorTableGroupAddIconColor">#000000</color>
     <color name="colorTableGroupAddIconStrokeColor">#8f8f8f</color>
 
-
+    <color name="colorLoginBackground1">#643939</color>
+    <color name="colorLoginBackground1_5">#dd1818</color>
+    <color name="colorLoginTextfieldBackground">#e4e4e4</color>
 </resources>

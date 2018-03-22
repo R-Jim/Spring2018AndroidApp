@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -41,14 +42,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
-        <activity android:name=".SettingActivity"
+        <activity
+            android:name=".SettingActivity"
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity"/>
+                android:value=".MainActivity" />
         </activity>
 
-        <!--Service declaration-->
+        <!-- Service declaration -->
 
         <service android:name="service.CustomFBMInstIdService">
             <intent-filter>
@@ -72,6 +74,11 @@
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/colorAccent" />
 
+        <activity
+            android:name=".LoginActivity"
+            android:label="@string/title_activity_login">
+
+        </activity>
     </application>
 
 </manifest>

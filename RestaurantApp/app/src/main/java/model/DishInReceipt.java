@@ -9,6 +9,7 @@ import data.model.Item;
 public class DishInReceipt {
     private Item dish;
     private int quantity;
+    private boolean changable;
 
     public DishInReceipt() {
     }
@@ -32,5 +33,13 @@ public class DishInReceipt {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public boolean isChangable() {
+        return changable;
+    }
+
+    public void setChangable(boolean changable) {
+        this.changable = changable;
     }
 }

@@ -41,7 +41,7 @@ public class OrderDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_detail);
-        setUpTab();
+
 
         TextView lblTableId = findViewById(R.id.orderDetailTableId);
         lblTableId.setText(tableId);
@@ -113,7 +113,7 @@ public class OrderDetailActivity extends AppCompatActivity {
                         TextView lblDate = findViewById(R.id.orderDetailDate);
                         Date date = new Date(receipt.getIssueDate());
                         lblDate.setText(String.valueOf(ParseUtils.parseDateToStringFormat(date)));
-
+                        setUpTab();
 
                         Log.d(this.getClass().getSimpleName(), "GET loaded from API");
                     }
@@ -136,9 +136,10 @@ public class OrderDetailActivity extends AppCompatActivity {
                         TextView lblDate = findViewById(R.id.orderDetailDate);
                         Date date = new Date(receipt.getIssueDate());
                         lblDate.setText(String.valueOf(ParseUtils.parseDateToStringFormat(date)));
-
+                        receiptId = receipt.getSeqId();
                         TextView lblReceiptId = findViewById(R.id.orderDetailReceiptId);
                         lblReceiptId.setText(String.valueOf(receipt.getSeqId()));
+                        setUpTab();
                         Log.d(this.getClass().getSimpleName(), "GET loaded from API");
                     }
                 }
@@ -172,5 +173,12 @@ public class OrderDetailActivity extends AppCompatActivity {
         tableId = null;
         receiptId = null;
         this.finish();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        tableId = null;
+        receiptId = null;
     }
 }

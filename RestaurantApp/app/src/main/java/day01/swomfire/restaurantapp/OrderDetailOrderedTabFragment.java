@@ -45,7 +45,7 @@ public class OrderDetailOrderedTabFragment extends Fragment {
 
     private void loadOrderedList(Integer receiptId) {
         RmaAPIService rmaAPIService = RmaAPIUtils.getAPIService();
-        rmaAPIService.getReceiptDetailsByReceiptId(receiptId).enqueue(new Callback<List<ReceiptDetail>>() {
+        rmaAPIService.getReceiptDetailsByReceiptSeq(receiptId).enqueue(new Callback<List<ReceiptDetail>>() {
             @Override
             public void onResponse(Call<List<ReceiptDetail>> call, Response<List<ReceiptDetail>> response) {
                 if (response.isSuccessful()) {
@@ -64,13 +64,17 @@ public class OrderDetailOrderedTabFragment extends Fragment {
     }
 
     private void initRecycleView(List<ReceiptDetail> receiptDetails) {
-        RecyclerView recyclerView = getActivity().findViewById(R.id.orderDetailOrderedRV);
-        List<DishInReceipt> dishInReceipts = parseList(receiptDetails);
-        OrderDetailRVAdapter orderDetailOrderingRVAdapter = new OrderDetailRVAdapter(dishInReceipts, R.layout.item_order_detail_ordered_list_row);
-        GridLayoutManager gLayoutManager = new GridLayoutManager(getActivity().getApplicationContext(), 1);
-        recyclerView.setLayoutManager(gLayoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(orderDetailOrderingRVAdapter);
+        if (getActivity() != null) {
+            RecyclerView recyclerView = getActivity().findViewById(R.id.orderDetailOrderedRV);
+            List<DishInReceipt> dishInReceipts = parseList(receiptDetails);
+            OrderDetailRVAdapter orderDetailOrderingRVAdapter = new OrderDetailRVAdapter(dishInReceipts, R.layout.item_order_detail_ordered_list_row);
+            GridLayoutManager gLayoutManager = new GridLayoutManager(getActivity().getApplicationContext(), 1);
+            if (recyclerView != null) {
+                recyclerView.setLayoutManager(gLayoutManager);
+                recyclerView.setItemAnimator(new DefaultItemAnimator());
+                recyclerView.setAdapter(orderDetailOrderingRVAdapter);
+            }
+        }
     }
 
     private List<DishInReceipt> parseList(List<ReceiptDetail> receiptDetails) {

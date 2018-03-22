@@ -50,8 +50,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight=".15"
-        android:paddingRight="15dp"
-        android:gravity="center">
+        android:gravity="center"
+        android:onClick="itemQuantityChange"
+        android:paddingRight="15dp">
 
         <TextView
             android:id="@+id/lblItemItemQuantity"
@@ -59,7 +60,6 @@
             android:layout_height="wrap_content"
             android:background="#28000000"
             android:fontFamily="@font/roboto_bold"
-            android:onClick="itemQuantityChange"
             android:text="2"
             android:textAlignment="center"
             android:textColor="@color/colorItemGroupTextColor"

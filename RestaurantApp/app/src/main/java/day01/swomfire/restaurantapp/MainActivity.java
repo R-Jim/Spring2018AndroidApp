@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.CheckBox;
@@ -28,28 +29,59 @@ import android.widget.TabWidget;
 
 import com.google.firebase.messaging.FirebaseMessaging;
 
+import java.util.List;
+
 import adapter.ExpandableItemListAdapter;
+import data.model.Item;
+import data.remote.RmaAPIService;
 import model.DishInItemList;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import service.TabHostService;
 import service.TabHostServiceImpl;
+import utils.RmaAPIUtils;
 
 public class MainActivity extends AppCompatActivity {
     private final String FB_TOPIC_REQUESTLIST = "RequestList";
 
     private FragmentTabHost tabHost;
+    private static List<Item> itemList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        loadDishList();
         // Subscribe to topic with API
-        FirebaseMessaging.getInstance().subscribeToTopic(FB_TOPIC_REQUESTLIST);
 
+    }
 
-        setSupportActionBar(findViewById(R.id.my_toolbar));
+    public static List<Item> getItemList() {
+        return itemList;
+    }
 
-        initTabWidget();
+    public void loadDishList() {
+        RmaAPIService mService = RmaAPIUtils.getAPIService();
+
+        mService.getItemList().enqueue(new Callback<List<Item>>() {
+            @Override
+            public void onResponse(Call<List<Item>> call, Response<List<Item>> response) {
+                if (response.isSuccessful()) {
+                    itemList = response.body();
+                    Log.d(this.getClass().getSimpleName(), "GET loaded from API");
+                    FirebaseMessaging.getInstance().subscribeToTopic(FB_TOPIC_REQUESTLIST);
+                    setSupportActionBar(findViewById(R.id.my_toolbar));
+                    initTabWidget();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Item>> call, Throwable t) {
+                System.out.println("Failed to load item list");
+            }
+        });
+
     }
 
 
@@ -136,6 +168,7 @@ public class MainActivity extends AppCompatActivity {
     public void itemQuantityChange(View view) {
         FragmentManager fm = getSupportFragmentManager();
         ItemQuantityDialogFragment itemQuantityDialogFragment = new ItemQuantityDialogFragment();
+        itemQuantityDialogFragment.setUp((View) view.getParent());
         itemQuantityDialogFragment.show(fm, "fragment_dialog_item_quantity");
     }
 

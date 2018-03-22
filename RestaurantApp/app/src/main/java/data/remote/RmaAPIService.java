@@ -7,8 +7,10 @@ import data.model.Item;
 import data.model.OrderRequest;
 import data.model.Receipt;
 import data.model.Request;
+import data.model.RequestDetail;
 import data.model.Table;
 import data.model.ReceiptDetail;
+import data.model.User;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -42,6 +44,7 @@ public interface RmaAPIService {
     @GET("/requests")
     Call<List<OrderRequest>> getRequestOrderList();
 
+
     @POST("/orders")
     @Headers({"Content-Type: application/json"})
     Call<Boolean> sendReceiptToServer(@Body OrderRequest orderRequest);
@@ -52,6 +55,13 @@ public interface RmaAPIService {
     @GET("/tables/{id}/receipts")
     Call<Receipt> getReceiptByTableId(@Path("id") int tableSeq);
 
-    @GET("/ordered-request/{id}")
-    Call<List<ReceiptDetail>> getReceiptDetailsByReceiptId(@Path("id") Integer receiptSeq);
+    @GET("/ordered-request/{seq}")
+    Call<List<ReceiptDetail>> getReceiptDetailsByReceiptSeq(@Path("seq") Integer receiptSeq);
+
+    @POST("/authenticate")
+    @Headers({"Content-Type: application/json"})
+    Call<Boolean> getAuthenticate(@Body User user);
+
+    @GET("/ordering-request/{seq}")
+    Call<List<RequestDetail>> getRequestDetailsByReceiptSeq(@Path("seq") Integer receiptSeq);
 }

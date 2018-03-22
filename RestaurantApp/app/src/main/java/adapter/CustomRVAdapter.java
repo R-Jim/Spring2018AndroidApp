@@ -10,8 +10,10 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import data.model.Item;
 import data.model.OrderRequest;
 import data.model.Request;
+import day01.swomfire.restaurantapp.MainActivity;
 import day01.swomfire.restaurantapp.R;
 
 /**
@@ -60,7 +62,16 @@ public class CustomRVAdapter extends RecyclerView.Adapter<CustomRVAdapter.Reques
     @Override
     public void onBindViewHolder(@NonNull RequestViewHolder holder, int position) {
         holder.tvTableId.setText(String.valueOf(requestList.get(position).getTableId()));
-        holder.tvDishName.setText(String.valueOf(requestList.get(position).getItemSeq()));
+
+        List<Item> itemList = MainActivity.getItemList();
+        String name = "";
+        for (Item item : itemList) {
+            if (item.getSeqId().equals((long) requestList.get(position).getItemSeq())) {
+                name = item.getItemName();
+                break;
+            }
+        }
+        holder.tvDishName.setText((name.length() < 12) ? name : name.substring(0, 12) + "...");
         holder.tvReceiptId.setText(String.valueOf(requestList.get(position).getReceiptSeq()));
         //holder.tvDishDiscr.setText(requestList.get(position).getTableId() + "");
     }

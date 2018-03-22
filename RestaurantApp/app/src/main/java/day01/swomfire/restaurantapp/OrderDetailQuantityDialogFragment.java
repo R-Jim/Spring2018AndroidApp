@@ -11,19 +11,30 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.util.List;
+
+import data.model.RequestDetail;
+import data.remote.RmaAPIService;
 import model.DishInItemList;
 import model.DishInReceipt;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import utils.RmaAPIUtils;
 import utils.StyleUtils;
 
 
 public class OrderDetailQuantityDialogFragment extends DialogFragment {
     private TextView itemQuantityText;
     private String[] itemPositionAndQuantity = null;
+    private Integer requestDetailId;
 
     @NonNull
     @Override
@@ -46,16 +57,28 @@ public class OrderDetailQuantityDialogFragment extends DialogFragment {
         // Set Quantity for dialog
         itemQuantityText = quantityDialog.findViewById(R.id.itemItemQuantityDialogQuantity);
         itemQuantityText.setText(itemPositionAndQuantity[1]);
-
         // Change button edit
+
         Button btnChange = quantityDialog.findViewById(R.id.btnItemItemQuantityDialogChange);
         btnChange.setOnClickListener(view -> {
             int quantityNew = Integer.valueOf(String.valueOf(itemQuantityText.getText()));
-            String[] itemPositionAndNewQuantity = {itemPositionAndQuantity[0], String.valueOf(quantityNew)};
-            SharedPreferences pref = getActivity().getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
-            SharedPreferences.Editor editor = pref.edit();
-            editor.putString("itemPositionAndNewQuantity", itemPositionAndNewQuantity[0] + "," + itemPositionAndNewQuantity[1]);
-            editor.commit();
+            requestDetailId = Integer.parseInt(itemPositionAndQuantity[0]);
+            List<RequestDetail> requestDetails = OrderDetailOrderingTabFragment.getRequestDetails();
+            RequestDetail requestDetail = null;
+            for (RequestDetail detail : requestDetails) {
+                if (detail.getSeq().equals(requestDetailId)) {
+                    requestDetail = detail;
+                    if (quantityNew > 0) {
+                        requestDetail.setQuantity(quantityNew);
+                    } else {
+                        requestDetail.setChangeable(false);
+                    }
+                    break;
+                }
+            }
+
+            sendRequestDetailToServer(requestDetail);
+
             OrderDetailQuantityDialogFragment.this.dismiss();
         });
         // Add button edit
@@ -88,5 +111,30 @@ public class OrderDetailQuantityDialogFragment extends DialogFragment {
         ft.detach(frg);
         ft.attach(frg);
         ft.commit();
+    }
+
+    private void sendRequestDetailToServer(RequestDetail requestDetail) {
+
+        RmaAPIService rmaAPIService = RmaAPIUtils.getAPIService();
+        rmaAPIService.sendRequestDetail(requestDetail).enqueue(new Callback<Boolean>() {
+            @Override
+            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                if (response.isSuccessful()) {
+                    if (response.body()) {
+                        Toast toast = Toast.makeText(getActivity().getApplicationContext(), "Request change success", Toast.LENGTH_SHORT);
+                        toast.show();
+                    } else {
+                        Toast toast = Toast.makeText(getActivity().getApplicationContext(), "Request change success", Toast.LENGTH_SHORT);
+                        toast.show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Boolean> call, Throwable t) {
+                Toast toast = Toast.makeText(getActivity().getApplicationContext(), "Fail to connect to server", Toast.LENGTH_SHORT);
+                toast.show();
+            }
+        });
     }
 }

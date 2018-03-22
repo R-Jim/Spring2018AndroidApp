@@ -13,9 +13,11 @@ import data.model.ReceiptDetail;
 import data.model.User;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -64,4 +66,11 @@ public interface RmaAPIService {
 
     @GET("/ordering-request/{seq}")
     Call<List<RequestDetail>> getRequestDetailsByReceiptSeq(@Path("seq") Integer receiptSeq);
+
+    @PUT("/ordering-request")
+    @Headers({"Content-Type: application/json"})
+    Call<Boolean> sendRequestDetail(@Body RequestDetail requestDetail);
+
+    @DELETE("/checkout/{receiptSeq}")
+    Call<Boolean> checkOutReceipt(@Path("receiptSeq") Integer receiptSeq);
 }

@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,7 +68,8 @@ public class RequestFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<Request>> call, Throwable t) {
-                System.out.println("Failed to load Order Request list");
+                Toast toast = Toast.makeText(getActivity().getApplicationContext(), "Fail to connect to server", Toast.LENGTH_SHORT);
+                toast.show();
 
             }
         });

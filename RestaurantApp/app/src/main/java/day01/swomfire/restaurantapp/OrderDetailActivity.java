@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TabHost;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.sql.Timestamp;
 import java.util.Date;
@@ -146,8 +147,8 @@ public class OrderDetailActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<Receipt> call, Throwable t) {
-                    System.out.println("Failed to load Order Request list");
-
+                    Toast toast = Toast.makeText(getApplicationContext(), "Fail to connect to server", Toast.LENGTH_SHORT);
+                    toast.show();
                 }
             });
         }
@@ -180,5 +181,34 @@ public class OrderDetailActivity extends AppCompatActivity {
         super.onDestroy();
         tableId = null;
         receiptId = null;
+    }
+
+    public void checkOutTable(View view) {
+        TextView lblReceiptId = findViewById(R.id.orderDetailReceiptId);
+        if (lblReceiptId != null) {
+            RmaAPIService rmaAPIService = RmaAPIUtils.getAPIService();
+            rmaAPIService.checkOutReceipt(Integer.parseInt(String.valueOf(lblReceiptId.getText()))).enqueue(new Callback<Boolean>() {
+                @Override
+                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                    if (response.isSuccessful()) {
+                        if (response.body()) {
+                            Toast toast = Toast.makeText(getApplicationContext(), "Table check out success", Toast.LENGTH_SHORT);
+                            toast.show();
+                            Intent intent = new Intent(OrderDetailActivity.this, OrderDetailActivity.class);
+                            startActivity(intent);
+                        } else {
+                            Toast toast = Toast.makeText(getApplicationContext(), "Table check out unsuccessful", Toast.LENGTH_SHORT);
+                            toast.show();
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Boolean> call, Throwable t) {
+                    Toast toast = Toast.makeText(getApplicationContext(), "Fail to connect to server", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+            });
+        }
     }
 }

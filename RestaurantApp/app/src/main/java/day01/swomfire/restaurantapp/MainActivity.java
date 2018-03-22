@@ -25,6 +25,7 @@ import android.widget.TabHost;
 import android.widget.TextView;
 
 import android.widget.TabWidget;
+import android.widget.Toast;
 
 
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -78,7 +79,8 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<Item>> call, Throwable t) {
-                System.out.println("Failed to load item list");
+                Toast toast = Toast.makeText(getApplicationContext(), "Fail to connect to server", Toast.LENGTH_SHORT);
+                toast.show();
             }
         });
 

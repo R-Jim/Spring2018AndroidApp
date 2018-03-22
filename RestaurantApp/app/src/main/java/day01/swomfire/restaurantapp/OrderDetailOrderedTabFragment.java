@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,8 +58,8 @@ public class OrderDetailOrderedTabFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<ReceiptDetail>> call, Throwable t) {
-                System.out.println("Failed to load Order Request list");
-
+                Toast toast = Toast.makeText(getActivity().getApplicationContext(), "Fail to connect to server", Toast.LENGTH_SHORT);
+                toast.show();
             }
         });
     }

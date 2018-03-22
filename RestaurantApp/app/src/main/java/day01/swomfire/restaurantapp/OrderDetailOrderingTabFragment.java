@@ -1,6 +1,5 @@
 package day01.swomfire.restaurantapp;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -30,7 +29,11 @@ import utils.RmaAPIUtils;
 
 public class OrderDetailOrderingTabFragment extends Fragment {
 
-    private List<RequestDetail> requestDetails;
+    private static List<RequestDetail> requestDetails;
+
+    public static List<RequestDetail> getRequestDetails() {
+        return requestDetails;
+    }
 
     @Nullable
     @Override
@@ -71,37 +74,15 @@ public class OrderDetailOrderingTabFragment extends Fragment {
     private void initRecycleView(List<RequestDetail> requestDetails) {
         List<DishInReceipt> dishInReceipts = new ArrayList<>();
         for (RequestDetail requestDetail : requestDetails) {
-            if (!requestDetail.getChangeable()) {
-                DishInReceipt dishInReceipt = new DishInReceipt();
-                List<Item> itemList = MainActivity.getItemList();
-                for (Item item : itemList) {
-                    if (item.getSeqId().equals((long) requestDetail.getItemSeq())) {
-                        dishInReceipt.setDish(item);
-                    }
-                }
-                boolean existed = false;
-                dishInReceipt.setQuantity(requestDetail.getQuantity());
-                if (!dishInReceipts.isEmpty()) {
-                    for (DishInReceipt inReceipt : dishInReceipts) {
-                        if (inReceipt.getDish().getSeqId().equals(dishInReceipt.getDish().getSeqId())) {
-                            dishInReceipt = inReceipt;
-                            dishInReceipt.setQuantity(requestDetail.getQuantity() + inReceipt.getQuantity());
-                            existed = true;
-                            break;
-                        }
-                    }
-                }
-                if (!existed) {
-                    dishInReceipt.setQuantity(requestDetail.getQuantity());
-                    dishInReceipts.add(dishInReceipt);
-                }
+            if (!requestDetail.getChangeable() && requestDetail.getQuantity() > 0) {
+                addDishToReceipt(requestDetail, dishInReceipts);
             }
         }
         initRV(dishInReceipts, R.layout.item_order_detail_ordering_not_changable_list_row, R.id.orderDetail);
 
         dishInReceipts = new ArrayList<>();
         for (RequestDetail requestDetail : requestDetails) {
-            if (requestDetail.getChangeable()) {
+            if (requestDetail.getChangeable() && requestDetail.getQuantity() > 0) {
 
                 DishInReceipt dishInReceipt = new DishInReceipt();
 
@@ -110,43 +91,12 @@ public class OrderDetailOrderingTabFragment extends Fragment {
                 for (Item item : itemList) {
                     if (item.getSeqId().equals((long) requestDetail.getItemSeq())) {
                         dishInReceipt.setDish(item);
+                        break;
                     }
                 }
-
-                boolean existed = false;
+                dishInReceipt.setRequestDetailId(requestDetail.getSeq());
                 dishInReceipt.setQuantity(requestDetail.getQuantity());
-                if (!dishInReceipts.isEmpty()) {
-                    for (DishInReceipt inReceipt : dishInReceipts) {
-                        if (inReceipt.getDish().getSeqId().equals(dishInReceipt.getDish().getSeqId())) {
-                            dishInReceipt = inReceipt;
-                            dishInReceipt.setQuantity(requestDetail.getQuantity() + inReceipt.getQuantity());
-                            existed = true;
-                            break;
-                        }
-                    }
-                }
-                if (!existed) {
-                    dishInReceipt.setQuantity(requestDetail.getQuantity());
-                    dishInReceipts.add(dishInReceipt);
-                }
-            }
-        }
-        SharedPreferences pref = getActivity().getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
-        if (pref != null) {
-            SharedPreferences.Editor editor = pref.edit();
-            String itemPositionAndQuantity = pref.getString("itemPositionAndNewQuantity", null);
-            editor.clear();
-            editor.commit();
-            if (itemPositionAndQuantity != null) {
-                String[] positionAndQuantity = itemPositionAndQuantity.split(",");
-                int position = Integer.parseInt(positionAndQuantity[0]);
-                int quantity = Integer.parseInt(positionAndQuantity[1]);
-                if (quantity > 0) {
-                    DishInReceipt dishInReceipt = dishInReceipts.get(position);
-                    dishInReceipt.setQuantity(quantity);
-                } else {
-                    dishInReceipts.remove(position);
-                }
+                dishInReceipts.add(dishInReceipt);
             }
         }
         initRV(dishInReceipts, R.layout.item_order_detail_ordering_list_row, R.id.orderDetailChangable);
@@ -165,5 +115,32 @@ public class OrderDetailOrderingTabFragment extends Fragment {
         }
     }
 
+    private void addDishToReceipt(RequestDetail requestDetail, List<DishInReceipt> dishInReceipts) {
+        DishInReceipt dishInReceipt = new DishInReceipt();
 
+
+        List<Item> itemList = MainActivity.getItemList();
+        for (Item item : itemList) {
+            if (item.getSeqId().equals((long) requestDetail.getItemSeq())) {
+                dishInReceipt.setDish(item);
+            }
+        }
+
+        boolean existed = false;
+        dishInReceipt.setQuantity(requestDetail.getQuantity());
+        if (!dishInReceipts.isEmpty()) {
+            for (DishInReceipt inReceipt : dishInReceipts) {
+                if (inReceipt.getDish().getSeqId().equals(dishInReceipt.getDish().getSeqId())) {
+                    dishInReceipt = inReceipt;
+                    dishInReceipt.setQuantity(requestDetail.getQuantity() + inReceipt.getQuantity());
+                    existed = true;
+                    break;
+                }
+            }
+        }
+        if (!existed) {
+            dishInReceipt.setQuantity(requestDetail.getQuantity());
+            dishInReceipts.add(dishInReceipt);
+        }
+    }
 }

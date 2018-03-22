@@ -10,6 +10,7 @@ public class DishInReceipt {
     private Item dish;
     private int quantity;
     private boolean changable;
+    private int requestDetailId;
 
     public DishInReceipt() {
     }
@@ -41,5 +42,13 @@ public class DishInReceipt {
 
     public void setChangable(boolean changable) {
         this.changable = changable;
+    }
+
+    public int getRequestDetailId() {
+        return requestDetailId;
+    }
+
+    public void setRequestDetailId(int requestDetailId) {
+        this.requestDetailId = requestDetailId;
     }
 }

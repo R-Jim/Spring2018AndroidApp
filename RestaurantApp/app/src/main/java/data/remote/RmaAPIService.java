@@ -1,8 +1,6 @@
 package data.remote;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Observable;
 
 import data.model.Category;
 import data.model.Item;
@@ -10,13 +8,10 @@ import data.model.OrderRequest;
 import data.model.Receipt;
 import data.model.Request;
 import data.model.Table;
+import data.model.ReceiptDetail;
 import retrofit2.Call;
-import retrofit2.Response;
 import retrofit2.http.Body;
-import retrofit2.http.Field;
-import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
-import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -56,4 +51,7 @@ public interface RmaAPIService {
 
     @GET("/tables/{id}/receipts")
     Call<Receipt> getReceiptByTableId(@Path("id") int tableSeq);
+
+    @GET("/ordered-request/{id}")
+    Call<List<ReceiptDetail>> getReceiptDetailsByReceiptId(@Path("id") Integer receiptSeq);
 }

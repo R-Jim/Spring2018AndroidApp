@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.Menu;
@@ -30,10 +31,15 @@ import android.widget.Toast;
 
 import com.google.firebase.messaging.FirebaseMessaging;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import adapter.CustomRVAdapter;
 import adapter.ExpandableItemListAdapter;
+import adapter.TableRVAdapter;
 import data.model.Item;
+import data.model.Request;
+import data.model.Table;
 import data.remote.RmaAPIService;
 import model.DishInItemList;
 import retrofit2.Call;
@@ -106,13 +112,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private String[] SUGGESTIONS = {
-            "Bauru", "Sao Paulo", "Rio de Janeiro", "Rio de Barto",
-            "Bahia", "Mato Grosso", "Minas Gerais",
-            "Tocantins", "Rio Grande do Sul"
-    };
+    private ArrayList<String> SUGGESTIONS = new ArrayList<>();
     private SimpleCursorAdapter mAdapter;
     private SearchView searchView;
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -135,13 +138,15 @@ public class MainActivity extends AppCompatActivity {
                 to,
                 CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
         searchView.setSuggestionsAdapter(mAdapter);
+
         searchView.setOnSuggestionListener(
                 new SearchView.OnSuggestionListener() {
                     @Override
                     public boolean onSuggestionClick(int position) {
-                        CharSequence text = mAdapter.getCursor().getString(1);
-                        searchView.setQuery(text, false);
-                        return true;
+                        String text = mAdapter.getCursor().getString(1);
+                        searchByTab(text);
+                        searchView.setIconified(true);
+                        return false;
                     }
 
                     @Override
@@ -151,33 +156,14 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
         );
-
+        searchView.setIconifiedByDefault(true);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener()
 
         {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                int currentTab = tabHost.getCurrentTab();
-                switch (currentTab) {
-                    case 2:
-                        ExpandableListView expandableListView = findViewById(R.id.itemExpandableList);
-                        ExpandableListAdapter expandableListAdapter = expandableListView.getExpandableListAdapter();
-                        if (expandableListAdapter != null) {
-                            int size = expandableListAdapter.getGroupCount();
-                            for (int i = 0; i < size; i++) {
-                                int entry = expandableListAdapter.getChildrenCount(i);
-                                for (int j = 0; j < entry; j++) {
-                                    DishInItemList dishInItemList = (DishInItemList) expandableListAdapter.getChild(i, j);
-                                    if (dishInItemList.getDish().getItemName().toLowerCase().contains(query.toLowerCase())) {
-                                        expandableListView.expandGroup(i);
-                                        expandableListView.setSelectedGroup(i);
-                                        break;
-                                    }
-                                }
-                            }
-                        }
-                        break;
-                }
+                searchByTab(query);
+                searchView.setIconified(true);
                 return false;
             }
 
@@ -188,17 +174,117 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
-
+        searchView.setOnSearchClickListener(v ->
+                loadSuggestion());
         return true;
     }
 
     private void populateAdapter(String query) {
         final MatrixCursor c = new MatrixCursor(new String[]{BaseColumns._ID, "name"});
-        for (int i = 0; i < SUGGESTIONS.length; i++) {
-            if (SUGGESTIONS[i].toLowerCase().startsWith(query.toLowerCase()))
-                c.addRow(new Object[]{i, SUGGESTIONS[i]});
+        for (int i = 0; i < SUGGESTIONS.size(); i++) {
+            if (SUGGESTIONS.get(i).toLowerCase().startsWith(query.toLowerCase()))
+                c.addRow(new Object[]{i, SUGGESTIONS.get(i)});
         }
         mAdapter.changeCursor(c);
+    }
+
+    private void loadSuggestion() {
+        SUGGESTIONS = new ArrayList<>();
+        int currentTab = tabHost.getCurrentTab();
+        switch (currentTab) {
+            case 0:
+                RecyclerView recyclerView = findViewById(R.id.rv_request_list);
+                if (recyclerView != null) {
+                    int count = recyclerView.getAdapter().getItemCount();
+                    for (int i = 0; i < count; i++) {
+                        CustomRVAdapter customRVAdapter = (CustomRVAdapter) recyclerView.getAdapter();
+                        Request request = customRVAdapter.getRequest(i);
+                        if (itemList != null) {
+                            for (Item item : itemList) {
+                                if (item.getSeqId().equals((long) request.getItemSeq())) {
+                                    SUGGESTIONS.add(item.getItemName());
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+                break;
+            case 1:
+                recyclerView = findViewById(R.id.rv_table_list);
+                if (recyclerView != null) {
+                    int count = recyclerView.getAdapter().getItemCount();
+                    for (int i = 0; i < count; i++) {
+                        TableRVAdapter tableRVAdapter = (TableRVAdapter) recyclerView.getAdapter();
+                        Table table = tableRVAdapter.getTable(i);
+                        SUGGESTIONS.add(table.getTableId());
+                    }
+                }
+                break;
+            case 2:
+                if (itemList != null) {
+                    for (Item item : itemList) {
+                        SUGGESTIONS.add(item.getItemName());
+                    }
+                }
+                break;
+        }
+    }
+
+    private void searchByTab(String searchValue) {
+        int currentTab = tabHost.getCurrentTab();
+        switch (currentTab) {
+            case 0:
+                RecyclerView recyclerView = findViewById(R.id.rv_request_list);
+                if (recyclerView != null) {
+                    int count = recyclerView.getAdapter().getItemCount();
+                    for (int i = 0; i < count; i++) {
+                        CustomRVAdapter customRVAdapter = (CustomRVAdapter) recyclerView.getAdapter();
+                        Request request = customRVAdapter.getRequest(i);
+                        if (itemList != null) {
+                            for (Item item : itemList) {
+                                if (item.getSeqId().equals((long) request.getItemSeq()) && item.getItemName().equals(searchValue)) {
+                                    recyclerView.scrollToPosition(i);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+                break;
+            case 1:
+                recyclerView = findViewById(R.id.rv_table_list);
+                if (recyclerView != null) {
+                    int count = recyclerView.getAdapter().getItemCount();
+                    for (int i = 0; i < count; i++) {
+                        TableRVAdapter tableRVAdapter = (TableRVAdapter) recyclerView.getAdapter();
+                        Table table = tableRVAdapter.getTable(i);
+                        if (searchValue.equals(table.getTableId())) {
+                            recyclerView.scrollToPosition(i);
+                            break;
+                        }
+                    }
+                }
+                break;
+            case 2:
+                ExpandableListView expandableListView = findViewById(R.id.itemExpandableList);
+                ExpandableListAdapter expandableListAdapter = expandableListView.getExpandableListAdapter();
+                if (expandableListAdapter != null) {
+                    int size = expandableListAdapter.getGroupCount();
+                    for (int i = 0; i < size; i++) {
+                        int entry = expandableListAdapter.getChildrenCount(i);
+                        for (int j = 0; j < entry; j++) {
+                            DishInItemList dishInItemList = (DishInItemList) expandableListAdapter.getChild(i, j);
+                            if (dishInItemList.getDish().getItemName().toLowerCase().contains(searchValue.toLowerCase())) {
+                                expandableListView.expandGroup(i);
+                                expandableListView.setSelectedGroup(i);
+                                break;
+                            }
+                        }
+                    }
+                }
+                break;
+        }
     }
 
     @Override
@@ -226,6 +312,7 @@ public class MainActivity extends AppCompatActivity {
                 tabId -> {
                     tabHostService.tabIconReset(tabHost);
                     tabHostService.tabChooseIndicator(tabHost, tabId);
+                    searchView.setIconified(true);
                 }
         );
     }

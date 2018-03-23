@@ -88,4 +88,8 @@ public class CustomRVAdapter extends RecyclerView.Adapter<CustomRVAdapter.Reques
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
     }
+
+    public Request getRequest(int position) {
+        return requestList.get(position);
+    }
 }

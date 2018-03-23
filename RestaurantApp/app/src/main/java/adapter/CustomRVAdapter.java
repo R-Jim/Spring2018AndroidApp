@@ -65,10 +65,12 @@ public class CustomRVAdapter extends RecyclerView.Adapter<CustomRVAdapter.Reques
 
         List<Item> itemList = MainActivity.getItemList();
         String name = "";
-        for (Item item : itemList) {
-            if (item.getSeqId().equals((long) requestList.get(position).getItemSeq())) {
-                name = item.getItemName();
-                break;
+        if (itemList != null) {
+            for (Item item : itemList) {
+                if (item.getSeqId().equals((long) requestList.get(position).getItemSeq())) {
+                    name = item.getItemName();
+                    break;
+                }
             }
         }
         holder.tvDishName.setText((name.length() < 12) ? name : name.substring(0, 12) + "...");

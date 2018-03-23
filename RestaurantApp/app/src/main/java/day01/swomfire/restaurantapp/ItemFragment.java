@@ -93,9 +93,11 @@ public class ItemFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<Category>> call, Throwable t) {
-                Toast toast = Toast.makeText(getActivity().getApplicationContext(), "Fail to connect to server", Toast.LENGTH_SHORT);
-                toast.show();
-                initData();
+                if (getActivity() != null) {
+                    Toast toast = Toast.makeText(getActivity().getApplicationContext(), "Fail to connect to server", Toast.LENGTH_SHORT);
+                    toast.show();
+                    initData();
+                }
             }
         });
 
@@ -196,16 +198,18 @@ public class ItemFragment extends Fragment {
 
             return true;
         });
-        SharedPreferences appSharedPrefs = PreferenceManager
-                .getDefaultSharedPreferences(getActivity().getApplicationContext());
-        SharedPreferences.Editor prefsEditor = appSharedPrefs.edit();
-        HashMap<String, List<DishInItemList>> stringListHashMap = DishInItemList.convertHashmapToStringKey(listHashMap);
-        Gson gson = new Gson();
-        String json = gson.toJson(stringListHashMap);
-        prefsEditor.putString("listDishInListStringHashMap", json);
-        json = gson.toJson(categoryListFromDb);
-        prefsEditor.putString("listCategory", json);
-        prefsEditor.commit();
+        if (getActivity() != null) {
+            SharedPreferences appSharedPrefs = PreferenceManager
+                    .getDefaultSharedPreferences(getActivity().getApplicationContext());
+            SharedPreferences.Editor prefsEditor = appSharedPrefs.edit();
+            HashMap<String, List<DishInItemList>> stringListHashMap = DishInItemList.convertHashmapToStringKey(listHashMap);
+            Gson gson = new Gson();
+            String json = gson.toJson(stringListHashMap);
+            prefsEditor.putString("listDishInListStringHashMap", json);
+            json = gson.toJson(categoryListFromDb);
+            prefsEditor.putString("listCategory", json);
+            prefsEditor.commit();
+        }
     }
 
     private DishInItemList createDish(Item item) {

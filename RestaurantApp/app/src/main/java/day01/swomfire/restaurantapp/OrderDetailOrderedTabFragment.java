@@ -58,8 +58,10 @@ public class OrderDetailOrderedTabFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<ReceiptDetail>> call, Throwable t) {
-                Toast toast = Toast.makeText(getActivity().getApplicationContext(), "Fail to connect to server", Toast.LENGTH_SHORT);
-                toast.show();
+                if (getActivity() != null) {
+                    Toast toast = Toast.makeText(getActivity().getApplicationContext(), "Fail to connect to server", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
             }
         });
     }

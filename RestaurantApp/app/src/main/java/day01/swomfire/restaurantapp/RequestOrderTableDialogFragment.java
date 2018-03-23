@@ -61,9 +61,11 @@ public class RequestOrderTableDialogFragment extends DialogFragment {
     private void initRV(View view) {
         RecyclerView recyclerView = view.findViewById(R.id.requestOrderChooseTable);
         TableRVAdapter tableRVAdapter = new TableRVAdapter(tables, TableRVAdapter.RVViewMode.REQUEST_ORDER_CHOOSE_TABLE.getViewMode());
-        GridLayoutManager gLayoutManager = new GridLayoutManager(getActivity().getApplicationContext(), 2);
-        recyclerView.setLayoutManager(gLayoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(tableRVAdapter);
+        if (getActivity() != null) {
+            GridLayoutManager gLayoutManager = new GridLayoutManager(getActivity().getApplicationContext(), 2);
+            recyclerView.setLayoutManager(gLayoutManager);
+            recyclerView.setItemAnimator(new DefaultItemAnimator());
+            recyclerView.setAdapter(tableRVAdapter);
+        }
     }
 }

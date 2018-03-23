@@ -121,19 +121,25 @@ public class OrderDetailQuantityDialogFragment extends DialogFragment {
             public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                 if (response.isSuccessful()) {
                     if (response.body()) {
-                        Toast toast = Toast.makeText(getActivity().getApplicationContext(), "Request change success", Toast.LENGTH_SHORT);
-                        toast.show();
+                        if (getActivity() != null) {
+                            Toast toast = Toast.makeText(getActivity().getApplicationContext(), "Request change success", Toast.LENGTH_SHORT);
+                            toast.show();
+                        }
                     } else {
-                        Toast toast = Toast.makeText(getActivity().getApplicationContext(), "Request change success", Toast.LENGTH_SHORT);
-                        toast.show();
+                        if (getActivity() != null) {
+                            Toast toast = Toast.makeText(getActivity().getApplicationContext(), "Request change success", Toast.LENGTH_SHORT);
+                            toast.show();
+                        }
                     }
                 }
             }
 
             @Override
             public void onFailure(Call<Boolean> call, Throwable t) {
-                Toast toast = Toast.makeText(getActivity().getApplicationContext(), "Fail to connect to server", Toast.LENGTH_SHORT);
-                toast.show();
+                if (getActivity() != null) {
+                    Toast toast = Toast.makeText(getActivity().getApplicationContext(), "Fail to connect to server", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
             }
         });
     }

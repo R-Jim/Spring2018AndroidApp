@@ -68,12 +68,17 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        loadDishList();
-        // Subscribe to topic with API
+        if (LoginActivity.token != null) {
+            setContentView(R.layout.activity_main);
+            loadDishList();
+            // Subscribe to topic with API
 //        FirebaseMessaging.getInstance().subscribeToTopic(FB_TOPIC_REQUESTLIST);
-        setSupportActionBar(findViewById(R.id.my_toolbar));
-        initTabWidget();
+            setSupportActionBar(findViewById(R.id.my_toolbar));
+            initTabWidget();
+        } else {
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(intent);
+        }
     }
 
     public static List<Item> getItemList() {

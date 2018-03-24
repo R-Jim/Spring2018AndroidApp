@@ -16,16 +16,21 @@ public class SettingActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_setting);
-        setSupportActionBar((Toolbar) findViewById(R.id.my_toolbar));
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (LoginActivity.token != null) {
+            setContentView(R.layout.activity_setting);
+            setSupportActionBar((Toolbar) findViewById(R.id.my_toolbar));
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        SharedPreferences sharedPreferences = this.getSharedPreferences(getString(R.string.setting_preference), Context.MODE_PRIVATE);
-        this.isNotiOn = sharedPreferences.getBoolean(getString(R.string.setting_preference_noti), true);
+            SharedPreferences sharedPreferences = this.getSharedPreferences(getString(R.string.setting_preference), Context.MODE_PRIVATE);
+            this.isNotiOn = sharedPreferences.getBoolean(getString(R.string.setting_preference_noti), true);
 
 
-        toggleButton = findViewById(R.id.tb_noti);
-        toggleButton.setChecked(isNotiOn);
+            toggleButton = findViewById(R.id.tb_noti);
+            toggleButton.setChecked(isNotiOn);
+        } else {
+            Intent intent = new Intent(SettingActivity.this, LoginActivity.class);
+            startActivity(intent);
+        }
     }
 
     public void onAccountSettingClick(View view) {

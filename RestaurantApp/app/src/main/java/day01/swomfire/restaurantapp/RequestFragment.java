@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
@@ -62,6 +63,7 @@ public class RequestFragment extends Fragment implements SwipeTouchHelper.Recycl
 
         RequestListAdapter adapter = new RequestListAdapter(requestList);
         this.adapter = adapter;
+
         rv.setAdapter(adapter);
         rv.setItemAnimator(new DefaultItemAnimator());
         rv.addItemDecoration(new DividerItemDecoration(this.getContext(), DividerItemDecoration.VERTICAL));
@@ -75,39 +77,53 @@ public class RequestFragment extends Fragment implements SwipeTouchHelper.Recycl
     }
 
     public void loadRequestList() {
-        mService.getRequestOrderList().enqueue(new Callback<List<Request>>() {
-            @Override
-            public void onResponse(Call<List<Request>> call, Response<List<Request>> response) {
-                if (response.isSuccessful()) {
-                    requestList = response.body();
+        mService.getRequestList().enqueue(new Callback<List<Request>>() {
+                    @Override
+                    public void onResponse
+                            (Call<List<Request>> call, Response<List<Request>> response) {
+                        if (response.isSuccessful()) {
+                            requestList = response.body();
 
-                    adapter = new RequestListAdapter(requestList);
-                    rv.setAdapter(adapter);
-                    System.out.println("Loaded list");
-                    Log.d(this.getClass().getSimpleName(), "GET loaded from API");
-                }
+                            adapter = new RequestListAdapter(requestList);
+                            rv.setAdapter(adapter);
+                            System.out.println("Loaded list");
+                            Log.d(this.getClass().getSimpleName(), "GET loaded from API");
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<Request>> call, Throwable t) {
+
+                        if (getActivity() != null) {
+                            Toast toast = Toast.makeText(getActivity().getApplicationContext(), "Fail to connect to server", Toast.LENGTH_SHORT);
+                            toast.show();
+                        }
+
+                    }
+                });
+    }
+
+
+    private void onRequestDismissed(Request request, int pos) {
+        if (request == null) {
+            return;
+        }
+        List<Request> dismissList = new ArrayList<>();
+        dismissList.add(request);
+
+        mService.sendDismissRequest(dismissList).enqueue(new Callback<Boolean>() {
+            @Override
+            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                System.out.println("Request has been dismissed successfully");
             }
 
             @Override
-            public void onFailure(Call<List<Request>> call, Throwable t) {
-                System.out.println("Failed to load Order Request list");
-
+            public void onFailure(Call<Boolean> call, Throwable t) {
+                Toast.makeText(getActivity(), "Failed to send dismiss request! Please try again later", Toast.LENGTH_SHORT).show();
+                adapter.restoredItem(request, pos);
             }
         });
     }
-
-//    private void initList() {
-//        requestList = new ArrayList<>();
-//        OrderRequest orderRequest = new OrderRequest();
-//        orderRequest.setTableId((long) 4);
-//        List<OrderDetail> orderDetails = new ArrayList<>();
-//        OrderDetail orderDetail = new OrderDetail();
-//        orderDetail.setItemSeq((long) 1);
-//        orderDetail.setQuantity(3);
-//        orderDetails.add(orderDetail);
-//        orderRequest.setOrderDetailList(orderDetails);
-//        requestList.add(orderRequest);
-//    }
 
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction, int position) {
@@ -147,26 +163,4 @@ public class RequestFragment extends Fragment implements SwipeTouchHelper.Recycl
 
         }
     }
-
-    private void onRequestDismissed(Request request, int pos) {
-        if (request == null) {
-            return;
-        }
-        List<Request> dismissList = new ArrayList<>();
-        dismissList.add(request);
-
-        mService.sendDismissRequest(dismissList).enqueue(new Callback<Boolean>() {
-            @Override
-            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                System.out.println("Request has been dismissed successfully");
-            }
-
-            @Override
-            public void onFailure(Call<Boolean> call, Throwable t) {
-                Toast.makeText(getActivity(), "Failed to send dismiss request! Please try again later", Toast.LENGTH_SHORT).show();
-                adapter.restoredItem(request, pos);
-            }
-        });
-    }
-
 }

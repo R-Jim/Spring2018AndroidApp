@@ -4,7 +4,11 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 /**
+<<<<<<< HEAD
  * Created by elpsychris on 24/03/2018.
+=======
+ * Created by Swomfire on 21-Mar-18.
+>>>>>>> master
  */
 
 public class Request {
@@ -23,6 +27,7 @@ public class Request {
     @SerializedName("tableId")
     @Expose
     private String tableId;
+
     @SerializedName("changeable")
     @Expose
     private Boolean changeable;
@@ -67,12 +72,12 @@ public class Request {
         this.tableId = tableId;
     }
 
-//    public Boolean getChangeable() {
-//        return changeable;
-//    }
-//
-//    public void setChangeable(Boolean changeable) {
-//        this.changeable = changeable;
-//    }
+    public Boolean getChangeable() {
+        return changeable;
+    }
+
+    public void setChangeable(Boolean changeable) {
+        this.changeable = changeable;
+    }
 
 }

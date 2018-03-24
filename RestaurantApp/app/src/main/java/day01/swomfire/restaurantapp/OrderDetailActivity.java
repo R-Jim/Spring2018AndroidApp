@@ -6,27 +6,52 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTabHost;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TabHost;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.sql.Timestamp;
+import java.util.Date;
+import java.util.List;
+
+import data.model.Receipt;
+import data.remote.RmaAPIService;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import utils.ParseUtils;
+import utils.RmaAPIUtils;
 
 public class OrderDetailActivity extends AppCompatActivity {
     public final String ORDERED_TAB = "ORDERED_TAB";
     public final String ORDERING_TAB = "ORDERING_TAB";
     private static String tableId;
+    private static Integer receiptId;
 
     public static void setTableId(String id) {
         tableId = id;
+    }
+
+    public static void setReceiptIdId(Integer id) {
+        receiptId = id;
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_detail);
-        setUpTab();
+
 
         TextView lblTableId = findViewById(R.id.orderDetailTableId);
         lblTableId.setText(tableId);
+
+        if (receiptId != null) {
+            TextView lblReceiptId = findViewById(R.id.orderDetailReceiptId);
+            lblReceiptId.setText(String.valueOf(receiptId));
+        }
+        loadOrderDetail();
     }
 
     private void setUpTab() {
@@ -64,17 +89,69 @@ public class OrderDetailActivity extends AppCompatActivity {
         });
     }
 
-    private void setNewTab(Context ctx, FragmentTabHost tabHost, String tag, String title) {
+/*    private void setNewTab(Context ctx, FragmentTabHost tabHost, String tag, String title) {
         TabHost.TabSpec tabSpec = tabHost.newTabSpec(tag);
         tabSpec.setIndicator(getTabIndicator(ctx, title));
         tabHost.addTab(tabSpec, ComTabFragment.class, null);
-    }
+    }*/
 
-    private View getTabIndicator(Context ctx, String title) {
-        View view = View.inflate(this, R.layout.tab_layout_order_detail, null);
-        TextView tvTitle = view.findViewById(R.id.tvTabTitle);
-        tvTitle.setText(title);
-        return view;
+    /*   private View getTabIndicator(Context ctx, String title) {
+           View view = View.inflate(this, R.layout.tab_layout_order_detail, null);
+           TextView tvTitle = view.findViewById(R.id.tvTabTitle);
+           tvTitle.setText(title);
+           return view;
+       }*/
+    private void loadOrderDetail() {
+        RmaAPIService rmaAPIService = RmaAPIUtils.getAPIService();
+        if (receiptId != null) {
+            rmaAPIService.getReceiptByReceiptId(receiptId).enqueue(new Callback<Receipt>() {
+                @Override
+                public void onResponse(Call<Receipt> call, Response<Receipt> response) {
+                    if (response.isSuccessful()) {
+                        Receipt receipt = response.body();
+                        TextView lblTotal = findViewById(R.id.orderDetailTotal);
+                        lblTotal.setText(String.valueOf((receipt.getTotal() != null) ? receipt.getTotal() : "0"));
+                        TextView lblDate = findViewById(R.id.orderDetailDate);
+                        Date date = new Date(receipt.getIssueDate());
+                        lblDate.setText(String.valueOf(ParseUtils.parseDateToStringFormat(date)));
+                        setUpTab();
+
+                        Log.d(this.getClass().getSimpleName(), "GET loaded from API");
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Receipt> call, Throwable t) {
+                    System.out.println("Failed to load Order Request list");
+
+                }
+            });
+        } else {
+            rmaAPIService.getReceiptByTableId(Integer.parseInt(tableId)).enqueue(new Callback<Receipt>() {
+                @Override
+                public void onResponse(Call<Receipt> call, Response<Receipt> response) {
+                    if (response.isSuccessful()) {
+                        Receipt receipt = response.body();
+                        TextView lblTotal = findViewById(R.id.orderDetailTotal);
+                        lblTotal.setText(String.valueOf((receipt.getTotal() != null) ? receipt.getTotal() : "0"));
+                        TextView lblDate = findViewById(R.id.orderDetailDate);
+                        Date date = new Date(receipt.getIssueDate());
+                        lblDate.setText(String.valueOf(ParseUtils.parseDateToStringFormat(date)));
+                        receiptId = receipt.getSeqId();
+                        TextView lblReceiptId = findViewById(R.id.orderDetailReceiptId);
+                        lblReceiptId.setText(String.valueOf(receipt.getSeqId()));
+                        setUpTab();
+                        Log.d(this.getClass().getSimpleName(), "GET loaded from API");
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Receipt> call, Throwable t) {
+                    Toast toast = Toast.makeText(getApplicationContext(), "Fail to connect to server", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+            });
+        }
     }
 
     public void requestItemQuantityChange(View view) {
@@ -95,6 +172,43 @@ public class OrderDetailActivity extends AppCompatActivity {
         i.putExtra("tableId", tableId);
         setResult(3, i);
         tableId = null;
+        receiptId = null;
         this.finish();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        tableId = null;
+        receiptId = null;
+    }
+
+    public void checkOutTable(View view) {
+        TextView lblReceiptId = findViewById(R.id.orderDetailReceiptId);
+        if (lblReceiptId != null) {
+            RmaAPIService rmaAPIService = RmaAPIUtils.getAPIService();
+            rmaAPIService.checkOutReceipt(Integer.parseInt(String.valueOf(lblReceiptId.getText()))).enqueue(new Callback<Boolean>() {
+                @Override
+                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                    if (response.isSuccessful()) {
+                        if (response.body()) {
+                            Toast toast = Toast.makeText(getApplicationContext(), "Table check out success", Toast.LENGTH_SHORT);
+                            toast.show();
+                            Intent intent = new Intent(OrderDetailActivity.this, OrderDetailActivity.class);
+                            startActivity(intent);
+                        } else {
+                            Toast toast = Toast.makeText(getApplicationContext(), "Table check out unsuccessful", Toast.LENGTH_SHORT);
+                            toast.show();
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Boolean> call, Throwable t) {
+                    Toast toast = Toast.makeText(getApplicationContext(), "Fail to connect to server", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+            });
+        }
     }
 }

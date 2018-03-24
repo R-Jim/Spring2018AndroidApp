@@ -20,14 +20,31 @@
             android:orientation="vertical"
             app:elevation="0dp">
 
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/my_toolbar"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="?attr/colorPrimary"
-                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-                app:title="Order Detail" />
+                android:layout_height="match_parent"
+                android:paddingRight="10dp">
 
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/my_toolbar"
+                    android:layout_width="0dp"
+                    android:layout_height="?attr/actionBarSize"
+                    android:layout_weight=".9"
+                    android:background="?attr/colorPrimary"
+                    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                    app:title="Order Detail" />
+
+                <Button
+                    style="@style/textStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".1"
+                    android:background="@android:color/transparent"
+                    android:text="CHECK OUT"
+                    android:textColor="@color/colorTabActive"
+                    android:onClick="checkOutTable"
+                    android:textSize="15dp" />
+            </LinearLayout>
         </android.support.design.widget.AppBarLayout>
 
         <LinearLayout
@@ -60,16 +77,28 @@
                         style="@style/orderDetailTextStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="0155" />
+                        android:text="" />
                 </LinearLayout>
 
 
-                <TextView
-                    style="@style/orderDetailTextStyle"
+                <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight=".5"
-                    android:text="Recipt: 01" />
+                    android:layout_weight=".5">
+
+                    <TextView
+                        style="@style/orderDetailTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Receipt: " />
+
+                    <TextView
+                        android:id="@+id/orderDetailReceiptId"
+                        style="@style/orderDetailTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="" />
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -77,19 +106,43 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <TextView
-                    style="@style/orderDetailTextStyle"
+                <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight=".5"
-                    android:text="Total: 100000000" />
+                    android:layout_weight=".5">
 
-                <TextView
-                    style="@style/orderDetailTextStyle"
+                    <TextView
+                        style="@style/orderDetailTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Total: " />
+
+                    <TextView
+                        android:id="@+id/orderDetailTotal"
+                        style="@style/orderDetailTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="" />
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight=".5"
-                    android:text="Date: 01/01/2018" />
+                    android:layout_weight=".5">
+
+                    <TextView
+                        style="@style/orderDetailTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Date: " />
+
+                    <TextView
+                        android:id="@+id/orderDetailDate"
+                        style="@style/orderDetailTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="" />
+                </LinearLayout>
             </LinearLayout>
 
         </LinearLayout>

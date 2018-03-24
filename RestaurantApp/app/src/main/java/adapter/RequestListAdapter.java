@@ -14,6 +14,8 @@ import java.util.List;
 import data.model.Item;
 import data.model.OrderRequest;
 import data.model.Request;
+
+import day01.swomfire.restaurantapp.MainActivity;
 import day01.swomfire.restaurantapp.R;
 
 /**
@@ -32,6 +34,8 @@ public class RequestListAdapter extends RecyclerView.Adapter<RequestListAdapter.
         public TextView tvTableId;
         public TextView tvDishName;
         public TextView tvDishDiscr;
+        TextView tvReceiptId;
+
         public RelativeLayout viewBackground, viewForeground;
 
         public RequestViewHolder(View itemView) {
@@ -40,8 +44,10 @@ public class RequestListAdapter extends RecyclerView.Adapter<RequestListAdapter.
             tvTableId = (TextView) itemView.findViewById(R.id.tv_table_id);
             tvDishName = (TextView) itemView.findViewById(R.id.tv_dish_name);
             tvDishDiscr = (TextView) itemView.findViewById(R.id.tv_description);
+            tvReceiptId = itemView.findViewById(R.id.tv_receipt_id);
             viewBackground = itemView.findViewById(R.id.view_background);
             viewForeground = itemView.findViewById(R.id.view_foreground);
+
         }
     }
 
@@ -62,7 +68,21 @@ public class RequestListAdapter extends RecyclerView.Adapter<RequestListAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull RequestViewHolder holder, int position) {
-        holder.tvTableId.setText(requestList.get(position).getTableId() + "");
+        holder.tvTableId.setText(String.valueOf(requestList.get(position).getTableId()));
+
+        List<Item> itemList = MainActivity.getItemList();
+        String name = "";
+        if (itemList != null) {
+            for (Item item : itemList) {
+                if (item.getSeqId().equals((long) requestList.get(position).getItemSeq())) {
+                    name = item.getItemName();
+                    break;
+                }
+            }
+        }
+        holder.tvDishName.setText((name.length() < 12) ? name : name.substring(0, 12) + "...");
+        holder.tvReceiptId.setText(String.valueOf(requestList.get(position).getReceiptSeq()));
+        //holder.tvDishDiscr.setText(requestList.get(position).getTableId() + "");
     }
 
 
@@ -92,4 +112,7 @@ public class RequestListAdapter extends RecyclerView.Adapter<RequestListAdapter.
     }
 
 
+    public Request getRequest(int position) {
+        return requestList.get(position);
+    }
 }

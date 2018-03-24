@@ -106,8 +106,7 @@ public class RequestOrderActivity extends AppCompatActivity {
         requestOrderTableDialogFragment.show(fm, "request_order_table_dialog_fragment");
     }
 
-
-    public void cancelRequest(View view) {
+    private void requestDelete() {
         if (listHashMap != null) {
             for (Map.Entry<Category, List<DishInItemList>> entry : listHashMap.entrySet()) {
                 for (DishInItemList dishInItemList : entry.getValue()) {
@@ -123,6 +122,10 @@ public class RequestOrderActivity extends AppCompatActivity {
         setResult(5, i);
         tableId = null;
         this.finish();
+    }
+
+    public void cancelRequest(View view) {
+        requestDelete();
     }
 
     public void requestItemQuantityChange(View view) {
@@ -187,6 +190,7 @@ public class RequestOrderActivity extends AppCompatActivity {
                         if (response.body()) {
                             Toast toast = Toast.makeText(getApplicationContext(), "Receipt sent to server", Toast.LENGTH_SHORT);
                             toast.show();
+                            requestDelete();
                         } else {
                             Toast toast = Toast.makeText(getApplicationContext(), "Failed to send Receipt to server", Toast.LENGTH_SHORT);
                             toast.show();

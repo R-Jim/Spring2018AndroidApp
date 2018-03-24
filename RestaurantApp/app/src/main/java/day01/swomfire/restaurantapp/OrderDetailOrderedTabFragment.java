@@ -7,19 +7,28 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import adapter.OrderDetailRVAdapter;
-import data.model.Item;
+import data.remote.RmaAPIService;
 import model.DishInReceipt;
+import data.model.ReceiptDetail;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import utils.RmaAPIUtils;
 
 
 public class OrderDetailOrderedTabFragment extends Fragment {
+    private List<ReceiptDetail> receiptDetails;
 
     @Nullable
     @Override
@@ -30,38 +39,55 @@ public class OrderDetailOrderedTabFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        List<DishInReceipt> dishInReceipts = new ArrayList<DishInReceipt>();
-        Item item = new Item();
-        item.setItemName("Sushi");
-        dishInReceipts.add(
-                new DishInReceipt(
-                        item, 2
-                )
-        );
-        Item item1 = new Item();
-        item1.setItemName("Chicken");
-        dishInReceipts.add(
-                new DishInReceipt(
-                        item1, 3
-                )
-        );
-        Item item2 = new Item();
-        item2.setItemName("Bugger");
-        dishInReceipts.add(
-                new DishInReceipt(
-                        item2, 4
-                )
-        );
-
-        initRecycleView(dishInReceipts);
+        View parent = (View) view.getParent().getParent();
+        TextView lblReceiptId = parent.findViewById(R.id.orderDetailReceiptId);
+        loadOrderedList(Integer.parseInt(String.valueOf(lblReceiptId.getText())));
     }
 
-    private void initRecycleView(List<DishInReceipt> dishInReceipts) {
-        RecyclerView recyclerView = getActivity().findViewById(R.id.orderDetailOrderedRV);
-        OrderDetailRVAdapter orderDetailOrderingRVAdapter = new OrderDetailRVAdapter(dishInReceipts, R.layout.item_order_detail_ordered_list_row);
-        GridLayoutManager gLayoutManager = new GridLayoutManager(getActivity().getApplicationContext(), 1);
-        recyclerView.setLayoutManager(gLayoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(orderDetailOrderingRVAdapter);
+    private void loadOrderedList(Integer receiptId) {
+        RmaAPIService rmaAPIService = RmaAPIUtils.getAPIService();
+        rmaAPIService.getReceiptDetailsByReceiptSeq(receiptId).enqueue(new Callback<List<ReceiptDetail>>() {
+            @Override
+            public void onResponse(Call<List<ReceiptDetail>> call, Response<List<ReceiptDetail>> response) {
+                if (response.isSuccessful()) {
+                    receiptDetails = response.body();
+                    Log.d(this.getClass().getSimpleName(), "GET loaded from API");
+                    initRecycleView(receiptDetails);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<ReceiptDetail>> call, Throwable t) {
+                if (getActivity() != null) {
+                    Toast toast = Toast.makeText(getActivity().getApplicationContext(), "Fail to connect to server", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+            }
+        });
+    }
+
+    private void initRecycleView(List<ReceiptDetail> receiptDetails) {
+        if (getActivity() != null) {
+            RecyclerView recyclerView = getActivity().findViewById(R.id.orderDetailOrderedRV);
+            List<DishInReceipt> dishInReceipts = parseList(receiptDetails);
+            OrderDetailRVAdapter orderDetailOrderingRVAdapter = new OrderDetailRVAdapter(dishInReceipts, R.layout.item_order_detail_ordered_list_row);
+            GridLayoutManager gLayoutManager = new GridLayoutManager(getActivity().getApplicationContext(), 1);
+            if (recyclerView != null) {
+                recyclerView.setLayoutManager(gLayoutManager);
+                recyclerView.setItemAnimator(new DefaultItemAnimator());
+                recyclerView.setAdapter(orderDetailOrderingRVAdapter);
+            }
+        }
+    }
+
+    private List<DishInReceipt> parseList(List<ReceiptDetail> receiptDetails) {
+        List<DishInReceipt> dishInReceipts = new ArrayList<>();
+        for (ReceiptDetail receiptDetail : receiptDetails) {
+            DishInReceipt dishInReceipt = new DishInReceipt();
+            dishInReceipt.setDish(receiptDetail.getItemByItemSeqId());
+            dishInReceipt.setQuantity(receiptDetail.getQuantity().intValue());
+            dishInReceipts.add(dishInReceipt);
+        }
+        return dishInReceipts;
     }
 }

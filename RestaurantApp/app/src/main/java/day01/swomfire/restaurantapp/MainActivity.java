@@ -59,7 +59,7 @@ import service.TabHostServiceImpl;
 import utils.RmaAPIUtils;
 
 public class MainActivity extends AppCompatActivity {
-    private final String FB_TOPIC_REQUESTLIST = "RequestList";
+    public final String FB_TOPIC_REQUESTLIST = "RequestList";
     private List<OrderRequest> requestList;
     private FragmentTabHost tabHost;
     private static List<Item> itemList;
@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         loadDishList();
         // Subscribe to topic with API
-        FirebaseMessaging.getInstance().subscribeToTopic(FB_TOPIC_REQUESTLIST);
+//        FirebaseMessaging.getInstance().subscribeToTopic(FB_TOPIC_REQUESTLIST);
         setSupportActionBar(findViewById(R.id.my_toolbar));
         initTabWidget();
     }

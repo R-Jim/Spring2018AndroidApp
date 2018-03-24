@@ -300,9 +300,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_add:
-                System.out.println("Setting item selected");
-                break;
             case R.id.action_search:
                 System.out.println("Search item selected");
                 break;

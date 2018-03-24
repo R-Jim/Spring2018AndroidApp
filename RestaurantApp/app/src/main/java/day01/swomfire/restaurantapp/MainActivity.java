@@ -324,7 +324,9 @@ public class MainActivity extends AppCompatActivity {
                 tabId -> {
                     tabHostService.tabIconReset(tabHost);
                     tabHostService.tabChooseIndicator(tabHost, tabId);
-                    searchView.setIconified(true);
+                    if (searchView != null) {
+                        searchView.setIconified(true);
+                    }
                 }
         );
     }

@@ -59,7 +59,7 @@ public class ItemFragment extends Fragment {
     public void loadDishList() {
         RmaAPIService mService = RmaAPIUtils.getAPIService();
 
-        mService.getItemList().enqueue(new Callback<List<Item>>() {
+        mService.getItemList(LoginActivity.token).enqueue(new Callback<List<Item>>() {
             @Override
             public void onResponse(Call<List<Item>> call, Response<List<Item>> response) {
                 if (response.isSuccessful()) {
@@ -81,7 +81,7 @@ public class ItemFragment extends Fragment {
     private void loadCategoryList() {
         RmaAPIService mService = RmaAPIUtils.getAPIService();
 
-        mService.getCategoryList().enqueue(new Callback<List<Category>>() {
+        mService.getCategoryList(LoginActivity.token).enqueue(new Callback<List<Category>>() {
             @Override
             public void onResponse(Call<List<Category>> call, Response<List<Category>> response) {
                 if (response.isSuccessful()) {

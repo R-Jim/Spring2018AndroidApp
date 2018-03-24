@@ -8,9 +8,4 @@
         android:icon="@drawable/ic_search_black_24dp"
         app:actionViewClass="android.support.v7.widget.SearchView" />
 
-    <item
-        android:id="@+id/action_add"
-        android:title="Setting"
-        android:icon="@drawable/ic_add_white_24dp"
-        app:showAsAction="ifRoom|collapseActionView"/>
 </menu>

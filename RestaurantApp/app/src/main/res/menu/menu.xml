@@ -2,10 +2,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/menu_setting"
-        android:title="@string/popup_setting"/>
+        android:title="@string/popup_setting" />
 
     <item
         android:id="@+id/menu_logout"
-        android:title="@string/popup_logout"/>
+        android:onClick="Logout"
+        android:title="@string/popup_logout" />
 
 </menu>

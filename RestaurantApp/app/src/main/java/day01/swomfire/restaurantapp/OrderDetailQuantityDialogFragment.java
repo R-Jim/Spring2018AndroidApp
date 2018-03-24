@@ -110,7 +110,7 @@ public class OrderDetailQuantityDialogFragment extends DialogFragment {
     private void sendRequestDetailToServer(Request requestDetail) {
 
         RmaAPIService rmaAPIService = RmaAPIUtils.getAPIService();
-        rmaAPIService.sendRequestDetail(requestDetail).enqueue(new Callback<Boolean>() {
+        rmaAPIService.sendRequestDetail(LoginActivity.token,requestDetail).enqueue(new Callback<Boolean>() {
             @Override
             public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                 if (response.isSuccessful()) {

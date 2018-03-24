@@ -39,8 +39,10 @@ import adapter.ExpandableItemListAdapter;
 import adapter.RequestListAdapter;
 import adapter.SwipeTouchHelper;
 import data.model.OrderRequest;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import adapter.ExpandableItemListAdapter;
 import adapter.TableRVAdapter;
 import data.model.Item;
@@ -81,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
     public void loadDishList() {
         RmaAPIService mService = RmaAPIUtils.getAPIService();
 
-        mService.getItemList().enqueue(new Callback<List<Item>>() {
+        mService.getItemList(LoginActivity.token).enqueue(new Callback<List<Item>>() {
             @Override
             public void onResponse(Call<List<Item>> call, Response<List<Item>> response) {
                 if (response.isSuccessful()) {
@@ -298,9 +300,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_add:
-                System.out.println("Setting item selected");
-                break;
             case R.id.action_search:
                 System.out.println("Search item selected");
                 break;
@@ -407,5 +406,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
+    public void Logout(MenuItem item) {
+        LoginActivity.token = null;
+        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+        startActivity(intent);
+    }
 }

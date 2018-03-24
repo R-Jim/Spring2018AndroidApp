@@ -104,7 +104,7 @@ public class OrderDetailActivity extends AppCompatActivity {
     private void loadOrderDetail() {
         RmaAPIService rmaAPIService = RmaAPIUtils.getAPIService();
         if (receiptId != null) {
-            rmaAPIService.getReceiptByReceiptId(receiptId).enqueue(new Callback<Receipt>() {
+            rmaAPIService.getReceiptByReceiptId(LoginActivity.token,receiptId).enqueue(new Callback<Receipt>() {
                 @Override
                 public void onResponse(Call<Receipt> call, Response<Receipt> response) {
                     if (response.isSuccessful()) {
@@ -127,7 +127,7 @@ public class OrderDetailActivity extends AppCompatActivity {
                 }
             });
         } else {
-            rmaAPIService.getReceiptByTableId(Integer.parseInt(tableId)).enqueue(new Callback<Receipt>() {
+            rmaAPIService.getReceiptByTableId(LoginActivity.token,Integer.parseInt(tableId)).enqueue(new Callback<Receipt>() {
                 @Override
                 public void onResponse(Call<Receipt> call, Response<Receipt> response) {
                     if (response.isSuccessful()) {
@@ -187,7 +187,7 @@ public class OrderDetailActivity extends AppCompatActivity {
         TextView lblReceiptId = findViewById(R.id.orderDetailReceiptId);
         if (lblReceiptId != null) {
             RmaAPIService rmaAPIService = RmaAPIUtils.getAPIService();
-            rmaAPIService.checkOutReceipt(Integer.parseInt(String.valueOf(lblReceiptId.getText()))).enqueue(new Callback<Boolean>() {
+            rmaAPIService.checkOutReceipt(LoginActivity.token,Integer.parseInt(String.valueOf(lblReceiptId.getText()))).enqueue(new Callback<Boolean>() {
                 @Override
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                     if (response.isSuccessful()) {

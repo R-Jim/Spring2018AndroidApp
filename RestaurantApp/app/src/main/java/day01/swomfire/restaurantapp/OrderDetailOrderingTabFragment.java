@@ -18,7 +18,7 @@ import java.util.List;
 
 import adapter.OrderDetailRVAdapter;
 import data.model.Item;
-import data.model.RequestDetail;
+import data.model.Request;
 import data.remote.RmaAPIService;
 import model.DishInReceipt;
 import retrofit2.Call;
@@ -29,9 +29,9 @@ import utils.RmaAPIUtils;
 
 public class OrderDetailOrderingTabFragment extends Fragment {
 
-    private static List<RequestDetail> requestDetails;
+    private static List<Request> requestDetails;
 
-    public static List<RequestDetail> getRequestDetails() {
+    public static List<Request> getRequestDetails() {
         return requestDetails;
     }
 
@@ -52,9 +52,9 @@ public class OrderDetailOrderingTabFragment extends Fragment {
 
     private void loadOrderedList(Integer receiptId) {
         RmaAPIService rmaAPIService = RmaAPIUtils.getAPIService();
-        rmaAPIService.getRequestDetailsByReceiptSeq(receiptId).enqueue(new Callback<List<RequestDetail>>() {
+        rmaAPIService.getRequestDetailsByReceiptSeq(receiptId).enqueue(new Callback<List<Request>>() {
             @Override
-            public void onResponse(Call<List<RequestDetail>> call, Response<List<RequestDetail>> response) {
+            public void onResponse(Call<List<Request>> call, Response<List<Request>> response) {
                 if (response.isSuccessful()) {
                     requestDetails = response.body();
                     Log.d(this.getClass().getSimpleName(), "GET loaded from API");
@@ -63,7 +63,7 @@ public class OrderDetailOrderingTabFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<List<RequestDetail>> call, Throwable t) {
+            public void onFailure(Call<List<Request>> call, Throwable t) {
                 System.out.println("Failed to load Order Request list");
 
             }
@@ -71,9 +71,9 @@ public class OrderDetailOrderingTabFragment extends Fragment {
     }
 
 
-    private void initRecycleView(List<RequestDetail> requestDetails) {
+    private void initRecycleView(List<Request> requestDetails) {
         List<DishInReceipt> dishInReceipts = new ArrayList<>();
-        for (RequestDetail requestDetail : requestDetails) {
+        for (Request requestDetail : requestDetails) {
             if (!requestDetail.getChangeable() && requestDetail.getQuantity() > 0) {
                 addDishToReceipt(requestDetail, dishInReceipts);
             }
@@ -81,7 +81,7 @@ public class OrderDetailOrderingTabFragment extends Fragment {
         initRV(dishInReceipts, R.layout.item_order_detail_ordering_not_changable_list_row, R.id.orderDetail);
 
         dishInReceipts = new ArrayList<>();
-        for (RequestDetail requestDetail : requestDetails) {
+        for (Request requestDetail : requestDetails) {
             if (requestDetail.getChangeable() && requestDetail.getQuantity() > 0) {
 
                 DishInReceipt dishInReceipt = new DishInReceipt();
@@ -115,7 +115,7 @@ public class OrderDetailOrderingTabFragment extends Fragment {
         }
     }
 
-    private void addDishToReceipt(RequestDetail requestDetail, List<DishInReceipt> dishInReceipts) {
+    private void addDishToReceipt(Request requestDetail, List<DishInReceipt> dishInReceipts) {
         DishInReceipt dishInReceipt = new DishInReceipt();
 
 

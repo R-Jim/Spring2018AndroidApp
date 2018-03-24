@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.MatrixCursor;
 import android.provider.BaseColumns;
+
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTabHost;
@@ -29,18 +30,24 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import adapter.CustomRVAdapter;
+import adapter.ExpandableItemListAdapter;
+import adapter.RequestListAdapter;
+import adapter.SwipeTouchHelper;
+import data.model.OrderRequest;
+import java.util.ArrayList;
+import java.util.List;
 import adapter.ExpandableItemListAdapter;
 import adapter.TableRVAdapter;
 import data.model.Item;
 import data.model.Request;
 import data.model.Table;
 import data.remote.RmaAPIService;
+
 import model.DishInItemList;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -51,9 +58,10 @@ import utils.RmaAPIUtils;
 
 public class MainActivity extends AppCompatActivity {
     private final String FB_TOPIC_REQUESTLIST = "RequestList";
-
+    private List<OrderRequest> requestList;
     private FragmentTabHost tabHost;
     private static List<Item> itemList;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -197,7 +205,7 @@ public class MainActivity extends AppCompatActivity {
                 if (recyclerView != null) {
                     int count = recyclerView.getAdapter().getItemCount();
                     for (int i = 0; i < count; i++) {
-                        CustomRVAdapter customRVAdapter = (CustomRVAdapter) recyclerView.getAdapter();
+                        RequestListAdapter customRVAdapter = (RequestListAdapter) recyclerView.getAdapter();
                         Request request = customRVAdapter.getRequest(i);
                         if (itemList != null) {
                             for (Item item : itemList) {
@@ -239,7 +247,7 @@ public class MainActivity extends AppCompatActivity {
                 if (recyclerView != null) {
                     int count = recyclerView.getAdapter().getItemCount();
                     for (int i = 0; i < count; i++) {
-                        CustomRVAdapter customRVAdapter = (CustomRVAdapter) recyclerView.getAdapter();
+                        RequestListAdapter customRVAdapter = (RequestListAdapter) recyclerView.getAdapter();
                         Request request = customRVAdapter.getRequest(i);
                         if (itemList != null) {
                             for (Item item : itemList) {
@@ -397,4 +405,7 @@ public class MainActivity extends AppCompatActivity {
         OrderDetailActivity.setTableId(String.valueOf(tableId.getText()));
         startActivityForResult(intent, 2);
     }
+
+
+
 }

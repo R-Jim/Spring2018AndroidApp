@@ -2,16 +2,12 @@ package day01.swomfire.restaurantapp;
 
 
 import android.app.Dialog;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -20,10 +16,8 @@ import android.widget.Toast;
 
 import java.util.List;
 
-import data.model.RequestDetail;
+import data.model.Request;
 import data.remote.RmaAPIService;
-import model.DishInItemList;
-import model.DishInReceipt;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -63,9 +57,9 @@ public class OrderDetailQuantityDialogFragment extends DialogFragment {
         btnChange.setOnClickListener(view -> {
             int quantityNew = Integer.valueOf(String.valueOf(itemQuantityText.getText()));
             requestDetailId = Integer.parseInt(itemPositionAndQuantity[0]);
-            List<RequestDetail> requestDetails = OrderDetailOrderingTabFragment.getRequestDetails();
-            RequestDetail requestDetail = null;
-            for (RequestDetail detail : requestDetails) {
+            List<Request> requestDetails = OrderDetailOrderingTabFragment.getRequestDetails();
+            Request requestDetail = null;
+            for (Request detail : requestDetails) {
                 if (detail.getSeq().equals(requestDetailId)) {
                     requestDetail = detail;
                     if (quantityNew > 0) {
@@ -113,7 +107,7 @@ public class OrderDetailQuantityDialogFragment extends DialogFragment {
         ft.commit();
     }
 
-    private void sendRequestDetailToServer(RequestDetail requestDetail) {
+    private void sendRequestDetailToServer(Request requestDetail) {
 
         RmaAPIService rmaAPIService = RmaAPIUtils.getAPIService();
         rmaAPIService.sendRequestDetail(requestDetail).enqueue(new Callback<Boolean>() {

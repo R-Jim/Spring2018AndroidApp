@@ -5,9 +5,8 @@ import java.util.List;
 import data.model.Category;
 import data.model.Item;
 import data.model.OrderRequest;
-import data.model.Receipt;
 import data.model.Request;
-import data.model.RequestDetail;
+import data.model.Receipt;
 import data.model.Table;
 import data.model.ReceiptDetail;
 import data.model.User;
@@ -15,6 +14,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.HTTP;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -34,6 +34,7 @@ public interface RmaAPIService {
     @GET("/items")
     Call<List<Item>> getItemList();
 
+
     @GET("/requests")
     Call<List<Request>> getRequestList();
 
@@ -44,12 +45,16 @@ public interface RmaAPIService {
     Call<List<Category>> getCategoryList();
 
     @GET("/requests")
-    Call<List<OrderRequest>> getRequestOrderList();
+    Call<List<Request>> getRequestOrderList();
 
 
     @POST("/orders")
     @Headers({"Content-Type: application/json"})
     Call<Boolean> sendReceiptToServer(@Body OrderRequest orderRequest);
+
+    @HTTP(method = "DELETE", path = "/requests", hasBody = true)
+    @Headers({"Content-Type: application/json"})
+    Call<Boolean> sendDismissRequest(@Body List<Request> dismissList);
 
     @GET("/receipts/{id}")
     Call<Receipt> getReceiptByReceiptId(@Path("id") Integer receiptSeq);
@@ -65,11 +70,11 @@ public interface RmaAPIService {
     Call<Boolean> getAuthenticate(@Body User user);
 
     @GET("/ordering-request/{seq}")
-    Call<List<RequestDetail>> getRequestDetailsByReceiptSeq(@Path("seq") Integer receiptSeq);
+    Call<List<Request>> getRequestDetailsByReceiptSeq(@Path("seq") Integer receiptSeq);
 
     @PUT("/ordering-request")
     @Headers({"Content-Type: application/json"})
-    Call<Boolean> sendRequestDetail(@Body RequestDetail requestDetail);
+    Call<Boolean> sendRequestDetail(@Body Request requestDetail);
 
     @DELETE("/checkout/{receiptSeq}")
     Call<Boolean> checkOutReceipt(@Path("receiptSeq") Integer receiptSeq);

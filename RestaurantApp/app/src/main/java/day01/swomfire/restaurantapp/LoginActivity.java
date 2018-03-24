@@ -61,31 +61,36 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-        //
-        View background = findViewById(R.id.login_form_background);
+        if (token == null) {
+            setContentView(R.layout.activity_login);
+            //
+            View background = findViewById(R.id.login_form_background);
 
-        StyleUtils.setGradientBackground(background, new int[]{getResources().getColor(R.color.colorLoginBackground1),
-                getResources().getColor(R.color.colorLoginBackground1_5)}, StyleUtils.GradientMode.BOTTOMLEFT_TOPRIGHT.getMode());
+            StyleUtils.setGradientBackground(background, new int[]{getResources().getColor(R.color.colorLoginBackground1),
+                    getResources().getColor(R.color.colorLoginBackground1_5)}, StyleUtils.GradientMode.BOTTOMLEFT_TOPRIGHT.getMode());
 
 
-        // Set up the login form.
-        mUsernameView = findViewById(R.id.username);
+            // Set up the login form.
+            mUsernameView = findViewById(R.id.username);
 
-        mPasswordView = findViewById(R.id.password);
-        mPasswordView.setOnEditorActionListener((textView, id, keyEvent) -> {
-            if (id == EditorInfo.IME_ACTION_DONE || id == EditorInfo.IME_NULL) {
-                attemptLogin();
-                return true;
-            }
-            return false;
-        });
+            mPasswordView = findViewById(R.id.password);
+            mPasswordView.setOnEditorActionListener((textView, id, keyEvent) -> {
+                if (id == EditorInfo.IME_ACTION_DONE || id == EditorInfo.IME_NULL) {
+                    attemptLogin();
+                    return true;
+                }
+                return false;
+            });
 
-        Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
-        mEmailSignInButton.setOnClickListener(view -> attemptLogin());
+            Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
+            mEmailSignInButton.setOnClickListener(view -> attemptLogin());
 
-        mLoginFormView = findViewById(R.id.login_form);
-        mProgressView = findViewById(R.id.login_progress);
+            mLoginFormView = findViewById(R.id.login_form);
+            mProgressView = findViewById(R.id.login_progress);
+        } else {
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(intent);
+        }
     }
 
     /**

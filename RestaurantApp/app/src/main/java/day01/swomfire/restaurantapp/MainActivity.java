@@ -3,6 +3,8 @@ package day01.swomfire.restaurantapp;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTabHost;
@@ -19,6 +21,7 @@ import android.widget.ExpandableListView;
 import android.support.v7.widget.PopupMenu;
 import android.view.MenuInflater;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TabHost;
 import android.widget.TextView;
@@ -26,17 +29,24 @@ import android.widget.TextView;
 import android.widget.TabWidget;
 
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
 
+import java.util.List;
+
 import adapter.ExpandableItemListAdapter;
+import adapter.RequestListAdapter;
+import adapter.SwipeTouchHelper;
+import data.model.OrderRequest;
 import model.DishInItemList;
 import service.TabHostService;
 import service.TabHostServiceImpl;
 
 public class MainActivity extends AppCompatActivity {
     private final String FB_TOPIC_REQUESTLIST = "RequestList";
-
+    private List<OrderRequest> requestList;
     private FragmentTabHost tabHost;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
         // Subscribe to topic with API
         FirebaseMessaging.getInstance().subscribeToTopic(FB_TOPIC_REQUESTLIST);
 
+        System.out.println(FirebaseInstanceId.getInstance().getToken());
 
         setSupportActionBar(findViewById(R.id.my_toolbar));
 ////        listView = findViewById(R.id.tableExpandableList);
@@ -211,4 +222,7 @@ public class MainActivity extends AppCompatActivity {
         OrderDetailActivity.setTableId(String.valueOf(tableId.getText()));
         startActivityForResult(intent, 2);
     }
+
+
+
 }

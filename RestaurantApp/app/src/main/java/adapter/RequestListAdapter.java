@@ -6,18 +6,21 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.List;
 
+import data.model.Item;
 import data.model.OrderRequest;
+import data.model.Request;
 import day01.swomfire.restaurantapp.R;
 
 /**
  * Created by elpsychris on 03/13/2018.
  */
 
-public class CustomRVAdapter extends RecyclerView.Adapter<CustomRVAdapter.RequestViewHolder> {
+public class RequestListAdapter extends RecyclerView.Adapter<RequestListAdapter.RequestViewHolder> {
 
 
     // Provide a reference to the views for each data item
@@ -26,9 +29,10 @@ public class CustomRVAdapter extends RecyclerView.Adapter<CustomRVAdapter.Reques
     public static class RequestViewHolder extends RecyclerView.ViewHolder {
 
         CardView cv;
-        TextView tvTableId;
-        TextView tvDishName;
-        TextView tvDishDiscr;
+        public TextView tvTableId;
+        public TextView tvDishName;
+        public TextView tvDishDiscr;
+        public RelativeLayout viewBackground, viewForeground;
 
         public RequestViewHolder(View itemView) {
             super(itemView);
@@ -36,13 +40,15 @@ public class CustomRVAdapter extends RecyclerView.Adapter<CustomRVAdapter.Reques
             tvTableId = (TextView) itemView.findViewById(R.id.tv_table_id);
             tvDishName = (TextView) itemView.findViewById(R.id.tv_dish_name);
             tvDishDiscr = (TextView) itemView.findViewById(R.id.tv_description);
+            viewBackground = itemView.findViewById(R.id.view_background);
+            viewForeground = itemView.findViewById(R.id.view_foreground);
         }
     }
 
     // Data for the RV
-    private List<OrderRequest> requestList;
+    public List<Request> requestList;
 
-    public CustomRVAdapter(List requestList) {
+    public RequestListAdapter(List requestList) {
         this.requestList = requestList;
     }
 
@@ -69,4 +75,21 @@ public class CustomRVAdapter extends RecyclerView.Adapter<CustomRVAdapter.Reques
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
     }
+
+    public void removeItem(int pos) {
+        if (requestList == null) {
+            return;
+        }
+
+        requestList.remove(pos);
+        notifyItemRemoved(pos);
+    }
+
+    public void restoredItem(Request request, int pos) {
+        requestList.add(pos, request);
+
+        notifyItemInserted(pos);
+    }
+
+
 }

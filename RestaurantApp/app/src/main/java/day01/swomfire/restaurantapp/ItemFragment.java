@@ -198,18 +198,6 @@ public class ItemFragment extends Fragment {
 
             return true;
         });
-        if (getActivity() != null) {
-            SharedPreferences appSharedPrefs = PreferenceManager
-                    .getDefaultSharedPreferences(getActivity().getApplicationContext());
-            SharedPreferences.Editor prefsEditor = appSharedPrefs.edit();
-            HashMap<String, List<DishInItemList>> stringListHashMap = DishInItemList.convertHashmapToStringKey(listHashMap);
-            Gson gson = new Gson();
-            String json = gson.toJson(stringListHashMap);
-            prefsEditor.putString("listDishInListStringHashMap", json);
-            json = gson.toJson(categoryListFromDb);
-            prefsEditor.putString("listCategory", json);
-            prefsEditor.commit();
-        }
     }
 
     private DishInItemList createDish(Item item) {

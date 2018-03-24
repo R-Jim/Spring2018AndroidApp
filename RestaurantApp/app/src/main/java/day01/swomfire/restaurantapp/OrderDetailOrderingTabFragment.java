@@ -1,9 +1,12 @@
 package day01.swomfire.restaurantapp;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -46,13 +49,22 @@ public class OrderDetailOrderingTabFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         View parent = (View) view.getParent().getParent();
         TextView lblReceiptId = parent.findViewById(R.id.orderDetailReceiptId);
-        loadOrderedList(Integer.parseInt(String.valueOf(lblReceiptId.getText())));
+        Integer receiptId;
+        try {
+            receiptId = Integer.parseInt(String.valueOf(lblReceiptId.getText()));
+
+        } catch (Exception e) {
+            receiptId = OrderDetailActivity.getReceiptId();
+        }
+        if (receiptId != null) {
+            loadOrderedList(receiptId);
+        }
 
     }
 
     private void loadOrderedList(Integer receiptId) {
         RmaAPIService rmaAPIService = RmaAPIUtils.getAPIService();
-        rmaAPIService.getRequestDetailsByReceiptSeq(LoginActivity.token,receiptId).enqueue(new Callback<List<Request>>() {
+        rmaAPIService.getRequestDetailsByReceiptSeq(LoginActivity.token, receiptId).enqueue(new Callback<List<Request>>() {
             @Override
             public void onResponse(Call<List<Request>> call, Response<List<Request>> response) {
                 if (response.isSuccessful()) {

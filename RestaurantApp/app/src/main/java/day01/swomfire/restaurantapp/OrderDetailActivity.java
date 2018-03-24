@@ -2,6 +2,8 @@ package day01.swomfire.restaurantapp;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTabHost;
 import android.support.v7.app.AppCompatActivity;
@@ -38,15 +40,33 @@ public class OrderDetailActivity extends AppCompatActivity {
         receiptId = id;
     }
 
+    public static String getTableId() {
+        return tableId;
+    }
+
+    public static Integer getReceiptId() {
+        return receiptId;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_detail);
 
+        if (tableId != null) {
+            SharedPreferences appSharedPrefs = PreferenceManager
+                    .getDefaultSharedPreferences(getApplicationContext());
+            SharedPreferences.Editor prefsEditor = appSharedPrefs.edit();
+            prefsEditor.putString("tableId", tableId);
+            prefsEditor.commit();
+        } else {
+            SharedPreferences appSharedPrefs = PreferenceManager
+                    .getDefaultSharedPreferences(getApplicationContext());
+            tableId = appSharedPrefs.getString("tableId", null);
+        }
 
         TextView lblTableId = findViewById(R.id.orderDetailTableId);
         lblTableId.setText(tableId);
-
         if (receiptId != null) {
             TextView lblReceiptId = findViewById(R.id.orderDetailReceiptId);
             lblReceiptId.setText(String.valueOf(receiptId));
@@ -104,7 +124,7 @@ public class OrderDetailActivity extends AppCompatActivity {
     private void loadOrderDetail() {
         RmaAPIService rmaAPIService = RmaAPIUtils.getAPIService();
         if (receiptId != null) {
-            rmaAPIService.getReceiptByReceiptId(LoginActivity.token,receiptId).enqueue(new Callback<Receipt>() {
+            rmaAPIService.getReceiptByReceiptId(LoginActivity.token, receiptId).enqueue(new Callback<Receipt>() {
                 @Override
                 public void onResponse(Call<Receipt> call, Response<Receipt> response) {
                     if (response.isSuccessful()) {
@@ -127,30 +147,32 @@ public class OrderDetailActivity extends AppCompatActivity {
                 }
             });
         } else {
-            rmaAPIService.getReceiptByTableId(LoginActivity.token,Integer.parseInt(tableId)).enqueue(new Callback<Receipt>() {
-                @Override
-                public void onResponse(Call<Receipt> call, Response<Receipt> response) {
-                    if (response.isSuccessful()) {
-                        Receipt receipt = response.body();
-                        TextView lblTotal = findViewById(R.id.orderDetailTotal);
-                        lblTotal.setText(String.valueOf((receipt.getTotal() != null) ? receipt.getTotal() : "0"));
-                        TextView lblDate = findViewById(R.id.orderDetailDate);
-                        Date date = new Date(receipt.getIssueDate());
-                        lblDate.setText(String.valueOf(ParseUtils.parseDateToStringFormat(date)));
-                        receiptId = receipt.getSeqId();
-                        TextView lblReceiptId = findViewById(R.id.orderDetailReceiptId);
-                        lblReceiptId.setText(String.valueOf(receipt.getSeqId()));
-                        setUpTab();
-                        Log.d(this.getClass().getSimpleName(), "GET loaded from API");
+            if (tableId != null) {
+                rmaAPIService.getReceiptByTableId(LoginActivity.token, Integer.parseInt(tableId)).enqueue(new Callback<Receipt>() {
+                    @Override
+                    public void onResponse(Call<Receipt> call, Response<Receipt> response) {
+                        if (response.isSuccessful()) {
+                            Receipt receipt = response.body();
+                            TextView lblTotal = findViewById(R.id.orderDetailTotal);
+                            lblTotal.setText(String.valueOf((receipt.getTotal() != null) ? receipt.getTotal() : "0"));
+                            TextView lblDate = findViewById(R.id.orderDetailDate);
+                            Date date = new Date(receipt.getIssueDate());
+                            lblDate.setText(String.valueOf(ParseUtils.parseDateToStringFormat(date)));
+                            receiptId = receipt.getSeqId();
+                            TextView lblReceiptId = findViewById(R.id.orderDetailReceiptId);
+                            lblReceiptId.setText(String.valueOf(receipt.getSeqId()));
+                            setUpTab();
+                            Log.d(this.getClass().getSimpleName(), "GET loaded from API");
+                        }
                     }
-                }
 
-                @Override
-                public void onFailure(Call<Receipt> call, Throwable t) {
-                    Toast toast = Toast.makeText(getApplicationContext(), "Fail to connect to server", Toast.LENGTH_SHORT);
-                    toast.show();
-                }
-            });
+                    @Override
+                    public void onFailure(Call<Receipt> call, Throwable t) {
+                        Toast toast = Toast.makeText(getApplicationContext(), "Fail to connect to server", Toast.LENGTH_SHORT);
+                        toast.show();
+                    }
+                });
+            }
         }
     }
 
@@ -187,7 +209,7 @@ public class OrderDetailActivity extends AppCompatActivity {
         TextView lblReceiptId = findViewById(R.id.orderDetailReceiptId);
         if (lblReceiptId != null) {
             RmaAPIService rmaAPIService = RmaAPIUtils.getAPIService();
-            rmaAPIService.checkOutReceipt(LoginActivity.token,Integer.parseInt(String.valueOf(lblReceiptId.getText()))).enqueue(new Callback<Boolean>() {
+            rmaAPIService.checkOutReceipt(LoginActivity.token, Integer.parseInt(String.valueOf(lblReceiptId.getText()))).enqueue(new Callback<Boolean>() {
                 @Override
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                     if (response.isSuccessful()) {

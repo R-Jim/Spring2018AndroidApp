@@ -9,7 +9,7 @@ import service.ApiAuthenticationClient;
  */
 
 public class RmaAPIUtils {
-    public static final String LOCAL_IP = "http://192.168.100.120";
+    public static final String LOCAL_IP = "http://25.14.138.194";
     public static final String PORT = "8080";
     public static final String BASE_URL = LOCAL_IP + ":" + PORT;
 

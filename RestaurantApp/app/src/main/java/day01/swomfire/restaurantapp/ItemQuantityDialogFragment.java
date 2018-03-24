@@ -23,10 +23,10 @@ public class ItemQuantityDialogFragment extends DialogFragment {
     private TextView currentItemQuantityText;
     private TextView itemQuantityText;
     private TextView lblId;
-    private View view;
+    private static View view1;
 
     public void setUp(View view) {
-        this.view = view;
+        view1 = view;
     }
 
     @NonNull
@@ -36,7 +36,7 @@ public class ItemQuantityDialogFragment extends DialogFragment {
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View quantityDialog = inflater.inflate(R.layout.fragment_dialog_item_quantity, null);
-        View view = this.view.findViewById(R.id.itemItem);
+        View view = view1.findViewById(R.id.itemItem);
         GradientDrawable background = (GradientDrawable) view.getBackground().getConstantState().newDrawable();
         quantityDialog.setBackground(background);
         builder.setView(quantityDialog);

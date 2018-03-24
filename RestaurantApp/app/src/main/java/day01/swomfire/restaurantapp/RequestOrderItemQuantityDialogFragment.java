@@ -17,13 +17,13 @@ import utils.StyleUtils;
 
 
 public class RequestOrderItemQuantityDialogFragment extends DialogFragment {
-    private View view;
+    private static View view;
     private TextView currentItemQuantityText;
     private TextView itemQuantityText;
     private TextView lblId;
 
-    public void setUp(View view) {
-        this.view = view;
+    public void setUp(View view1) {
+        view = view1;
     }
 
     @NonNull

@@ -41,12 +41,21 @@ public class OrderDetailOrderedTabFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         View parent = (View) view.getParent().getParent();
         TextView lblReceiptId = parent.findViewById(R.id.orderDetailReceiptId);
-        loadOrderedList(Integer.parseInt(String.valueOf(lblReceiptId.getText())));
+        Integer receiptId;
+        try {
+            receiptId = Integer.parseInt(String.valueOf(lblReceiptId.getText()));
+
+        } catch (Exception e) {
+            receiptId = OrderDetailActivity.getReceiptId();
+        }
+        if (receiptId != null) {
+            loadOrderedList(Integer.parseInt(String.valueOf(lblReceiptId.getText())));
+        }
     }
 
     private void loadOrderedList(Integer receiptId) {
         RmaAPIService rmaAPIService = RmaAPIUtils.getAPIService();
-        rmaAPIService.getReceiptDetailsByReceiptSeq(LoginActivity.token,receiptId).enqueue(new Callback<List<ReceiptDetail>>() {
+        rmaAPIService.getReceiptDetailsByReceiptSeq(LoginActivity.token, receiptId).enqueue(new Callback<List<ReceiptDetail>>() {
             @Override
             public void onResponse(Call<List<ReceiptDetail>> call, Response<List<ReceiptDetail>> response) {
                 if (response.isSuccessful()) {

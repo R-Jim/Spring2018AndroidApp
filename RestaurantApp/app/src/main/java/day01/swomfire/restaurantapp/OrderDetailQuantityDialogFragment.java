@@ -100,17 +100,19 @@ public class OrderDetailQuantityDialogFragment extends DialogFragment {
     @Override
     public void onDismiss(DialogInterface dialog) {
         super.onDismiss(dialog);
-        Fragment frg = getActivity().getSupportFragmentManager().findFragmentByTag("ORDERING_TAB");
-        final android.support.v4.app.FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-        ft.detach(frg);
-        ft.attach(frg);
-        ft.commit();
+        if (getActivity() != null) {
+            Fragment frg = getActivity().getSupportFragmentManager().findFragmentByTag("ORDERING_TAB");
+            final android.support.v4.app.FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+            ft.detach(frg);
+            ft.attach(frg);
+            ft.commit();
+        }
     }
 
     private void sendRequestDetailToServer(Request requestDetail) {
 
         RmaAPIService rmaAPIService = RmaAPIUtils.getAPIService();
-        rmaAPIService.sendRequestDetail(LoginActivity.token,requestDetail).enqueue(new Callback<Boolean>() {
+        rmaAPIService.sendRequestDetail(LoginActivity.token, requestDetail).enqueue(new Callback<Boolean>() {
             @Override
             public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                 if (response.isSuccessful()) {

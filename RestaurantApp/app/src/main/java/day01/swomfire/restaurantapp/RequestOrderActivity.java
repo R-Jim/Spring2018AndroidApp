@@ -69,28 +69,30 @@ public class RequestOrderActivity extends AppCompatActivity {
     }
 
     public static void initRecycleListView(Activity activity) {
-        int newQuantity = 0;
-        dishInItemLists = new ArrayList<>();
-        listHashMap = ExpandableItemListAdapter.getListHashMap();
-        if (listHashMap != null) {
-            for (Map.Entry<Category, List<DishInItemList>> entry : listHashMap.entrySet()) {
-                for (DishInItemList dishInItemList : entry.getValue()) {
-                    if (dishInItemList.isSelected()) {
-                        dishInItemLists.add(dishInItemList);
-                        newQuantity += dishInItemList.getQuantity();
+        if (activity != null) {
+            int newQuantity = 0;
+            dishInItemLists = new ArrayList<>();
+            listHashMap = ExpandableItemListAdapter.getListHashMap();
+            if (listHashMap != null) {
+                for (Map.Entry<Category, List<DishInItemList>> entry : listHashMap.entrySet()) {
+                    for (DishInItemList dishInItemList : entry.getValue()) {
+                        if (dishInItemList.isSelected()) {
+                            dishInItemLists.add(dishInItemList);
+                            newQuantity += dishInItemList.getQuantity();
+                        }
                     }
                 }
             }
-        }
-        if (tableId != null) {
-            TextView requestOrderTable = activity.findViewById(R.id.requestOrderTableId);
-            requestOrderTable.setText(tableId);
-        }
+            if (tableId != null) {
+                TextView requestOrderTable = activity.findViewById(R.id.requestOrderTableId);
+                requestOrderTable.setText(tableId);
+            }
 
-        TextView lblNewRequest = activity.findViewById(R.id.lblItemRequestRowNewQuantity);
-        lblNewRequest.setText(String.valueOf(newQuantity));
+            TextView lblNewRequest = activity.findViewById(R.id.lblItemRequestRowNewQuantity);
+            lblNewRequest.setText(String.valueOf(newQuantity));
 
-        initRecyclerView(R.id.requestItemRecyclerView, dishInItemLists, activity);
+            initRecyclerView(R.id.requestItemRecyclerView, dishInItemLists, activity);
+        }
     }
 
     public void backToMenu(View view) {
@@ -183,7 +185,7 @@ public class RequestOrderActivity extends AppCompatActivity {
             OrderRequest orderRequest = new OrderRequest();
             orderRequest.setTableId(Long.parseLong(tableId));
             orderRequest.setOrderDetailList(orderDetails);
-            mService.sendReceiptToServer(LoginActivity.token,orderRequest).enqueue(new Callback<Boolean>() {
+            mService.sendReceiptToServer(LoginActivity.token, orderRequest).enqueue(new Callback<Boolean>() {
                 @Override
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                     if (response.isSuccessful()) {

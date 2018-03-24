@@ -10,11 +10,13 @@ import data.model.Receipt;
 import data.model.Table;
 import data.model.ReceiptDetail;
 import data.model.User;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.HTTP;
+import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -32,17 +34,17 @@ public interface RmaAPIService {
     Call<Item> getItem(@Query("itemId") String id);
 
     @GET("/items")
-    Call<List<Item>> getItemList();
+    Call<List<Item>> getItemList(@Header("Authorization") String token);
 
 
     @GET("/requests")
-    Call<List<Request>> getRequestList();
+    Call<List<Request>> getRequestList(@Header("Authorization") String token);
 
     @GET("/tables")
-    Call<List<Table>> getTableList();
+    Call<List<Table>> getTableList(@Header("Authorization") String token);
 
     @GET("/categories")
-    Call<List<Category>> getCategoryList();
+    Call<List<Category>> getCategoryList(@Header("Authorization") String token);
 
     @GET("/requests")
     Call<List<Request>> getRequestOrderList();
@@ -50,32 +52,32 @@ public interface RmaAPIService {
 
     @POST("/orders")
     @Headers({"Content-Type: application/json"})
-    Call<Boolean> sendReceiptToServer(@Body OrderRequest orderRequest);
+    Call<Boolean> sendReceiptToServer(@Header("Authorization") String token, @Body OrderRequest orderRequest);
 
     @HTTP(method = "DELETE", path = "/requests", hasBody = true)
     @Headers({"Content-Type: application/json"})
-    Call<Boolean> sendDismissRequest(@Body List<Request> dismissList);
+    Call<Boolean> sendDismissRequest(@Header("Authorization") String token, @Body List<Request> dismissList);
 
     @GET("/receipts/{id}")
-    Call<Receipt> getReceiptByReceiptId(@Path("id") Integer receiptSeq);
+    Call<Receipt> getReceiptByReceiptId(@Header("Authorization") String token, @Path("id") Integer receiptSeq);
 
     @GET("/tables/{id}/receipts")
-    Call<Receipt> getReceiptByTableId(@Path("id") int tableSeq);
+    Call<Receipt> getReceiptByTableId(@Header("Authorization") String token, @Path("id") int tableSeq);
 
     @GET("/ordered-request/{seq}")
-    Call<List<ReceiptDetail>> getReceiptDetailsByReceiptSeq(@Path("seq") Integer receiptSeq);
+    Call<List<ReceiptDetail>> getReceiptDetailsByReceiptSeq(@Header("Authorization") String token, @Path("seq") Integer receiptSeq);
 
-    @POST("/authenticate")
+    @POST("/login")
     @Headers({"Content-Type: application/json"})
-    Call<Boolean> getAuthenticate(@Body User user);
+    Call<ResponseBody> getAuthenticate(@Body User user);
 
     @GET("/ordering-request/{seq}")
-    Call<List<Request>> getRequestDetailsByReceiptSeq(@Path("seq") Integer receiptSeq);
+    Call<List<Request>> getRequestDetailsByReceiptSeq(@Header("Authorization") String token, @Path("seq") Integer receiptSeq);
 
     @PUT("/ordering-request")
     @Headers({"Content-Type: application/json"})
-    Call<Boolean> sendRequestDetail(@Body Request requestDetail);
+    Call<Boolean> sendRequestDetail(@Header("Authorization") String token, @Body Request requestDetail);
 
     @DELETE("/checkout/{receiptSeq}")
-    Call<Boolean> checkOutReceipt(@Path("receiptSeq") Integer receiptSeq);
+    Call<Boolean> checkOutReceipt(@Header("Authorization") String token, @Path("receiptSeq") Integer receiptSeq);
 }

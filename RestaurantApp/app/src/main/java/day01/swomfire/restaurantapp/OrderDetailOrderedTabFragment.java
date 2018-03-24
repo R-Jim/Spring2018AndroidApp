@@ -46,7 +46,7 @@ public class OrderDetailOrderedTabFragment extends Fragment {
 
     private void loadOrderedList(Integer receiptId) {
         RmaAPIService rmaAPIService = RmaAPIUtils.getAPIService();
-        rmaAPIService.getReceiptDetailsByReceiptSeq(receiptId).enqueue(new Callback<List<ReceiptDetail>>() {
+        rmaAPIService.getReceiptDetailsByReceiptSeq(LoginActivity.token,receiptId).enqueue(new Callback<List<ReceiptDetail>>() {
             @Override
             public void onResponse(Call<List<ReceiptDetail>> call, Response<List<ReceiptDetail>> response) {
                 if (response.isSuccessful()) {

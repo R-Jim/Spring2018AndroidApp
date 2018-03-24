@@ -41,7 +41,7 @@ public class RequestOrderTableDialogFragment extends DialogFragment {
 
     public void loadRequestList(View view) {
         RmaAPIService mService = RmaAPIUtils.getAPIService();
-        mService.getTableList().enqueue(new Callback<List<Table>>() {
+        mService.getTableList(LoginActivity.token).enqueue(new Callback<List<Table>>() {
             @Override
             public void onResponse(Call<List<Table>> call, Response<List<Table>> response) {
                 if (response.isSuccessful()) {

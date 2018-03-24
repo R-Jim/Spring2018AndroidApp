@@ -16,6 +16,7 @@
     <string name="setting_logout_title">Log out</string>
     <string name="about_title">About</string>
     <string name="setting_staffid_title">UserID</string>
+    <string name="setting_app_title">Restaurant App v0.1</string>
     <string name="popup_setting">Setting</string>
     <string name="popup_logout">Log out</string>
     <string name="setting_preference">com.rma.SETTING_PREFERENCE</string>

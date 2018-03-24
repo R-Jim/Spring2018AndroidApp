@@ -77,7 +77,7 @@ public class RequestFragment extends Fragment implements SwipeTouchHelper.Recycl
     }
 
     public void loadRequestList() {
-        mService.getRequestList().enqueue(new Callback<List<Request>>() {
+        mService.getRequestList(LoginActivity.token).enqueue(new Callback<List<Request>>() {
                     @Override
                     public void onResponse
                             (Call<List<Request>> call, Response<List<Request>> response) {
@@ -111,7 +111,7 @@ public class RequestFragment extends Fragment implements SwipeTouchHelper.Recycl
         List<Request> dismissList = new ArrayList<>();
         dismissList.add(request);
 
-        mService.sendDismissRequest(dismissList).enqueue(new Callback<Boolean>() {
+        mService.sendDismissRequest(LoginActivity.token,dismissList).enqueue(new Callback<Boolean>() {
             @Override
             public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                 System.out.println("Request has been dismissed successfully");

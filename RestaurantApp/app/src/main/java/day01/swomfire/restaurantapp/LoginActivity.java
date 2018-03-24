@@ -30,11 +30,14 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import data.model.User;
 import data.remote.RmaAPIService;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -90,6 +93,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * If there are form errors (invalid email, missing fields, etc.), the
      * errors are presented and no actual login attempt is made.
      */
+    public static String token;
+
     private void attemptLogin() {
 
         // Reset errors.
@@ -124,36 +129,68 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
-            StyleUtils.showProgress(true, mLoginFormView, mProgressView);
-            StyleUtils.showProgress(false, mLoginFormView, mProgressView);
-/*            RmaAPIService rmaAPIService = RmaAPIUtils.getAPIService();
-            rmaAPIService.getAuthenticate().enqueue(new Callback<Boolean>() {
+            showProgress(true);
+            RmaAPIService rmaAPIService = RmaAPIUtils.getAPIService();
+            User user = new User();
+            user.setUsername(username);
+            user.setPassword(password);
+            rmaAPIService.getAuthenticate(user).enqueue(new Callback<ResponseBody>() {
                 @Override
-                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                     if (response.isSuccessful()) {
+                        token = response.headers().get("Authorization");
                         Log.d(this.getClass().getSimpleName(), "Authenticated");
                         showProgress(false);
-                        Boolean authentication = response.body();
-                        if (authentication) {
-                            finish();
-                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                            LoginActivity.this.startActivity(intent);
-                        } else {
-                            mUsernameView.setError("Username or Password are incorrect");
-                            mUsernameView.requestFocus();
-                        }
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        startActivity(intent);
+                    } else {
+                        mUsernameView.setError("Username or Password is incorrect");
+                        System.out.println("Failed to connect to server");
+                        showProgress(false);
                     }
                 }
 
                 @Override
-                public void onFailure(Call<Boolean> call, Throwable t) {
-                    System.out.println("Failed to connect to server");
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    Toast toast = Toast.makeText(getApplicationContext(), "Fail to connect to server", Toast.LENGTH_SHORT);
+                    toast.show();
                     showProgress(false);
                 }
-            });*/
+            });
         }
     }
 
+    private void showProgress(final boolean show) {
+        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
+        // for very easy animations. If available, use these APIs to fade-in
+        // the progress spinner.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
+            int shortAnimTime = 200;
+
+            mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+            mLoginFormView.animate().setDuration(shortAnimTime).alpha(
+                    show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+                }
+            });
+
+            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+            mProgressView.animate().setDuration(shortAnimTime).alpha(
+                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+                }
+            });
+        } else {
+            // The ViewPropertyAnimator APIs are not available, so simply show
+            // and hide the relevant UI components.
+            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+            mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+        }
+    }
 
     /**
      * Shows the progress UI and hides the login form.

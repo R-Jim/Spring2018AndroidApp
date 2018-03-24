@@ -183,7 +183,7 @@ public class RequestOrderActivity extends AppCompatActivity {
             OrderRequest orderRequest = new OrderRequest();
             orderRequest.setTableId(Long.parseLong(tableId));
             orderRequest.setOrderDetailList(orderDetails);
-            mService.sendReceiptToServer(orderRequest).enqueue(new Callback<Boolean>() {
+            mService.sendReceiptToServer(LoginActivity.token,orderRequest).enqueue(new Callback<Boolean>() {
                 @Override
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                     if (response.isSuccessful()) {

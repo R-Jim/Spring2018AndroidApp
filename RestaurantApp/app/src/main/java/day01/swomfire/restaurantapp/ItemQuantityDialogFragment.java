@@ -23,7 +23,11 @@ public class ItemQuantityDialogFragment extends DialogFragment {
     private TextView currentItemQuantityText;
     private TextView itemQuantityText;
     private TextView lblId;
+    private View view;
 
+    public void setUp(View view) {
+        this.view = view;
+    }
 
     @NonNull
     @Override
@@ -32,7 +36,7 @@ public class ItemQuantityDialogFragment extends DialogFragment {
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View quantityDialog = inflater.inflate(R.layout.fragment_dialog_item_quantity, null);
-        View view = getActivity().findViewById(R.id.itemItem);
+        View view = this.view.findViewById(R.id.itemItem);
         GradientDrawable background = (GradientDrawable) view.getBackground().getConstantState().newDrawable();
         quantityDialog.setBackground(background);
         builder.setView(quantityDialog);
@@ -41,9 +45,7 @@ public class ItemQuantityDialogFragment extends DialogFragment {
         currentItemQuantityText = view.findViewById(R.id.lblItemItemQuantity);
         quantityOld = Integer.parseInt(String.valueOf(currentItemQuantityText.getText()));
 
-        View parent1 = (View) view.getParent();
-        View parent2 = (View) parent1.getParent();
-        lblId = parent2.findViewById(R.id.lblListItemId);
+        lblId = view.findViewById(R.id.lblListItemId);
 
         // Set Quantity for dialog
         itemQuantityText = quantityDialog.findViewById(R.id.itemItemQuantityDialogQuantity);

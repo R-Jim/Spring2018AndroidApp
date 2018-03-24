@@ -49,6 +49,11 @@ public class TableRVAdapter extends RecyclerView.Adapter<TableRVAdapter.MyViewHo
     private List<Table> tables;
     private int viewMode;
 
+
+    public List<Table> getTables() {
+        return tables;
+    }
+
     @Override
     public int getItemViewType(int position) {
         if (viewMode == RVViewMode.TABLE_TAB.getViewMode()) {
@@ -65,6 +70,7 @@ public class TableRVAdapter extends RecyclerView.Adapter<TableRVAdapter.MyViewHo
             }
         }
     }
+
 
     class MyViewHolder extends RecyclerView.ViewHolder {
 
@@ -118,6 +124,10 @@ public class TableRVAdapter extends RecyclerView.Adapter<TableRVAdapter.MyViewHo
     @Override
     public int getItemCount() {
         return (tables != null) ? tables.size() : -1;
+    }
+
+    public Table getTable(int position) {
+        return tables.get(position);
     }
 }
 

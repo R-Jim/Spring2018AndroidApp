@@ -10,17 +10,28 @@
         android:layout_height="match_parent">
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/orderDetail"
+            android:id="@+id/orderDetailChangable"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
         </android.support.v7.widget.RecyclerView>
 
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/orderDetail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/orderDetailChangable">
+
+        </android.support.v7.widget.RecyclerView>
+
         <Button
+            style="@style/textStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
+            android:background="@color/colorPrimary"
             android:onClick="addNewRequestToTable"
-            android:text="+" />
+            android:text="Order More"
+            android:textColor="@color/colorOrderDetailTableInfoTextColor" />
     </RelativeLayout>
 </FrameLayout>

@@ -10,7 +10,12 @@
         android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:cardBackgroundColor="@android:color/transparent">
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="6dp"
+        android:layout_marginTop="6dp"
+        android:elevation="4dp"
+        app:cardBackgroundColor="@android:color/white"
+        app:cardCornerRadius="2dp">
 
 
         <RelativeLayout
@@ -72,9 +77,9 @@
 
                         <ImageButton
                             android:layout_width="match_parent"
-                            android:onClick="toOrderDetail"
                             android:layout_height="match_parent"
                             android:background="@android:color/transparent"
+                            android:onClick="toOrderDetail"
                             android:src="@drawable/table_ordering_order_icon" />
                     </android.support.constraint.ConstraintLayout>
 
@@ -88,15 +93,6 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:layout_alignBottom="@+id/tableContent"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:background="@color/colorTableGroupAddIconStrokeColor">
-
-            </LinearLayout>
         </RelativeLayout>
     </android.support.v7.widget.CardView>
 </LinearLayout>

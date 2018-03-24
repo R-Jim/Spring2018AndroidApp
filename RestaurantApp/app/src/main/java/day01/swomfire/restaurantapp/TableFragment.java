@@ -81,12 +81,16 @@ public class TableFragment extends Fragment {
     }
 
     private void initRecycleView(List<Table> tables) {
-        RecyclerView recyclerView = getActivity().findViewById(R.id.rv_table_list);
-        TableRVAdapter tableRVAdapter = new TableRVAdapter(tables, TableRVAdapter.RVViewMode.TABLE_TAB.getViewMode());
-        GridLayoutManager gLayoutManager = new GridLayoutManager(getActivity().getApplicationContext(), 1);
-        recyclerView.setLayoutManager(gLayoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(tableRVAdapter);
+        if (getActivity() != null) {
+            RecyclerView recyclerView = getActivity().findViewById(R.id.rv_table_list);
+            if (recyclerView != null) {
+                TableRVAdapter tableRVAdapter = new TableRVAdapter(tables, TableRVAdapter.RVViewMode.TABLE_TAB.getViewMode());
+                GridLayoutManager gLayoutManager = new GridLayoutManager(getActivity().getApplicationContext(), 1);
+                recyclerView.setLayoutManager(gLayoutManager);
+                recyclerView.setItemAnimator(new DefaultItemAnimator());
+                recyclerView.setAdapter(tableRVAdapter);
+            }
+        }
     }
 
     private void initSpinner(View view) {

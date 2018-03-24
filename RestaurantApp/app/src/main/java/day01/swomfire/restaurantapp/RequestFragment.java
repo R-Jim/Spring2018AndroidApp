@@ -10,12 +10,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import adapter.CustomRVAdapter;
 import data.model.OrderRequest;
+import data.model.Request;
 import data.remote.RmaAPIService;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -24,7 +26,7 @@ import utils.RmaAPIUtils;
 
 public class RequestFragment extends Fragment {
     private RecyclerView rv;
-    private List<OrderRequest> requestList;
+    private List<Request> requestList;
 
     private RmaAPIService mService;
 
@@ -45,17 +47,15 @@ public class RequestFragment extends Fragment {
         rv = getView().findViewById(R.id.rv_request_list);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         rv.setLayoutManager(layoutManager);
-        //loadRequestList();
-
-        initList();
+        loadRequestList();
         CustomRVAdapter adapter = new CustomRVAdapter(requestList);
         rv.setAdapter(adapter);
     }
 
     public void loadRequestList() {
-        mService.getRequestOrderList().enqueue(new Callback<List<OrderRequest>>() {
+        mService.getRequestList().enqueue(new Callback<List<Request>>() {
             @Override
-            public void onResponse(Call<List<OrderRequest>> call, Response<List<OrderRequest>> response) {
+            public void onResponse(Call<List<Request>> call, Response<List<Request>> response) {
                 if (response.isSuccessful()) {
                     requestList = response.body();
 
@@ -67,20 +67,14 @@ public class RequestFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<List<OrderRequest>> call, Throwable t) {
-                System.out.println("Failed to load Order Request list");
+            public void onFailure(Call<List<Request>> call, Throwable t) {
+                if (getActivity() != null) {
+                    Toast toast = Toast.makeText(getActivity().getApplicationContext(), "Fail to connect to server", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
 
             }
         });
-    }
-
-    private void initList() {
-        requestList = new ArrayList<>();
-        OrderRequest orderRequest = new OrderRequest();
-        orderRequest.setTableNo("4");
-        orderRequest.setItemSeq("213");
-        orderRequest.setItemName("Capu");
-        requestList.add(orderRequest);
     }
 
 }

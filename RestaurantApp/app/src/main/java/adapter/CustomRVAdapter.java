@@ -10,7 +10,10 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import data.model.Item;
 import data.model.OrderRequest;
+import data.model.Request;
+import day01.swomfire.restaurantapp.MainActivity;
 import day01.swomfire.restaurantapp.R;
 
 /**
@@ -29,18 +32,20 @@ public class CustomRVAdapter extends RecyclerView.Adapter<CustomRVAdapter.Reques
         TextView tvTableId;
         TextView tvDishName;
         TextView tvDishDiscr;
+        TextView tvReceiptId;
 
         public RequestViewHolder(View itemView) {
             super(itemView);
-            cv = (CardView) itemView.findViewById(R.id.cv_request_item);
-            tvTableId = (TextView) itemView.findViewById(R.id.tv_table_id);
-            tvDishName = (TextView) itemView.findViewById(R.id.tv_dish_name);
-            tvDishDiscr = (TextView) itemView.findViewById(R.id.tv_description);
+            cv = itemView.findViewById(R.id.cv_request_item);
+            tvTableId = itemView.findViewById(R.id.tv_table_id);
+            tvDishName = itemView.findViewById(R.id.tv_dish_name);
+            tvDishDiscr = itemView.findViewById(R.id.tv_description);
+            tvReceiptId = itemView.findViewById(R.id.tv_receipt_id);
         }
     }
 
     // Data for the RV
-    private List<OrderRequest> requestList;
+    private List<Request> requestList;
 
     public CustomRVAdapter(List requestList) {
         this.requestList = requestList;
@@ -56,9 +61,21 @@ public class CustomRVAdapter extends RecyclerView.Adapter<CustomRVAdapter.Reques
 
     @Override
     public void onBindViewHolder(@NonNull RequestViewHolder holder, int position) {
-        holder.tvTableId.setText(requestList.get(position).getTableNo() + "");
-        holder.tvDishName.setText(requestList.get(position).getItemName());
-        holder.tvDishDiscr.setText(requestList.get(position).getItemSeq());
+        holder.tvTableId.setText(String.valueOf(requestList.get(position).getTableId()));
+
+        List<Item> itemList = MainActivity.getItemList();
+        String name = "";
+        if (itemList != null) {
+            for (Item item : itemList) {
+                if (item.getSeqId().equals((long) requestList.get(position).getItemSeq())) {
+                    name = item.getItemName();
+                    break;
+                }
+            }
+        }
+        holder.tvDishName.setText((name.length() < 12) ? name : name.substring(0, 12) + "...");
+        holder.tvReceiptId.setText(String.valueOf(requestList.get(position).getReceiptSeq()));
+        //holder.tvDishDiscr.setText(requestList.get(position).getTableId() + "");
     }
 
 
@@ -70,5 +87,9 @@ public class CustomRVAdapter extends RecyclerView.Adapter<CustomRVAdapter.Reques
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
+    }
+
+    public Request getRequest(int position) {
+        return requestList.get(position);
     }
 }

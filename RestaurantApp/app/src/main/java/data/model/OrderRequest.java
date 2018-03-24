@@ -7,94 +7,42 @@ package data.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+import java.util.Set;
+
 public class OrderRequest {
-    @SerializedName("seq")
+    @SerializedName("tableId")
     @Expose
-    private Integer seq;
-    @SerializedName("receiptSeq")
-    @Expose
-    private String receiptSeq;
-    @SerializedName("tableNo")
-    @Expose
-    private String tableNo;
-    @SerializedName("itemSeq")
-    @Expose
-    private String itemSeq;
-    @SerializedName("itemName")
-    @Expose
-    private String itemName;
-    @SerializedName("quan")
-    @Expose
-    private Integer quan;
+    private Long tableId;
     @SerializedName("subscribers")
     @Expose
-    private Object subscribers;
-    @SerializedName("done")
+    private Set<String> subscribers = null;
+    @SerializedName("orderDetailList")
     @Expose
-    private Boolean done;
+    private List<OrderDetail> orderDetailList = null;
 
-    public Integer getSeq() {
-        return seq;
+    public Long getTableId() {
+        return tableId;
     }
 
-    public void setSeq(Integer seq) {
-        this.seq = seq;
+    public void setTableId(Long tableId) {
+        this.tableId = tableId;
     }
 
-    public String getReceiptSeq() {
-        return receiptSeq;
-    }
-
-    public void setReceiptSeq(String receiptSeq) {
-        this.receiptSeq = receiptSeq;
-    }
-
-    public String getTableNo() {
-        return tableNo;
-    }
-
-    public void setTableNo(String tableNo) {
-        this.tableNo = tableNo;
-    }
-
-    public String getItemSeq() {
-        return itemSeq;
-    }
-
-    public void setItemSeq(String itemSeq) {
-        this.itemSeq = itemSeq;
-    }
-
-    public String getItemName() {
-        return itemName;
-    }
-
-    public void setItemName(String itemName) {
-        this.itemName = itemName;
-    }
-
-    public Integer getQuan() {
-        return quan;
-    }
-
-    public void setQuan(Integer quan) {
-        this.quan = quan;
-    }
-
-    public Object getSubscribers() {
+    public Set<String> getSubscribers() {
         return subscribers;
     }
 
-    public void setSubscribers(Object subscribers) {
+    public void setSubscribers(Set<String> subscribers) {
         this.subscribers = subscribers;
     }
 
-    public Boolean getDone() {
-        return done;
+    public List<OrderDetail> getOrderDetailList() {
+        return orderDetailList;
     }
 
-    public void setDone(Boolean done) {
-        this.done = done;
+    public void setOrderDetailList(List<OrderDetail> orderDetailList) {
+        this.orderDetailList = orderDetailList;
     }
 }
 
